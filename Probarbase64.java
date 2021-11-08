@@ -1,3 +1,4 @@
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -8,6 +9,8 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -40,6 +43,21 @@ public class Probarbase64 {
 		SecretKey originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES"); 
 		return originalKey;
 	}
+
+	public String base64PublicKey(PublicKey publicKey){
+		byte[] encodedPublicKey = publicKey.getEncoded();
+		String b64PublicKey = Base64.getEncoder().encodeToString(encodedPublicKey);
+		
+		return b64PublicKey;
+	}
+
+	public String base64PrivateKey(PrivateKey privateKey){
+		byte[] encodedPublicKey = privateKey.getEncoded();
+		String b64PrivateKey = Base64.getEncoder().encodeToString(encodedPublicKey);
+		
+		return b64PrivateKey;
+	}
+
 	/*
 	public List<String> cogerMuchosArchivosBase64(ArrayList<String> archivos){
 		System.out.println(ruta);
@@ -184,6 +202,28 @@ public class Probarbase64 {
 
     }
 	
+	public boolean stringToFile(String cadena, String salida){
+        boolean hecho=false;
+        
+        
+		try(FileOutputStream fos = new FileOutputStream(salida);
+        BufferedOutputStream bos = new BufferedOutputStream(fos)) {
+            //convert string to byte array
+            byte[] bytes = cadena.getBytes();
+            //write byte array to file
+            bos.write(bytes);
+            bos.close();
+            fos.close();
+            //System.out.print("Data written to file successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+
+        return hecho;
+
+    }
+
 	public boolean aFichero(List<String> cadena, ArrayList<String> salida){
         boolean hecho=false;
         List<byte[]> bytes =new ArrayList<byte[]>();
