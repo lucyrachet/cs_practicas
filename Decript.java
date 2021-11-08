@@ -14,6 +14,8 @@ public class Decript {
         String clave = bbdd.recogerClave(nombre_archivo);
 
         base.bFichero(aes.decryptFile(path, base.asciiSecretKey(clave)), "decript/"+archivo_decript);
+
+        f.delete();
     }
 
     /*

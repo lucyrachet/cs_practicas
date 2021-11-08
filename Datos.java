@@ -86,9 +86,9 @@ public class Datos {
     public void eliminar(String nombre_archivo){
         try{
             Connection con = crearConexion();
-            String sql =  "DELETE FROM archivoclaves WHERE nombre= ?";
+            String sql =  "DELETE FROM archivoclaves WHERE nombre LIKE ?";
             PreparedStatement pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, nombre_archivo);
+            pstmt.setString(1, nombre_archivo + "%");
             pstmt.executeUpdate(); 
             con.close();
         }catch(Exception e){
