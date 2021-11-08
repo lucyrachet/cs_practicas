@@ -6,8 +6,6 @@ import java.security.SecureRandom;
 
 public abstract class AES_abstract {
 
-    public AES_abstract(){}
-
 
     public abstract SecretKey getAESKey();
     

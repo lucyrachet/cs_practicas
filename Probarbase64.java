@@ -9,14 +9,25 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+
+
+import java.security.NoSuchAlgorithmException;
+
+
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+
 
 public class Probarbase64 {
 	private String ruta = "C:\\Users\\lucyr\\eclipse-workspace\\CS-Encriptacion\\src\\archivos\\";
@@ -49,6 +60,27 @@ public class Probarbase64 {
 		String b64PublicKey = Base64.getEncoder().encodeToString(encodedPublicKey);
 		
 		return b64PublicKey;
+	}
+
+	public PublicKey asciiToPublicKey(String publicKeyStr) throws  NoSuchAlgorithmException, InvalidKeySpecException {
+        KeyFactory kf = KeyFactory.getInstance("RSA");
+
+        PKCS8EncodedKeySpec keySpecPKCS8 = new PKCS8EncodedKeySpec(Base64.getDecoder().decode(publicKeyStr));
+        PublicKey publicKey = kf.generatePublic(keySpecPKCS8);
+
+		
+		return publicKey;
+    }
+
+	public PrivateKey asciiToPrivateKey(String privateKeyStr) throws NoSuchAlgorithmException, InvalidKeySpecException{
+		
+
+		KeyFactory kf = KeyFactory.getInstance("RSA");
+
+        PKCS8EncodedKeySpec keySpecPKCS8 = new PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKeyStr));
+        PrivateKey privateKey = kf.generatePrivate(keySpecPKCS8);
+
+		return privateKey;
 	}
 
 	public String base64PrivateKey(PrivateKey privateKey){
