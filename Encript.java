@@ -20,8 +20,8 @@ public class Encript {
 
         base.bFichero(aes.encryptFile(path, clave), "encript/"+nombre_archivo+".enc");
     }
-
-    /*public static void main(String[] args){
+/*
+    public static void main(String[] args){
         try {
             Encript cript = new Encript("archivos/foto.jpg");
         } catch (Exception e) {
