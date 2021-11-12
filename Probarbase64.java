@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryIteratorException;
 import java.nio.file.DirectoryStream;
@@ -16,6 +17,7 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -255,6 +257,21 @@ public class Probarbase64 {
         return hecho;
 
     }
+
+	public String fileToString(String filePath) throws IOException{
+		String contenido="";
+
+		//Path fileName= Path.of(filePath);
+		Charset encoding = Charset.defaultCharset();
+        // reading all lines of file as List of strings
+		List<String> lines = Files.readAllLines(Paths.get(filePath), encoding);
+		
+		// converting List<String> to palin string using java 8 api.
+		contenido = lines.stream().collect(Collectors.joining("\n"));
+		
+ 
+		return contenido;
+	}
 
 	public boolean aFichero(List<String> cadena, ArrayList<String> salida){
         boolean hecho=false;

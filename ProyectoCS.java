@@ -26,31 +26,31 @@ public class ProyectoCS {
         String contrasena_dada = null;
 
         //while estado sea login o registro
-        while(interfaz.estado=="login" || interfaz.estado=="registro"){
-            System.out.print("");
-            if(interfaz.pathLogin.isBlank()==false|| interfaz.pathRegistro.isBlank()==false){
-                if(interfaz.pathLogin.isBlank()==false){
-                    //Encriptar
-                    System.out.println(interfaz.pathLogin);
-                    /************* */
+        // while(interfaz.estado=="login" || interfaz.estado=="registro"){
+        //     System.out.print("");
+        //     if(interfaz.pathLogin.isBlank()==false|| interfaz.pathRegistro.isBlank()==false){
+        //         if(interfaz.pathLogin.isBlank()==false){
+        //             //Encriptar
+        //             System.out.println(interfaz.pathLogin);
+        //             /************* */
                         
-                    interfaz.pathLogin = "";
-                } else{
-                    //Desencriptar
-                    Decript desencriptar = new Decript(interfaz.pathRegistro);
-                    interfaz.pathRegistro = "";
+        //             interfaz.pathLogin = "";
+        //         } else{
+        //             //Desencriptar
+        //             Decript desencriptar = new Decript(interfaz.pathRegistro);
+        //             interfaz.pathRegistro = "";
 
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
 
 
         /********* */
         //Comprobacion de login bien hecho
-        existeUsuario = bbdd.userExists(usuario_dado);
+        existeUsuario = bbdd.existeUsuario(usuario_dado);
 
         if(existeUsuario==true){
-            String contrasena_bbdd=bbdd.getContrasena(usuario_dado);
+            String contrasena_bbdd=bbdd.recogerPassword(usuario_dado);
 
             if(contrasena_bbdd == contrasena_dada){
                 usuarioValidado=true;
@@ -63,7 +63,7 @@ public class ProyectoCS {
          * 
          */
         
-        while ((usuarioValidado==true) && (interfaz.estado=="encriptar" || interfaz.estado=="desencriptar")) {
+        while ((usuarioValidado==true) /*&& (interfaz.estado=="encriptar" || interfaz.estado=="desencriptar")*/) {
             System.out.print("");
             if(interfaz.pathDesencriptar.isBlank()==false|| interfaz.pathEncriptar.isBlank()==false){
                 if(interfaz.pathEncriptar.isBlank()==false){
@@ -99,7 +99,7 @@ public class ProyectoCS {
 
                         
                         //mete la clave en la bbdd en la tabla de archivos
-                        bbdd.insertarClave(nombre_archivo, clave_string);
+                        bbdd.insertarClave(nombre_archivo, clave_string,usuario_dado);
                         
                         
                         // mete en la carpeta encript el archivo con su_nombre.enc
@@ -111,7 +111,34 @@ public class ProyectoCS {
                     interfaz.pathEncriptar = "";
                 } else{
                     //Desencriptar
-                    Decript desencriptar = new Decript(interfaz.pathDesencriptar);
+                    //Decript desencriptar = new Decript(interfaz.pathDesencriptar);
+                    /*************/
+                    String path = interfaz.pathDesencriptar;
+                    AES aes = new AES();
+                    RSA rsa = new RSA();
+                    Probarbase64 base = new Probarbase64("");
+                    
+                    
+                    File f = new File(path);                    //cogemos el file de desencriptar
+                    String nombre_archivo = f.getName();        //cogemos el nombre que tenga
+                    nombre_archivo = nombre_archivo.substring(0, nombre_archivo.lastIndexOf('.'));  //quitamos lo q hay despues del ."enc"
+                    
+                    String keyRSA = nombre_archivo+".key";                      //pongo como es el nombre de la key
+                    //File fKeyRSA = new File(keyRSA);                          //cojo el archivo
+                    String keyRSAString = base.fileToString(keyRSA);            //cojo el archivo y lo paso a String
+                    PrivateKey privKey = base.asciiToPrivateKey(keyRSAString);  //paso el string a PrivateKey
+
+                    String archivo_decript = bbdd.recogerNombre(nombre_archivo);    //coges el nombre del archivo de la bbdd
+                    String clave = bbdd.recogerClave(nombre_archivo);               //cogemos la clave AES de ese archivo
+
+                    String claveAES = rsa.decryptAESKey(clave, privKey);                          //desencriptamos la clave AES con la privada de RSA
+                    
+                    base.bFichero(aes.decryptFile(path, base.asciiSecretKey(claveAES)), "decript/"+archivo_decript);   //pasamos de base64 la clave AES a Secret Key
+                                                                                                                    //desencriptamos y 
+                                                                                                                    // convertimos a fichero
+                    f.delete(); //borramos el archivo de la carpeta
+
+                    /*************/
                     interfaz.pathDesencriptar = "";
 
                 }

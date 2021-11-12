@@ -23,9 +23,11 @@ DROP TABLE IF EXISTS `archivoclaves`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `archivoclaves` (
-  `nombre` varchar(200) NOT NULL,
-  `clave` varchar(200) NOT NULL,
-  PRIMARY KEY (`nombre`)
+  `nombre` varchar(256) NOT NULL,
+  `clave` varchar(256) NOT NULL,
+  `usuario` varchar(256) DEFAULT NULL,
+  KEY `usuario_idx` (`usuario`),
+  CONSTRAINT `usuario` FOREIGN KEY (`usuario`) REFERENCES `usuarios` (`nombre`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -35,6 +37,7 @@ CREATE TABLE `archivoclaves` (
 
 LOCK TABLES `archivoclaves` WRITE;
 /*!40000 ALTER TABLE `archivoclaves` DISABLE KEYS */;
+INSERT INTO `archivoclaves` VALUES ('archivo1','clave1','usuario1'),('archivo2','clave2','usuario2');
 /*!40000 ALTER TABLE `archivoclaves` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -47,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-10-23 12:49:12
+-- Dump completed on 2021-11-09 21:50:15
