@@ -10,7 +10,7 @@ public class ProyectoCS {
     public static void main(String[] args) throws Exception {
         Interfaz_abstract interfaz = new Interfaz();
 
-        interfaz.setVisible(true);
+        //interfaz.setVisible(true);
         
         //para la comprobacion del login
         Datos bbdd = new Datos();
@@ -24,24 +24,24 @@ public class ProyectoCS {
 
         //while estado sea login o registro
         while(usuarioValidado==false && (interfaz.dameEstado()==EstadoInterfaz.Login || interfaz.dameEstado()==EstadoInterfaz.Registro)){
-            //Login
-            if(interfaz.dameEstado()==EstadoInterfaz.Login){
+            // //Login
+            // if(interfaz.dameEstado()==EstadoInterfaz.Login){
 
-            }
-            //Registro
-            if(interfaz.dameEstado()==EstadoInterfaz.Registro){
+            // }
+            // //Registro
+            // if(interfaz.dameEstado()==EstadoInterfaz.Registro){
 
-            }
-            if(interfaz.pathLogin.isBlank()==false|| interfaz.pathRegistro.isBlank()==false){
-                if(interfaz.pathLogin.isBlank()==false){
-                    //Login
-                    System.out.println(interfaz.pathLogin);
-                    /************* */
-                    usuario_dado=interfaz.dameNombreUsuario();
-                    contrasena_dada = interfaz.dameContrasenaLogin();
+            // }
+            // if(interfaz.pathLogin.isBlank()==false|| interfaz.pathRegistro.isBlank()==false){
+            //     if(interfaz.pathLogin.isBlank()==false){
+            //         //Login
+            //         System.out.println(interfaz.pathLogin);
+            //         /************* */
+            //         usuario_dado=interfaz.dameNombreUsuario();
+            //         contrasena_dada = interfaz.dameContrasenaLogin();
 
-                    //Comprobacion de login bien hecho
-                    existeUsuario = bbdd.existeUsuario(usuario_dado);
+            //         //Comprobacion de login bien hecho
+            //         existeUsuario = bbdd.existeUsuario(usuario_dado);
             if(interfaz.estado==EstadoInterfaz.Login){
                 usuario_dado=interfaz.dameNombreLogin();
                 contrasena_dada = interfaz.dameContrasenaLogin();
