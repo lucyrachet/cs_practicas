@@ -18,14 +18,14 @@ public class RSA{
     public RSA(){}
 
 
-    public static KeyPair crearParClaves() throws NoSuchAlgorithmException{
+    public KeyPair crearParClaves() throws NoSuchAlgorithmException{
         KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
-        generator.initialize(1024);
+        generator.initialize(2048);
         return generator.generateKeyPair();
     }
 
     //Encripta clave AES
-    public static byte[] encryptKey(SecretKey sKey, PublicKey puk) throws NoSuchAlgorithmException, InvalidKeyException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException{
+    public byte[] encryptKey(SecretKey sKey, PublicKey puk) throws NoSuchAlgorithmException, InvalidKeyException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException{
 
         byte[] encryptedKey; 
   
@@ -38,7 +38,7 @@ public class RSA{
     }
 
     //Desencripta AES
-    public static SecretKey decryptKey(byte[] sKey, PrivateKey prk) throws NoSuchAlgorithmException,NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+    public SecretKey decryptKey(byte[] sKey, PrivateKey prk) throws NoSuchAlgorithmException,NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
 
         byte[] decryptedKey;
 
