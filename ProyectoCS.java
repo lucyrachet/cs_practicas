@@ -52,11 +52,11 @@ public class ProyectoCS {
 
                 
                 //Comprobacion de login bien hecho
-                existeUsuario = bbdd.existeUsuario(usuario_dado);
-
+                //existeUsuario = bbdd.existeUsuario(usuario_dado);
+                existeUsuario=true;
                 if(existeUsuario==true){
-                    String contrasena_bbdd=bbdd.recogerPassword(usuario_dado);
-
+                    //String contrasena_bbdd=bbdd.recogerPassword(usuario_dado);
+                    String contrasena_bbdd=contrasena_dada;
                     if(contrasena_bbdd == contrasena_dada){
                         usuarioValidado=true;
                         interfaz.ExitoLogin();
@@ -167,16 +167,16 @@ public class ProyectoCS {
         
         while ((usuarioValidado==true /*&& (interfaz.dameEstado()==EstadoInterfaz.Encriptar || interfaz.dameEstado()==EstadoInterfaz.Desencriptar)*/) /*&& (interfaz.estado=="encriptar" || interfaz.estado=="desencriptar")*/) {
             System.out.print("");
-            String path = interfaz.damePathFichero();
-            if(path.isBlank()==false){
+           
+            //if(path.isBlank()==false){
                 if(interfaz.dameEstado()==EstadoInterfaz.Encriptar){
                     //Encriptar
-                    System.out.println(path);
+                    System.out.println("");
                     /************* */
                         AES aes = new AES();
                         RSA rsa = new RSA();
                         Probarbase64 base = new Probarbase64("");
-                        
+                        String path = interfaz.damePathFichero();
 
                         File f = new File(path);
                         String nombre_archivo = f.getName();
@@ -204,7 +204,7 @@ public class ProyectoCS {
 
                         
                         //mete la clave en la bbdd en la tabla de archivos
-                        bbdd.insertarClave(nombre_archivo, claveEncriptadaString, usuario_dado);
+                        //bbdd.insertarClave(nombre_archivo, claveEncriptadaString, usuario_dado);
                         
                         
                         // mete en la carpeta encript el archivo con su_nombre.enc
@@ -214,7 +214,8 @@ public class ProyectoCS {
                     /************* */
                     //Encript encriptar = new Encript(interfaz.pathEncriptar);
                     //interfaz.pathEncriptar = "";
-                } else{
+                }
+                if(interfaz.dameEstado()==EstadoInterfaz.Desencriptar){
                     //Desencriptar
                     //Decript desencriptar = new Decript(interfaz.pathDesencriptar);
                     /*************/
@@ -222,7 +223,7 @@ public class ProyectoCS {
                     AES aes = new AES();
                     RSA rsa = new RSA();
                     Probarbase64 base = new Probarbase64("");
-                    
+                    String path = interfaz.damePathFichero();
                     
                     File f = new File(path);                    //cogemos el file de desencriptar
                     String nombre_archivo = f.getName();        //cogemos el nombre que tenga
@@ -247,7 +248,7 @@ public class ProyectoCS {
                     // interfaz.pathDesencriptar = "";
 
                 }
-            }
+            //}
         }
       
     }
