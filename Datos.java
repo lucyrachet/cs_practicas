@@ -145,7 +145,7 @@ public class Datos {
         return password;
     }
 
-
+    //Comprueba si existe algún usuario 
     public Boolean existeUsuario(String nombre_usuario){
         Boolean existe=false;
         try{
