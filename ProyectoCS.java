@@ -50,8 +50,7 @@ public class ProyectoCS {
                 usuario_dado=interfaz.dameNombreLogin();
                 contrasena_dada = interfaz.dameContrasenaLogin();
 
-                System.out.println(usuario_dado);
-                System.out.println(contrasena_dada);
+                
                 //Comprobacion de login bien hecho
                 existeUsuario = bbdd.existeUsuario(usuario_dado);
 
