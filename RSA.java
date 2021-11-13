@@ -20,7 +20,7 @@ public class RSA{
 
     public static KeyPair crearParClaves() throws NoSuchAlgorithmException{
         KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
-        generator.initialize(1024);
+        generator.initialize(2048);
         return generator.generateKeyPair();
     }
 
