@@ -3,11 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
-import java.awt.BorderLayout;
+
 import java.awt.Color;
 import javax.swing.BorderFactory;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
 //import javax.swing.JPanel;
 
 
@@ -15,51 +13,19 @@ import javax.swing.UIManager;
  *
  * @author luism
  */
-
-enum EstadoInterfaz{
-    SinEstado,Login,Registro,Encriptar,Desencriptar
-}
-
-public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
+public class Plantilla extends javax.swing.JFrame {
     
     private int xMouse,yMouse;
-    private EstadoInterfaz estado;
-    private String pathFichero,nombreLogin,contrasenaLogin,nombreRegistro,contrasena1Registro,contrasena2Registo;
-    //private String optionsPathEncriptar,optionsPathDesencriptar;
     
-    public PanelIniciarSesion panelIniciarSesion;
-    public PanelRegistro panelRegistro;
-    public PanelInicio panelInicio;
-    public PanelExito panelExito;
-   
+    
     /**
      * Creates new form Interfaz
      */
-    public Interfaz() {
-        estado = EstadoInterfaz.SinEstado;
-        
-        try{
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch(Exception e){
-            
-        }
-        
+    public Plantilla() {
         setUndecorated(true);
         getRootPane().setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(20,39,155)));
         initComponents();
         this.setLocationRelativeTo(null);
-        
-        panelIniciarSesion = new PanelIniciarSesion(this);
-        panelRegistro = new PanelRegistro(this);
-        panelInicio = new PanelInicio(this);
-        panelExito = new PanelExito(this);
-        
-        this.ponerPanel(panelIniciarSesion);
-        
-        this.setVisible(true);
-        
-        
-        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -79,7 +45,7 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
         Main = new javax.swing.JPanel();
         tituloPanel = new javax.swing.JPanel();
         tituloMain = new javax.swing.JLabel();
-        content = new javax.swing.JPanel();
+        PanelPrincipal = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -138,6 +104,7 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
 
         getContentPane().add(Header, java.awt.BorderLayout.PAGE_START);
 
+        Footer.setBackground(new java.awt.Color(230, 230, 230));
         Footer.setPreferredSize(new java.awt.Dimension(800, 30));
 
         Authors.setBackground(new java.awt.Color(92, 122, 234));
@@ -162,7 +129,7 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
         Main.setBackground(new java.awt.Color(230, 230, 230));
         Main.setLayout(new java.awt.BorderLayout());
 
-        tituloPanel.setPreferredSize(new java.awt.Dimension(800, 80));
+        tituloPanel.setBackground(new java.awt.Color(230, 230, 230));
 
         tituloMain.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         tituloMain.setForeground(new java.awt.Color(92, 122, 234));
@@ -173,32 +140,32 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
         tituloPanel.setLayout(tituloPanelLayout);
         tituloPanelLayout.setHorizontalGroup(
             tituloPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tituloPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tituloMain, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(tituloMain, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
         );
         tituloPanelLayout.setVerticalGroup(
             tituloPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tituloPanelLayout.createSequentialGroup()
-                .addGap(0, 40, Short.MAX_VALUE)
-                .addComponent(tituloMain, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(tituloPanelLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(tituloMain, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         Main.add(tituloPanel, java.awt.BorderLayout.PAGE_START);
 
-        javax.swing.GroupLayout contentLayout = new javax.swing.GroupLayout(content);
-        content.setLayout(contentLayout);
-        contentLayout.setHorizontalGroup(
-            contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        PanelPrincipal.setBackground(new java.awt.Color(230, 230, 230));
+
+        javax.swing.GroupLayout PanelPrincipalLayout = new javax.swing.GroupLayout(PanelPrincipal);
+        PanelPrincipal.setLayout(PanelPrincipalLayout);
+        PanelPrincipalLayout.setHorizontalGroup(
+            PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 800, Short.MAX_VALUE)
         );
-        contentLayout.setVerticalGroup(
-            contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 355, Short.MAX_VALUE)
+        PanelPrincipalLayout.setVerticalGroup(
+            PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 335, Short.MAX_VALUE)
         );
 
-        Main.add(content, java.awt.BorderLayout.CENTER);
+        Main.add(PanelPrincipal, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(Main, java.awt.BorderLayout.CENTER);
 
@@ -242,107 +209,10 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
     private javax.swing.JPanel Footer;
     private javax.swing.JPanel Header;
     private javax.swing.JPanel Main;
+    private javax.swing.JPanel PanelPrincipal;
     private javax.swing.JLabel cerrar;
-    private javax.swing.JPanel content;
     private javax.swing.JLabel tituloHeader;
     private javax.swing.JLabel tituloMain;
     private javax.swing.JPanel tituloPanel;
     // End of variables declaration//GEN-END:variables
-
-    public void ponerPanel(JPanel p){
-        p.setSize(800, 355);
-        p.setLocation(0, 0);
-        
-        content.removeAll();
-        content.add(p, BorderLayout.CENTER);
-        content.revalidate();
-        content.repaint();
-    }
-    
-    public void Login(String _nombre, String _pass){
-        nombreLogin = _nombre;
-        contrasenaLogin = _pass;
-        cambiarEstado(EstadoInterfaz.Login);
-    }
-    
-    public void ErrorLogin(){
-        cambiarEstado(EstadoInterfaz.SinEstado);
-        panelIniciarSesion.Error();
-    }
-    
-    public void ExitoLogin(){
-        cambiarEstado(EstadoInterfaz.SinEstado);
-        panelExito.Exito("Has iniciado sesión correctamente");
-        ponerPanel(panelExito);
-    }
-    
-    public void Registro(String _nombre, String _pass){
-        nombreRegistro = _nombre;
-        contrasena1Registro = _pass;
-        cambiarEstado(EstadoInterfaz.Registro);    
-    }
-    
-    public void ErrorRegistro(){
-        cambiarEstado(EstadoInterfaz.SinEstado);
-        panelRegistro.Error();
-    }
-    
-    public void ExitoRegistro(){
-        cambiarEstado(EstadoInterfaz.SinEstado);
-        panelExito.Exito("Te has registrado correctamente");
-        ponerPanel(panelExito);
-        
-    }
-    
-    public void Encriptar(String _path){
-        pathFichero = _path;
-        cambiarEstado(EstadoInterfaz.Encriptar);
-    }
-    
-    public void Desencriptar(String _path){
-        pathFichero = _path;
-        cambiarEstado(EstadoInterfaz.Desencriptar);
-    }
-    
-    @Override
-    public EstadoInterfaz dameEstado() {
-        return estado;
-    }
-
-    public void cambiarEstado(EstadoInterfaz _estado){
-        estado = _estado;
-        //System.out.println("DEBERIA ENTRAR AQUI");
-    }
-    
-    @Override
-    public String damePathFichero() {
-        return pathFichero;
-    }
-
-    @Override
-    public String dameNombreLogin() {
-        return nombreLogin;
-    }
-
-    @Override
-    public String dameContrasenaLogin() {
-        return contrasenaLogin;
-    }
-
-    @Override
-    public String dameNombreRegistro() {
-        return nombreRegistro;
-    }
-
-    @Override
-    public String dameContrasena1Registro() {
-        return contrasena1Registro;
-    }
-
-    @Override
-    public String dameContrasena2Registro() {
-        return contrasena2Registo;
-    }
-
-    
 }

@@ -263,4 +263,8 @@ public class PanelRegistro extends javax.swing.JPanel {
     private javax.swing.JLabel tituloPanel;
     private javax.swing.JLabel yaTienesCuenta;
     // End of variables declaration//GEN-END:variables
+
+    public void Error(){
+        
+    }
 }
