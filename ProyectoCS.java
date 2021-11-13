@@ -121,7 +121,7 @@ public class ProyectoCS {
                         SecretKey clave = aes.getAESKey();
                         String clave_string = base.base64SecretKey(clave);
                         
-                        rsa.encryptAESKey(clave);
+                        String claveEncriptada = rsa.encryptAESKey(clave);
                         KeyPair pairRSA = rsa.getRSAKeys();
                         SecretKey keyAESEncrypted = rsa.getAESKey();
 
@@ -140,7 +140,7 @@ public class ProyectoCS {
 
                         
                         //mete la clave en la bbdd en la tabla de archivos
-                        bbdd.insertarClave(nombre_archivo, clave_string,usuario_dado);
+                        bbdd.insertarClave(nombre_archivo, claveEncriptada,usuario_dado);
                         
                         
                         // mete en la carpeta encript el archivo con su_nombre.enc

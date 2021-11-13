@@ -12,5 +12,5 @@ public abstract class RSA_abstract {
 
     public abstract SecretKey getAESKey();
 
-    public abstract void encryptAESKey(SecretKey secretKey);
+    public abstract String encryptAESKey(SecretKey secretKey); 
 }
