@@ -62,7 +62,7 @@ public class ProyectoCS {
             }
             //Registro
             if(interfaz.estado==EstadoInterfaz.Registro){
-                AES aes = new AES();
+                    AES aes = new AES();
                     RSA rsa = new RSA();
                     Probarbase64 base = new Probarbase64("");
 
