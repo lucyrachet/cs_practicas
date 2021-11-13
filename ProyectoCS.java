@@ -8,7 +8,7 @@ import java.security.PublicKey;
 
 public class ProyectoCS {
     public static void main(String[] args) throws Exception {
-        Interfaz_abstract interfaz = new Interfaz();
+        Interfaz interfaz = new Interfaz();
 
         //interfaz.setVisible(true);
         
@@ -43,7 +43,7 @@ public class ProyectoCS {
 
             //         //Comprobacion de login bien hecho
             //         existeUsuario = bbdd.existeUsuario(usuario_dado);
-            if(interfaz.estado==EstadoInterfaz.Login){
+            if(interfaz.dameEstado()==EstadoInterfaz.Login){
                 usuario_dado=interfaz.dameNombreLogin();
                 contrasena_dada = interfaz.dameContrasenaLogin();
 
@@ -62,7 +62,7 @@ public class ProyectoCS {
                 }
             }
             //Registro
-            if(interfaz.estado==EstadoInterfaz.Registro){
+            if(interfaz.dameEstado()==EstadoInterfaz.Registro){
                     AES aes = new AES();
                     RSA rsa = new RSA();
                     Probarbase64 base = new Probarbase64("");
@@ -159,11 +159,11 @@ public class ProyectoCS {
          * 
          */
         
-        while ((usuarioValidado==true && (interfaz.estado==EstadoInterfaz.Encriptar || interfaz.estado==EstadoInterfaz.Desencriptar)) /*&& (interfaz.estado=="encriptar" || interfaz.estado=="desencriptar")*/) {
+        while ((usuarioValidado==true && (interfaz.dameEstado()==EstadoInterfaz.Encriptar || interfaz.dameEstado()==EstadoInterfaz.Desencriptar)) /*&& (interfaz.estado=="encriptar" || interfaz.estado=="desencriptar")*/) {
             System.out.print("");
             String path = interfaz.damePathFichero();
             if(path.isBlank()==false){
-                if(interfaz.estado==EstadoInterfaz.Encriptar){
+                if(interfaz.dameEstado()==EstadoInterfaz.Encriptar){
                     //Encriptar
                     System.out.println(path);
                     /************* */
