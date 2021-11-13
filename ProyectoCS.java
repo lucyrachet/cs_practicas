@@ -7,14 +7,9 @@ import java.security.PublicKey;
 
 
 public class ProyectoCS {
-    private static Interfaz interfaz;
-    
-    
-    
     public static void main(String[] args) throws Exception {
-       interfaz = new Interfaz();
-        
-        interfaz = new Interfaz();
+        Interfaz_abstract interfaz = new Interfaz();
+
         interfaz.setVisible(true);
         
         //para la comprobacion del login
@@ -28,7 +23,15 @@ public class ProyectoCS {
         String contrasena_dada2 = null;
 
         //while estado sea login o registro
-        while(usuarioValidado==false && (interfaz.estado=="login" || interfaz.estado=="registro")){
+        while(usuarioValidado==false && (interfaz.estado==EstadoInterfaz.Login || interfaz.estado==EstadoInterfaz.Registro)){
+            //Login
+            if(interfaz.estado==EstadoInterfaz.Login){
+
+            }
+            //Registro
+            if(interfaz.estado==EstadoInterfaz.Registro){
+
+            }
             System.out.print("");
             if(interfaz.pathLogin.isBlank()==false|| interfaz.pathRegistro.isBlank()==false){
                 if(interfaz.pathLogin.isBlank()==false){
@@ -121,12 +124,14 @@ public class ProyectoCS {
                         SecretKey clave = aes.getAESKey();
                         String clave_string = base.base64SecretKey(clave);
                         
-                        String claveEncriptada = rsa.encryptAESKey(clave);
                         KeyPair pairRSA = rsa.getRSAKeys();
                         SecretKey keyAESEncrypted = rsa.getAESKey();
 
                         PublicKey publicKey = pairRSA.getPublic();
                         PrivateKey privateKey = pairRSA.getPrivate();
+
+                        byte[] claveEncriptada = rsa.encryptKey(clave,publicKey);
+                        
                     
                         //convertimos las claves a base64
                         String publicRSAKeyString = base.base64PublicKey(publicKey);
