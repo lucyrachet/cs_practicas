@@ -173,24 +173,24 @@ public class PanelInicio extends javax.swing.JPanel {
         desencriptarResult.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         desencriptarResult.setForeground(new java.awt.Color(92, 122, 234));
         desencriptarResult.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        desencriptarResult.setText("b");
+        desencriptarResult.setText("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
         javax.swing.GroupLayout PanelCentralLayout = new javax.swing.GroupLayout(PanelCentral);
         PanelCentral.setLayout(PanelCentralLayout);
         PanelCentralLayout.setHorizontalGroup(
             PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelCentralLayout.createSequentialGroup()
-                .addGap(180, 180, 180)
-                .addComponent(Encriptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(PanelCentralLayout.createSequentialGroup()
-                .addGap(150, 150, 150)
-                .addComponent(encriptarResult, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(PanelCentralLayout.createSequentialGroup()
-                .addGap(180, 180, 180)
-                .addComponent(Desencriptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(PanelCentralLayout.createSequentialGroup()
-                .addGap(150, 150, 150)
-                .addComponent(desencriptarResult, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelCentralLayout.createSequentialGroup()
+                .addGap(0, 173, Short.MAX_VALUE)
+                .addGroup(PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Encriptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Desencriptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(174, 174, 174))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelCentralLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(encriptarResult, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(desencriptarResult, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         PanelCentralLayout.setVerticalGroup(
             PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,7 +201,7 @@ public class PanelInicio extends javax.swing.JPanel {
                 .addComponent(encriptarResult)
                 .addGap(25, 25, 25)
                 .addComponent(Desencriptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(11, 11, 11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(desencriptarResult))
         );
 
@@ -241,7 +241,9 @@ public class PanelInicio extends javax.swing.JPanel {
             desencriptarResult.setText("No se ha seleccionado ningun archivo");
         }
     }//GEN-LAST:event_DesencriptarTxtMouseClicked
+    
 
+    
     private void DesencriptarTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DesencriptarTxtMouseEntered
         Desencriptar.setBackground(new Color(61,39,155));
         DesencriptarTxt.setForeground(new Color(230, 230, 230));
@@ -274,4 +276,3 @@ public class PanelInicio extends javax.swing.JPanel {
         desencriptarResult.setText("El archivo "+lastFile+" se ha desencriptado correctamente");
     }
 }
-

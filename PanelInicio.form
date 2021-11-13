@@ -104,8 +104,14 @@
                   </Group>
                   <EmptySpace min="-2" pref="174" max="-2" attributes="0"/>
               </Group>
-              <Component id="encriptarResult" max="32767" attributes="0"/>
-              <Component id="desencriptarResult" alignment="1" max="32767" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="encriptarResult" alignment="1" max="32767" attributes="0"/>
+                      <Component id="desencriptarResult" alignment="1" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -237,7 +243,7 @@
               <Color blue="ea" green="7a" red="5c" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="b"/>
+            <Property name="text" type="java.lang.String" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"/>
           </Properties>
         </Component>
       </SubComponents>
