@@ -270,3 +270,4 @@ public class PanelInicio extends javax.swing.JPanel {
         desencriptarResult.setText("El archivo "+lastFile+" se ha desencriptado correctamente");
     }
 }
+
