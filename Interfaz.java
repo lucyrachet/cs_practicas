@@ -47,7 +47,6 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
         getRootPane().setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(20,39,155)));
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setVisible(true);
         
         panelIniciarSesion = new PanelIniciarSesion(this);
         panelRegistro = new PanelRegistro(this);
@@ -55,6 +54,7 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
         
         this.ponerPanel(panelIniciarSesion);
         
+        this.setVisible(true);
         
         
         
