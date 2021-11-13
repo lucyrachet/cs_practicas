@@ -56,7 +56,7 @@ public class ProyectoCS {
                 existeUsuario=true;
                 if(existeUsuario==true){
                     //String contrasena_bbdd=bbdd.recogerPassword(usuario_dado);
-                    String contrasena_bbdd=contrasena_dada;
+                    String contrasena_bbdd=contrasena_dada+"t";
                     if(contrasena_bbdd == contrasena_dada){
                         usuarioValidado=true;
                         interfaz.ExitoLogin();
