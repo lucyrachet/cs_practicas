@@ -162,9 +162,9 @@ public class ProyectoCS {
             System.out.print("");
             String path = interfaz.damePathFichero();
             if(path.isBlank()==false){
-                if(path=="encriptar"){
+                if(interfaz.estado==EstadoInterfaz.Encriptar || interfaz.estado==EstadoInterfaz.Desencriptar){
                     //Encriptar
-                    System.out.println(interfaz.pathEncriptar);
+                    System.out.println(path);
                     /************* */
                         AES aes = new AES();
                         RSA rsa = new RSA();
@@ -183,7 +183,7 @@ public class ProyectoCS {
                         PrivateKey privateKey = pairRSA.getPrivate();
 
                         byte[] claveEncriptada = rsa.encryptKey(clave,publicKey);
-                        
+                        String claveEncriptadaString = new String(claveEncriptada);  
                     
                         //convertimos las claves a base64
                         String publicRSAKeyString = base.base64PublicKey(publicKey);
@@ -197,21 +197,21 @@ public class ProyectoCS {
 
                         
                         //mete la clave en la bbdd en la tabla de archivos
-                        bbdd.insertarClave(nombre_archivo, claveEncriptada,usuario_dado);
+                        bbdd.insertarClave(nombre_archivo, claveEncriptadaString, usuario_dado);
                         
                         
                         // mete en la carpeta encript el archivo con su_nombre.enc
-                        base.bFichero(aes.encryptFile(interfaz.pathEncriptar, clave), "encript/"+nombre_archivo+".enc");
+                        base.bFichero(aes.encryptFile(path, clave), "encript/"+nombre_archivo+".enc");
 
 
                     /************* */
                     //Encript encriptar = new Encript(interfaz.pathEncriptar);
-                    interfaz.pathEncriptar = "";
+                    //interfaz.pathEncriptar = "";
                 } else{
                     //Desencriptar
                     //Decript desencriptar = new Decript(interfaz.pathDesencriptar);
                     /*************/
-                    String path = interfaz.pathDesencriptar;
+                    //String path = interfaz.pathDesencriptar;
                     AES aes = new AES();
                     RSA rsa = new RSA();
                     Probarbase64 base = new Probarbase64("");
@@ -228,16 +228,16 @@ public class ProyectoCS {
 
                     String archivo_decript = bbdd.recogerNombre(nombre_archivo);    //coges el nombre del archivo de la bbdd
                     String clave = bbdd.recogerClave(nombre_archivo);               //cogemos la clave AES de ese archivo
-
-                    String claveAES = rsa.decryptAESKey(clave, privKey);                          //desencriptamos la clave AES con la privada de RSA
+                    byte[] clave_bytes = clave.getBytes();
+                    SecretKey claveAES = rsa.decryptKey(clave_bytes, privKey);                          //desencriptamos la clave AES con la privada de RSA
                     
-                    base.bFichero(aes.decryptFile(path, base.asciiSecretKey(claveAES)), "decript/"+archivo_decript);   //pasamos de base64 la clave AES a Secret Key
+                    base.bFichero(aes.decryptFile(path,claveAES), "decript/"+archivo_decript);   //pasamos de base64 la clave AES a Secret Key
                                                                                                                     //desencriptamos y 
                                                                                                                     // convertimos a fichero
                     f.delete(); //borramos el archivo de la carpeta
 
                     /*************/
-                    interfaz.pathDesencriptar = "";
+                    // interfaz.pathDesencriptar = "";
 
                 }
             }
