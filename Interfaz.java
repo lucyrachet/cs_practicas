@@ -1,5 +1,5 @@
 public class Interfaz extends Interfaz_abstract{
-
+    
     public Interfaz(){
         estado = EstadoInterfaz.Nada;
     }
