@@ -26,46 +26,30 @@ public class ProyectoCS {
         while(usuarioValidado==false && (interfaz.estado==EstadoInterfaz.Login || interfaz.estado==EstadoInterfaz.Registro)){
             //Login
             if(interfaz.estado==EstadoInterfaz.Login){
+                usuario_dado=interfaz.dameNombreLogin();
+                contrasena_dada = interfaz.dameContrasenaLogin();
 
+                //Comprobacion de login bien hecho
+                existeUsuario = bbdd.existeUsuario(usuario_dado);
+
+                if(existeUsuario==true){
+                    String contrasena_bbdd=bbdd.recogerPassword(usuario_dado);
+
+                    if(contrasena_bbdd == contrasena_dada){
+                        usuarioValidado=true;
+                    }else{
+                        //?????? no se que puede hacer para comunicarlo
+                        System.out.println("Las contrasenas no coinciden");
+                    }
+                }
             }
             //Registro
             if(interfaz.estado==EstadoInterfaz.Registro){
-
-            }
-            System.out.print("");
-            if(interfaz.pathLogin.isBlank()==false|| interfaz.pathRegistro.isBlank()==false){
-                if(interfaz.pathLogin.isBlank()==false){
-                    //Login
-                    System.out.println(interfaz.pathLogin);
-                    /************* */
-                    usuario_dado=interfaz.dameNombreUsuario();
-                    contrasena_dada = interfaz.dameContrasenaLogin();
-
-                    //Comprobacion de login bien hecho
-                    existeUsuario = bbdd.existeUsuario(usuario_dado);
-
-                    if(existeUsuario==true){
-                        String contrasena_bbdd=bbdd.recogerPassword(usuario_dado);
-
-                        if(contrasena_bbdd == contrasena_dada){
-                            usuarioValidado=true;
-                        }else{
-                            //?????? no se que puede hacer para comunicarlo
-                            System.out.println("Las contrasenas no coinciden");
-                        }
-                    }
-
-                    interfaz.pathLogin = "";
-                } else{
-                    //Registro
-                    //Decript desencriptar = new Decript(interfaz.pathRegistro);
-                    /***************/
-
-                    AES aes = new AES();
+                AES aes = new AES();
                     RSA rsa = new RSA();
                     Probarbase64 base = new Probarbase64("");
 
-                    usuario_dado=interfaz.dameNombreUsuario();
+                    usuario_dado=interfaz.dameNombreRegistro();
                     contrasena_dada1 = interfaz.dameContrasena1Registro();
                     contrasena_dada2 = interfaz.dameContrasena2Registro();
 
@@ -81,10 +65,60 @@ public class ProyectoCS {
                         System.out.println("El usuario ya existe elija otro nombre");
                     }
 
-                    /***************/
-                    interfaz.pathRegistro = "";
+            }
+            System.out.print("");
+            // if(interfaz.pathLogin.isBlank()==false|| interfaz.pathRegistro.isBlank()==false){
+            //     if(interfaz.pathLogin.isBlank()==false){
+            //         //Login
+            //         System.out.println(interfaz.pathLogin);
+            //         /************* */
+            //         usuario_dado=interfaz.dameNombreLogin();
+            //         contrasena_dada = interfaz.dameContrasenaLogin();
 
-                }
+            //         //Comprobacion de login bien hecho
+            //         existeUsuario = bbdd.existeUsuario(usuario_dado);
+
+            //         if(existeUsuario==true){
+            //             String contrasena_bbdd=bbdd.recogerPassword(usuario_dado);
+
+            //             if(contrasena_bbdd == contrasena_dada){
+            //                 usuarioValidado=true;
+            //             }else{
+            //                 //?????? no se que puede hacer para comunicarlo
+            //                 System.out.println("Las contrasenas no coinciden");
+            //             }
+            //         }
+
+            //         interfaz.pathLogin = "";
+            //     } else{
+            //         //Registro
+            //         //Decript desencriptar = new Decript(interfaz.pathRegistro);
+            //         /***************/
+
+            //         AES aes = new AES();
+            //         RSA rsa = new RSA();
+            //         Probarbase64 base = new Probarbase64("");
+
+            //         usuario_dado=interfaz.dameNombreUsuario();
+            //         contrasena_dada1 = interfaz.dameContrasena1Registro();
+            //         contrasena_dada2 = interfaz.dameContrasena2Registro();
+
+            //         Boolean existe=bbdd.existeUsuario(usuario_dado);    
+            //         if(existe==false){                                      //si el usuario no existe lo creamos
+            //             if(contrasena_dada1==contrasena_dada2){             //si las contrasenas coinciden
+            //                 KeyPair pairRSA = rsa.getRSAKeys();
+            //                 PublicKey publicKeyRSA = pairRSA.getPublic();
+
+            //                 bbdd.insertarUsuario(usuario_dado, base.base64PublicKey(publicKeyRSA), contrasena_dada1);   //insertamos el usuario
+            //             }
+            //         }else{
+            //             System.out.println("El usuario ya existe elija otro nombre");
+            //         }
+
+            //         /***************/
+            //         interfaz.pathRegistro = "";
+
+            //     }
             }
         }
 
@@ -124,8 +158,8 @@ public class ProyectoCS {
                         SecretKey clave = aes.getAESKey();
                         String clave_string = base.base64SecretKey(clave);
                         
-                        KeyPair pairRSA = rsa.getRSAKeys();
-                        SecretKey keyAESEncrypted = rsa.getAESKey();
+                        KeyPair pairRSA = rsa.crearParClaves();
+                        SecretKey keyAESEncrypted = aes.getAESKey();
 
                         PublicKey publicKey = pairRSA.getPublic();
                         PrivateKey privateKey = pairRSA.getPrivate();
