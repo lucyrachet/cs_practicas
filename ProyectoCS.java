@@ -24,6 +24,7 @@ public class ProyectoCS {
 
         //while estado sea login o registro
         while(usuarioValidado==false && (interfaz.dameEstado()==EstadoInterfaz.Login || interfaz.dameEstado()==EstadoInterfaz.Registro)){
+            System.out.print("");
             // //Login
             // if(interfaz.dameEstado()==EstadoInterfaz.Login){
 
@@ -158,11 +159,11 @@ public class ProyectoCS {
          * 
          */
         
-        while ((usuarioValidado==true) /*&& (interfaz.estado=="encriptar" || interfaz.estado=="desencriptar")*/) {
+        while ((usuarioValidado==true && (interfaz.estado==EstadoInterfaz.Encriptar || interfaz.estado==EstadoInterfaz.Desencriptar)) /*&& (interfaz.estado=="encriptar" || interfaz.estado=="desencriptar")*/) {
             System.out.print("");
             String path = interfaz.damePathFichero();
             if(path.isBlank()==false){
-                if(interfaz.estado==EstadoInterfaz.Encriptar || interfaz.estado==EstadoInterfaz.Desencriptar){
+                if(interfaz.estado==EstadoInterfaz.Encriptar){
                     //Encriptar
                     System.out.println(path);
                     /************* */
