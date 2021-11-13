@@ -56,14 +56,18 @@ public class ProyectoCS {
                 existeUsuario=true;
                 if(existeUsuario==true){
                     //String contrasena_bbdd=bbdd.recogerPassword(usuario_dado);
-                    String contrasena_bbdd=contrasena_dada+"t";
+                    String contrasena_bbdd=contrasena_dada;
                     if(contrasena_bbdd == contrasena_dada){
                         usuarioValidado=true;
                         interfaz.ExitoLogin();
                     }else{
                         //?????? no se que puede hacer para comunicarlo
-                        System.out.println("Las contrasenas no coinciden");
+                        interfaz.ErrorLogin();
+                        //System.out.println("Las contrasenas no coinciden");
+
                     }
+                }else{
+                    interfaz.ErrorLogin();
                 }
             }
             //Registro
@@ -83,10 +87,12 @@ public class ProyectoCS {
                             PublicKey publicKeyRSA = pairRSA.getPublic();
 
                             bbdd.insertarUsuario(usuario_dado, base.base64PublicKey(publicKeyRSA), contrasena_dada1);   //insertamos el usuario
-                            interfaz.ExitoRegistro();
+                            
+                        }else{
+                            interfaz.ErrorRegistro("Las contrasenas no coinciden");
                         }
                     }else{
-                        System.out.println("El usuario ya existe elija otro nombre");
+                        interfaz.ErrorRegistro("El usuario ya existe.");
                     }
 
             }
