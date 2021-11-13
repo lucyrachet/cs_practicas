@@ -13,7 +13,7 @@ public class Datos {
         Connection con = null;
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/p1cs", "root", "practica1CS");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/p1cs", "root", "root");
 
         }catch(Exception e){
             System.out.println("No se ha podido conectar a la base de datos");
@@ -171,7 +171,7 @@ public class Datos {
     /*
     public static void main(String[] args){
         Datos bbdd = new Datos();
-        
+
         bbdd.insertarUsuario("usuario1", "clavep1", "password1");
         bbdd.insertarUsuario("usuario2", "clavep2", "password2");
         
@@ -186,6 +186,13 @@ public class Datos {
         
         System.out.println("La contraseña del usuario 1: "+bbdd.recogerPassword("usuario1"));
         System.out.println("La contraseña del usuario 2: "+bbdd.recogerPassword("usuario2"));
+        
+        if(bbdd.existeUsuario("usuario2")){
+            System.out.println("Existe el usuario");
+        }else{
+            System.out.println("No existe el usuario");
+        }
     }
     */
+    
 }
