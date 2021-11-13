@@ -18,6 +18,7 @@ public class PanelIniciarSesion extends javax.swing.JPanel {
     public PanelIniciarSesion(Interfaz i) {
         interfaz = i;
         initComponents();
+        error.setText("");
     }
 
     /**
@@ -42,6 +43,7 @@ public class PanelIniciarSesion extends javax.swing.JPanel {
         EntrarTxt = new javax.swing.JLabel();
         crearCuenta = new javax.swing.JLabel();
         noTenerCuenta = new javax.swing.JLabel();
+        error = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(800, 355));
         setLayout(new java.awt.BorderLayout());
@@ -153,6 +155,9 @@ public class PanelIniciarSesion extends javax.swing.JPanel {
         noTenerCuenta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         noTenerCuenta.setText("¿No tienes cuenta?");
 
+        error.setForeground(new java.awt.Color(255, 102, 102));
+        error.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout PanelCentralLayout = new javax.swing.GroupLayout(PanelCentral);
         PanelCentral.setLayout(PanelCentralLayout);
         PanelCentralLayout.setHorizontalGroup(
@@ -168,9 +173,6 @@ public class PanelIniciarSesion extends javax.swing.JPanel {
                 .addGap(150, 150, 150)
                 .addComponent(passLabel))
             .addGroup(PanelCentralLayout.createSequentialGroup()
-                .addGap(150, 150, 150)
-                .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(PanelCentralLayout.createSequentialGroup()
                 .addGap(180, 180, 180)
                 .addComponent(Entrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(PanelCentralLayout.createSequentialGroup()
@@ -179,6 +181,11 @@ public class PanelIniciarSesion extends javax.swing.JPanel {
             .addGroup(PanelCentralLayout.createSequentialGroup()
                 .addGap(270, 270, 270)
                 .addComponent(crearCuenta))
+            .addGroup(PanelCentralLayout.createSequentialGroup()
+                .addGap(150, 150, 150)
+                .addGroup(PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pass, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                    .addComponent(error, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         PanelCentralLayout.setVerticalGroup(
             PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,19 +200,22 @@ public class PanelIniciarSesion extends javax.swing.JPanel {
                 .addComponent(passLabel)
                 .addGap(3, 3, 3)
                 .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(error)
+                .addGap(20, 20, 20)
                 .addComponent(Entrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21)
                 .addComponent(noTenerCuenta)
                 .addGap(6, 6, 6)
-                .addComponent(crearCuenta))
+                .addComponent(crearCuenta)
+                .addContainerGap())
         );
 
         add(PanelCentral, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void EntrarTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EntrarTxtMouseClicked
-        interfaz.Login(nombre.getText(), String.valueOf(pass.getPassword()));
+        interfaz.Login(nombre.getText(), pass.toString());
     }//GEN-LAST:event_EntrarTxtMouseClicked
 
     private void EntrarTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EntrarTxtMouseEntered
@@ -238,6 +248,7 @@ public class PanelIniciarSesion extends javax.swing.JPanel {
     private javax.swing.JPanel PanelDerecho;
     private javax.swing.JPanel PanelIzquierdo;
     private javax.swing.JLabel crearCuenta;
+    private javax.swing.JLabel error;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel noTenerCuenta;
     private javax.swing.JTextField nombre;
@@ -248,7 +259,7 @@ public class PanelIniciarSesion extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     public void Error(){
-        
+        error.setText("El usuario o la contraseña no son correctos");
     }
 
 }
