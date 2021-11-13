@@ -23,8 +23,25 @@ public class ProyectoCS {
         String contrasena_dada2 = null;
 
         //while estado sea login o registro
-        while(usuarioValidado==false && (interfaz.estado==EstadoInterfaz.Login || interfaz.estado==EstadoInterfaz.Registro)){
+        while(usuarioValidado==false && (interfaz.dameEstado()==EstadoInterfaz.Login || interfaz.dameEstado()==EstadoInterfaz.Registro)){
             //Login
+            if(interfaz.dameEstado()==EstadoInterfaz.Login){
+
+            }
+            //Registro
+            if(interfaz.dameEstado()==EstadoInterfaz.Registro){
+
+            }
+            if(interfaz.pathLogin.isBlank()==false|| interfaz.pathRegistro.isBlank()==false){
+                if(interfaz.pathLogin.isBlank()==false){
+                    //Login
+                    System.out.println(interfaz.pathLogin);
+                    /************* */
+                    usuario_dado=interfaz.dameNombreUsuario();
+                    contrasena_dada = interfaz.dameContrasenaLogin();
+
+                    //Comprobacion de login bien hecho
+                    existeUsuario = bbdd.existeUsuario(usuario_dado);
             if(interfaz.estado==EstadoInterfaz.Login){
                 usuario_dado=interfaz.dameNombreLogin();
                 contrasena_dada = interfaz.dameContrasenaLogin();
