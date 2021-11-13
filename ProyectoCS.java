@@ -121,12 +121,14 @@ public class ProyectoCS {
                         SecretKey clave = aes.getAESKey();
                         String clave_string = base.base64SecretKey(clave);
                         
-                        String claveEncriptada = rsa.encryptAESKey(clave);
                         KeyPair pairRSA = rsa.getRSAKeys();
                         SecretKey keyAESEncrypted = rsa.getAESKey();
 
                         PublicKey publicKey = pairRSA.getPublic();
                         PrivateKey privateKey = pairRSA.getPrivate();
+
+                        byte[] claveEncriptada = rsa.encryptKey(clave,publicKey);
+                        
                     
                         //convertimos las claves a base64
                         String publicRSAKeyString = base.base64PublicKey(publicKey);
