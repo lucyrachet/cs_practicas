@@ -23,7 +23,7 @@ public class ProyectoCS {
         String contrasena_dada2 = null;
 
         //while estado sea login o registro
-        while(usuarioValidado==false && (interfaz.dameEstado()==EstadoInterfaz.Login || interfaz.dameEstado()==EstadoInterfaz.Registro)){
+        while(usuarioValidado==false /*&& (interfaz.dameEstado()==EstadoInterfaz.Login || interfaz.dameEstado()==EstadoInterfaz.Registro)*/){
             System.out.print("");
             // //Login
             // if(interfaz.dameEstado()==EstadoInterfaz.Login){
@@ -43,10 +43,15 @@ public class ProyectoCS {
 
             //         //Comprobacion de login bien hecho
             //         existeUsuario = bbdd.existeUsuario(usuario_dado);
+
+            
+            
             if(interfaz.dameEstado()==EstadoInterfaz.Login){
                 usuario_dado=interfaz.dameNombreLogin();
                 contrasena_dada = interfaz.dameContrasenaLogin();
 
+                System.out.println(usuario_dado);
+                System.out.println(contrasena_dada);
                 //Comprobacion de login bien hecho
                 existeUsuario = bbdd.existeUsuario(usuario_dado);
 
@@ -55,6 +60,7 @@ public class ProyectoCS {
 
                     if(contrasena_bbdd == contrasena_dada){
                         usuarioValidado=true;
+                        interfaz.ExitoLogin();
                     }else{
                         //?????? no se que puede hacer para comunicarlo
                         System.out.println("Las contrasenas no coinciden");
@@ -78,6 +84,7 @@ public class ProyectoCS {
                             PublicKey publicKeyRSA = pairRSA.getPublic();
 
                             bbdd.insertarUsuario(usuario_dado, base.base64PublicKey(publicKeyRSA), contrasena_dada1);   //insertamos el usuario
+                            interfaz.ExitoRegistro();
                         }
                     }else{
                         System.out.println("El usuario ya existe elija otro nombre");
@@ -159,7 +166,7 @@ public class ProyectoCS {
          * 
          */
         
-        while ((usuarioValidado==true && (interfaz.dameEstado()==EstadoInterfaz.Encriptar || interfaz.dameEstado()==EstadoInterfaz.Desencriptar)) /*&& (interfaz.estado=="encriptar" || interfaz.estado=="desencriptar")*/) {
+        while ((usuarioValidado==true /*&& (interfaz.dameEstado()==EstadoInterfaz.Encriptar || interfaz.dameEstado()==EstadoInterfaz.Desencriptar)*/) /*&& (interfaz.estado=="encriptar" || interfaz.estado=="desencriptar")*/) {
             System.out.print("");
             String path = interfaz.damePathFichero();
             if(path.isBlank()==false){
