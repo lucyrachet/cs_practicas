@@ -298,12 +298,19 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
         pathFichero = _path;
         cambiarEstado(EstadoInterfaz.Encriptar);
     }
+
+    public void ExitoEncriptar(){
+        cambiarEstado(EstadoInterfaz.SinEstado);
+    }
     
     public void Desencriptar(String _path){
         pathFichero = _path;
         cambiarEstado(EstadoInterfaz.Desencriptar);
     }
-    
+    public void ExitoDesencriptar(){
+        cambiarEstado(EstadoInterfaz.SinEstado);
+    }
+
     @Override
     public EstadoInterfaz dameEstado() {
         return estado;
