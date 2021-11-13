@@ -205,7 +205,7 @@ public class PanelIniciarSesion extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void EntrarTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EntrarTxtMouseClicked
-        interfaz.Login(nombre.getText(), pass.getPassword().toString());
+        interfaz.Login(nombre.getText(), String.valueOf(pass.getPassword()));
     }//GEN-LAST:event_EntrarTxtMouseClicked
 
     private void EntrarTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EntrarTxtMouseEntered
