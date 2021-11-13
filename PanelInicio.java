@@ -211,8 +211,8 @@ public class PanelInicio extends javax.swing.JPanel {
     private void EncriptarTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EncriptarTxtMouseClicked
         int returnValue = openEncriptar.showOpenDialog(this);
         if(returnValue == JFileChooser.APPROVE_OPTION){
-            lastFile =openEncriptar.getSelectedFile().getPath();
-            interfaz.Encriptar(lastFile);
+            lastFile =openEncriptar.getSelectedFile().getName();
+            interfaz.Encriptar(openEncriptar.getSelectedFile().getPath());
             //encriptarResult.setText(openEncriptar.getSelectedFile().getName());
         } else{
             encriptarResult.setText("No se ha seleccionado ningun archivo");
@@ -232,8 +232,8 @@ public class PanelInicio extends javax.swing.JPanel {
     private void DesencriptarTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DesencriptarTxtMouseClicked
         int returnValue = openDesencriptar.showOpenDialog(this);
         if(returnValue == JFileChooser.APPROVE_OPTION){
-            lastFile = openDesencriptar.getSelectedFile().getPath();
-            interfaz.Desencriptar(lastFile);
+            lastFile = openDesencriptar.getSelectedFile().getName();
+            interfaz.Desencriptar(openDesencriptar.getSelectedFile().getPath());
             //desencriptarResult.setText(openDesencriptar.getSelectedFile().getName());
         } else{
             desencriptarResult.setText("No se ha seleccionado ningun archivo");
