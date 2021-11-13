@@ -1,4 +1,6 @@
 import javax.crypto.*;
+import javax.crypto.spec.SecretKeySpec;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.security.NoSuchAlgorithmException;
@@ -9,6 +11,14 @@ import java.security.SecureRandom;
 public class AES{
 
     public AES(){}
+    
+    public SecretKey getAESKeyPSW(String psw) throws NoSuchAlgorithmException{
+        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+        keyGen.init(128, SecureRandom.getInstanceStrong());
+        SecretKey sk = keyGen.generateKey();
+        sk = new SecretKeySpec(psw.getBytes(), 0, 16, "AES");
+        return sk;
+    }
 
     public SecretKey getAESKey() throws NoSuchAlgorithmException {
         KeyGenerator keyGen = KeyGenerator.getInstance("AES");
