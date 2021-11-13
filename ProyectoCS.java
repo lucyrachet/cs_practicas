@@ -73,7 +73,7 @@ public class ProyectoCS {
                     Boolean existe=bbdd.existeUsuario(usuario_dado);    
                     if(existe==false){                                      //si el usuario no existe lo creamos
                         if(contrasena_dada1==contrasena_dada2){             //si las contrasenas coinciden
-                            KeyPair pairRSA = rsa.getRSAKeys();
+                            KeyPair pairRSA = rsa.crearParClaves();
                             PublicKey publicKeyRSA = pairRSA.getPublic();
 
                             bbdd.insertarUsuario(usuario_dado, base.base64PublicKey(publicKeyRSA), contrasena_dada1);   //insertamos el usuario
@@ -136,7 +136,7 @@ public class ProyectoCS {
             //         interfaz.pathRegistro = "";
 
             //     }
-            }
+            //}
         }
 
 
@@ -160,8 +160,9 @@ public class ProyectoCS {
         
         while ((usuarioValidado==true) /*&& (interfaz.estado=="encriptar" || interfaz.estado=="desencriptar")*/) {
             System.out.print("");
-            if(interfaz.pathDesencriptar.isBlank()==false|| interfaz.pathEncriptar.isBlank()==false){
-                if(interfaz.pathEncriptar.isBlank()==false){
+            String path = interfaz.damePathFichero();
+            if(path.isBlank()==false){
+                if(path=="encriptar"){
                     //Encriptar
                     System.out.println(interfaz.pathEncriptar);
                     /************* */
@@ -170,7 +171,7 @@ public class ProyectoCS {
                         Probarbase64 base = new Probarbase64("");
                         
 
-                        File f = new File(interfaz.pathEncriptar);
+                        File f = new File(path);
                         String nombre_archivo = f.getName();
                         SecretKey clave = aes.getAESKey();
                         String clave_string = base.base64SecretKey(clave);
