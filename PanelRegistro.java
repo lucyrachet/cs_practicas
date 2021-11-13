@@ -269,6 +269,6 @@ public class PanelRegistro extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     public void Error(String _error){
-        error.setText(error);
+        error.setText(_error);
     }
 }

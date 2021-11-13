@@ -55,8 +55,8 @@ public class ProyectoCS {
                 //existeUsuario = bbdd.existeUsuario(usuario_dado);
                 existeUsuario=true;
                 if(existeUsuario==true){
-                    //String contrasena_bbdd=bbdd.recogerPassword(usuario_dado);
-                    String contrasena_bbdd=contrasena_dada;
+                    String contrasena_bbdd=bbdd.recogerPassword(usuario_dado);
+                    //String contrasena_bbdd=contrasena_dada;
                     if(contrasena_bbdd == contrasena_dada){
                         usuarioValidado=true;
                         interfaz.ExitoLogin();
@@ -80,14 +80,15 @@ public class ProyectoCS {
                     contrasena_dada1 = interfaz.dameContrasena1Registro();
                     contrasena_dada2 = interfaz.dameContrasena2Registro();
 
-                    Boolean existe=bbdd.existeUsuario(usuario_dado);    
+                    //Boolean existe=bbdd.existeUsuario(usuario_dado); 
+                    Boolean existe=true;   
                     if(existe==false){                                      //si el usuario no existe lo creamos
                         if(contrasena_dada1==contrasena_dada2){             //si las contrasenas coinciden
                             KeyPair pairRSA = rsa.crearParClaves();
                             PublicKey publicKeyRSA = pairRSA.getPublic();
 
                             bbdd.insertarUsuario(usuario_dado, base.base64PublicKey(publicKeyRSA), contrasena_dada1);   //insertamos el usuario
-                            
+                            interfaz.ExitoRegistro();
                         }else{
                             interfaz.ErrorRegistro("Las contrasenas no coinciden");
                         }
@@ -210,7 +211,7 @@ public class ProyectoCS {
 
                         
                         //mete la clave en la bbdd en la tabla de archivos
-                        //bbdd.insertarClave(nombre_archivo, claveEncriptadaString, usuario_dado);
+                        bbdd.insertarClave(nombre_archivo, claveEncriptadaString, usuario_dado);
                         
                         
                         // mete en la carpeta encript el archivo con su_nombre.enc
