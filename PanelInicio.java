@@ -23,10 +23,12 @@ public class PanelInicio extends javax.swing.JPanel {
         interfaz = i;
         initComponents();
         
+        EncriptarTxt.setText("");
+        DesencriptarTxt.setText("");
         openEncriptar = new JFileChooser();
-        openEncriptar.setCurrentDirectory(new File("data\\desencriptado"));
+        openEncriptar.setCurrentDirectory(new File("desencriptado"));
         openDesencriptar = new JFileChooser();
-        openDesencriptar.setCurrentDirectory(new File("data\\encriptado"));
+        openDesencriptar.setCurrentDirectory(new File("encriptado"));
         openDesencriptar.setFileFilter(new FileNameExtensionFilter("Encryted files","enc"));
     }
 
