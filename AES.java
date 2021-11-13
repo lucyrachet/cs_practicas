@@ -5,6 +5,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.Base64;
 
 
 
@@ -20,14 +21,14 @@ public class AES{
         return sk;
     }
 
-    public SecretKey getAESKey() throws NoSuchAlgorithmException {
+    public static SecretKey getAESKey() throws NoSuchAlgorithmException {
         KeyGenerator keyGen = KeyGenerator.getInstance("AES");
         keyGen.init(128);
         return keyGen.generateKey();
     }
 
 
-    public byte[] encryptFile(String path, SecretKey sKey) throws Exception {
+    public static byte[] encryptFile(String path, SecretKey sKey) throws Exception {
         if (sKey == null) {
                          System.out.print ("La clave es nula"); //Comprobar que la clave no sea nula
             return new byte[0];
@@ -59,50 +60,47 @@ public class AES{
 
     
     // cifrado
-    /*
-    public static byte[] encrypt(byte[] sSrc, SecretKey sKey) throws Exception {
+    
+    public static String encryptString(String sSrc, SecretKey sKey) throws Exception {
         if (sKey == null) {
                          System.out.print ("La clave es nula");
-            return null;
-        }
-                 // Determine si la clave es de 16 bits
-        if (sKey.length() != 16) {
-                         System.out.print ("La longitud de la clave no es de 16 bits");
             return null;
         }
         //byte[] raw = sKey.getBytes("utf-8");
         //SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
         Cipher cipher = Cipher.getInstance ("AES / ECB / PKCS5Padding"); // "algoritmo / modo / método de complemento"
         cipher.init(Cipher.ENCRYPT_MODE, sKey);
-        return cipher.doFinal(sSrc); 
-    }*/
-
+        byte[] encrypted = cipher.doFinal(sSrc.getBytes("utf-8"));
+ 
+                 return Base64.getEncoder().encodeToString(encrypted); // Aquí, BASE64 se utiliza para la función de transcodificación, que también puede desempeñar el papel de cifrado doble.
+    }
  
          // descifrar
-         /*
-    public static byte[] decrypt(byte[] sSrc, SecretKey sKey) throws Exception {
+    public static String decryptString(String sSrc, SecretKey sKey) throws Exception {
         try {
                          // Determine si la clave es correcta
             if (sKey == null) {
                                  System.out.print ("La clave es nula");
                 return null;
             }
-                         // Determine si la clave es de 16 bits
-            if (sKey.length() != 16) {
-                                 System.out.print ("La longitud de la clave no es de 16 bits");
-                return null;
-            }
             //byte[] raw = sKey.getBytes("utf-8");
             //SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, sKey);
-                         return cipher.doFinal(sSrc); 
-           
+            byte [] encrypted1 = Base64.getDecoder().decode(sSrc); // Primero descifra con base64
+            try {
+                byte[] original = cipher.doFinal(encrypted1);
+                String originalString = new String(original,"utf-8");
+                return originalString;
+            } catch (Exception e) {
+                System.out.println(e.toString());
+                return null;
+            }
         } catch (Exception ex) {
             System.out.println(ex.toString());
             return null;
         }
-    }*/
+    }
 
     
     /*public static boolean bFichero(byte[] bytes, String salida){
@@ -130,16 +128,16 @@ public class AES{
      
 
     
-    /*public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         SecretKey cKey = getAESKey(); //Llamo al método para obtener  la clave
         System.out.println(cKey);
-        byte[] enString = AES.encryptFile("D://YO.jpg", cKey); //Encripto el archivo
+        String p = "patata";
+        System.out.println(p);
+        String ep = encryptString(p, cKey);
+        System.out.println("CLAVE ENCRIPTADA: "+ep);
+        System.out.println("CLAVE DESENCRIPTADA: "+decryptString(ep, cKey));
 
-        bFichero(enString, "D://YOENCRIPTADO.enc");
- 
-        byte[] b = AES.decryptFile("D://YOENCRIPTADO.enc", cKey); //Se desencripta el archivo
-
-        bFichero(b, "D://YODESENCRIPTADO.jpg");
-    }*/
+        
+    }
 
 }
