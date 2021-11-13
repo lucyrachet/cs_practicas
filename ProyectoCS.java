@@ -23,16 +23,15 @@ public class ProyectoCS {
         String contrasena_dada2 = null;
 
         //while estado sea login o registro
-        while(usuarioValidado==false && (interfaz.estado==EstadoInterfaz.Login || interfaz.estado==EstadoInterfaz.Registro)){
+        while(usuarioValidado==false && (interfaz.dameEstado()==EstadoInterfaz.Login || interfaz.dameEstado()==EstadoInterfaz.Registro)){
             //Login
-            if(interfaz.estado==EstadoInterfaz.Login){
+            if(interfaz.dameEstado()==EstadoInterfaz.Login){
 
             }
             //Registro
-            if(interfaz.estado==EstadoInterfaz.Registro){
+            if(interfaz.dameEstado()==EstadoInterfaz.Registro){
 
             }
-            System.out.print("");
             if(interfaz.pathLogin.isBlank()==false|| interfaz.pathRegistro.isBlank()==false){
                 if(interfaz.pathLogin.isBlank()==false){
                     //Login

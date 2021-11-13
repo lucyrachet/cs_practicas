@@ -1,5 +1,24 @@
 public class Interfaz extends Interfaz_abstract{
 
+    public Interfaz(){
+        estado = EstadoInterfaz.Nada;
+    }
+
+    @Override
+    public EstadoInterfaz dameEstado() {
+        return estado;
+    }
+
+    @Override
+    protected void cambiarEstado(EstadoInterfaz _estado) {
+        if(estado != _estado){
+            estado = _estado;
+        } else{
+            System.err.println("Para cambiar los estados de interfaz tienen que ser diferentes");
+        }
+        
+    }
+
     @Override
     public String damePathFichero() {
         // TODO Auto-generated method stub
@@ -35,5 +54,7 @@ public class Interfaz extends Interfaz_abstract{
         // TODO Auto-generated method stub
         return null;
     }
+
+    
     
 }
