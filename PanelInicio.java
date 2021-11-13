@@ -19,6 +19,7 @@ public class PanelInicio extends javax.swing.JPanel {
      */
     private final JFileChooser openEncriptar, openDesencriptar;
     Interfaz interfaz;
+    String lastFile;
     public PanelInicio(Interfaz i) {
         interfaz = i;
         initComponents();
@@ -210,8 +211,9 @@ public class PanelInicio extends javax.swing.JPanel {
     private void EncriptarTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EncriptarTxtMouseClicked
         int returnValue = openEncriptar.showOpenDialog(this);
         if(returnValue == JFileChooser.APPROVE_OPTION){
-            interfaz.Encriptar(openEncriptar.getSelectedFile().getPath());
-            encriptarResult.setText(openEncriptar.getSelectedFile().getName());
+            lastFile =openEncriptar.getSelectedFile().getPath();
+            interfaz.Encriptar(lastFile);
+            //encriptarResult.setText(openEncriptar.getSelectedFile().getName());
         } else{
             encriptarResult.setText("No se ha seleccionado ningun archivo");
         }
@@ -230,8 +232,9 @@ public class PanelInicio extends javax.swing.JPanel {
     private void DesencriptarTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DesencriptarTxtMouseClicked
         int returnValue = openDesencriptar.showOpenDialog(this);
         if(returnValue == JFileChooser.APPROVE_OPTION){
-            interfaz.Desencriptar(openDesencriptar.getSelectedFile().getPath());
-            desencriptarResult.setText(openDesencriptar.getSelectedFile().getName());
+            lastFile = openDesencriptar.getSelectedFile().getPath();
+            interfaz.Desencriptar(lastFile);
+            //desencriptarResult.setText(openDesencriptar.getSelectedFile().getName());
         } else{
             desencriptarResult.setText("No se ha seleccionado ningun archivo");
         }
@@ -260,4 +263,10 @@ public class PanelInicio extends javax.swing.JPanel {
     private javax.swing.JLabel encriptarResult;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+    public void ExitoEncriptar(){
+        encriptarResult.setText("El archivo "+lastFile+" se ha encriptado correctamente");
+    }
+    public void ExitoDesencriptar(){
+        desencriptarResult.setText("El archivo "+lastFile+" se ha desencriptado correctamente");
+    }
 }

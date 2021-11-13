@@ -300,6 +300,7 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
     }
 
     public void ExitoEncriptar(){
+        panelInicio.ExitoEncriptar();
         cambiarEstado(EstadoInterfaz.SinEstado);
     }
     
@@ -308,6 +309,7 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
         cambiarEstado(EstadoInterfaz.Desencriptar);
     }
     public void ExitoDesencriptar(){
+        panelInicio.ExitoDesencriptar();
         cambiarEstado(EstadoInterfaz.SinEstado);
     }
 
