@@ -215,6 +215,7 @@ public class PanelInicio extends javax.swing.JPanel {
             interfaz.Encriptar(openEncriptar.getSelectedFile().getPath());
             //encriptarResult.setText(openEncriptar.getSelectedFile().getName());
         } else{
+            if(!desencriptarResult.getText().equals("")) desencriptarResult.setText("");
             encriptarResult.setText("No se ha seleccionado ningun archivo");
         }
     }//GEN-LAST:event_EncriptarTxtMouseClicked
@@ -236,6 +237,7 @@ public class PanelInicio extends javax.swing.JPanel {
             interfaz.Desencriptar(openDesencriptar.getSelectedFile().getPath());
             //desencriptarResult.setText(openDesencriptar.getSelectedFile().getName());
         } else{
+            if(!encriptarResult.getText().equals("")) encriptarResult.setText("");
             desencriptarResult.setText("No se ha seleccionado ningun archivo");
         }
     }//GEN-LAST:event_DesencriptarTxtMouseClicked
@@ -264,9 +266,11 @@ public class PanelInicio extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
     public void ExitoEncriptar(){
+        if(!desencriptarResult.getText().equals("")) desencriptarResult.setText("");
         encriptarResult.setText("El archivo "+lastFile+" se ha encriptado correctamente");
     }
     public void ExitoDesencriptar(){
+        if(!encriptarResult.getText().equals("")) encriptarResult.setText("");
         desencriptarResult.setText("El archivo "+lastFile+" se ha desencriptado correctamente");
     }
 }
