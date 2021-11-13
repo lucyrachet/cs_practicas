@@ -1,7 +1,18 @@
 /**
  * Interfaz_abstract
  */
+
+enum EstadoInterfaz{
+    Nada,Login,Registro,Encriptar,Desencriptar
+}
+
 public abstract class Interfaz_abstract {
+    
+    EstadoInterfaz estado;
+
+    public Interfaz_abstract(){
+        estado = EstadoInterfaz.Nada;
+    }
     
     public abstract String damePathFichero();
     public abstract String dameNombreLogin();         //devuelve el nombre que haya introducido en el login
