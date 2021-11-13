@@ -18,6 +18,7 @@ public class PanelRegistro extends javax.swing.JPanel {
     public PanelRegistro(Interfaz i) {
         interfaz = i;
         initComponents();
+        error.setText("");
     }
 
     /**
@@ -43,6 +44,7 @@ public class PanelRegistro extends javax.swing.JPanel {
         EntrarTxt = new javax.swing.JLabel();
         iniciarSesion = new javax.swing.JLabel();
         yaTienesCuenta = new javax.swing.JLabel();
+        error = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(800, 355));
         setLayout(new java.awt.BorderLayout());
@@ -159,38 +161,36 @@ public class PanelRegistro extends javax.swing.JPanel {
         yaTienesCuenta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         yaTienesCuenta.setText("¿Ya tienes cuenta?");
 
+        error.setForeground(new java.awt.Color(255, 102, 102));
+        error.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout PanelCentralLayout = new javax.swing.GroupLayout(PanelCentral);
         PanelCentral.setLayout(PanelCentralLayout);
         PanelCentralLayout.setHorizontalGroup(
             PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(tituloPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelCentralLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Entrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(PanelCentralLayout.createSequentialGroup()
+                        .addGap(70, 70, 70)
+                        .addComponent(yaTienesCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PanelCentralLayout.createSequentialGroup()
+                        .addGap(90, 90, 90)
+                        .addComponent(iniciarSesion)))
+                .addGap(168, 168, 168))
             .addGroup(PanelCentralLayout.createSequentialGroup()
                 .addGap(150, 150, 150)
-                .addComponent(nombreLabel))
-            .addGroup(PanelCentralLayout.createSequentialGroup()
-                .addGap(150, 150, 150)
-                .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(PanelCentralLayout.createSequentialGroup()
-                .addGap(150, 150, 150)
-                .addComponent(passLabel))
-            .addGroup(PanelCentralLayout.createSequentialGroup()
-                .addGap(150, 150, 150)
-                .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(PanelCentralLayout.createSequentialGroup()
-                .addGap(150, 150, 150)
-                .addComponent(repetirPassLabel))
-            .addGroup(PanelCentralLayout.createSequentialGroup()
-                .addGap(150, 150, 150)
-                .addComponent(repetirPass, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(PanelCentralLayout.createSequentialGroup()
-                .addGap(180, 180, 180)
-                .addComponent(Entrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(PanelCentralLayout.createSequentialGroup()
-                .addGap(250, 250, 250)
-                .addComponent(yaTienesCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(PanelCentralLayout.createSequentialGroup()
-                .addGap(270, 270, 270)
-                .addComponent(iniciarSesion))
+                .addGroup(PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nombreLabel)
+                    .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(passLabel)
+                    .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(repetirPassLabel)
+                    .addGroup(PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(repetirPass, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                        .addComponent(error, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         PanelCentralLayout.setVerticalGroup(
             PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,19 +208,22 @@ public class PanelRegistro extends javax.swing.JPanel {
                 .addComponent(repetirPassLabel)
                 .addGap(3, 3, 3)
                 .addComponent(repetirPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(error)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Entrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21)
                 .addComponent(yaTienesCuenta)
                 .addGap(6, 6, 6)
-                .addComponent(iniciarSesion))
+                .addComponent(iniciarSesion)
+                .addContainerGap())
         );
 
         add(PanelCentral, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void EntrarTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EntrarTxtMouseClicked
-        interfaz.Login(nombre.getText(), String.valueOf(pass.getPassword()));
+        interfaz.Login(nombre.getText(), pass.toString());
     }//GEN-LAST:event_EntrarTxtMouseClicked
 
     private void EntrarTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EntrarTxtMouseEntered
@@ -252,6 +255,7 @@ public class PanelRegistro extends javax.swing.JPanel {
     private javax.swing.JPanel PanelCentral;
     private javax.swing.JPanel PanelDerecho;
     private javax.swing.JPanel PanelIzquierdo;
+    private javax.swing.JLabel error;
     private javax.swing.JLabel iniciarSesion;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField nombre;
@@ -264,7 +268,7 @@ public class PanelRegistro extends javax.swing.JPanel {
     private javax.swing.JLabel yaTienesCuenta;
     // End of variables declaration//GEN-END:variables
 
-    public void Error(){
-        
+    public void Error(String _error){
+        error.setText(error);
     }
 }

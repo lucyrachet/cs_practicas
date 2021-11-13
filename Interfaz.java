@@ -282,9 +282,9 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
         cambiarEstado(EstadoInterfaz.Registro);    
     }
     
-    public void ErrorRegistro(){
+    public void ErrorRegistro(String _error){
         cambiarEstado(EstadoInterfaz.SinEstado);
-        panelRegistro.Error();
+        panelRegistro.Error(_error);
     }
     
     public void ExitoRegistro(){
