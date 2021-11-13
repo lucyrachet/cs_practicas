@@ -220,7 +220,7 @@ public class PanelRegistro extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void EntrarTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EntrarTxtMouseClicked
-        interfaz.Login(nombre.getText(), pass.getSelectedText());
+        interfaz.Login(nombre.getText(), pass.getPassword().toString());
     }//GEN-LAST:event_EntrarTxtMouseClicked
 
     private void EntrarTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EntrarTxtMouseEntered
