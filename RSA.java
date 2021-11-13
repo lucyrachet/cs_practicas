@@ -4,7 +4,6 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.util.*;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -24,6 +23,8 @@ public class RSA{
         generator.initialize(1024);
         return generator.generateKeyPair();
     }
+
+    //Encripta clave AES
     public static byte[] encryptKey(SecretKey sKey, PublicKey puk) throws NoSuchAlgorithmException, InvalidKeyException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException{
 
         byte[] encryptedKey; 
@@ -36,6 +37,7 @@ public class RSA{
 
     }
 
+    //Desencripta AES
     public static SecretKey decryptKey(byte[] sKey, PrivateKey prk) throws NoSuchAlgorithmException,NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
 
         byte[] decryptedKey;
