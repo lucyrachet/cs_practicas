@@ -1,5 +1,8 @@
 import java.io.File;
 import javax.crypto.SecretKey;
+
+import com.mysql.cj.jdbc.SuspendableXAConnection;
+
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -8,6 +11,7 @@ import java.security.PublicKey;
 
 public class ProyectoCS {
     public static void main(String[] args) throws Exception {
+        
         Interfaz interfaz = new Interfaz();
 
         //interfaz.setVisible(true);
@@ -21,6 +25,13 @@ public class ProyectoCS {
         String contrasena_dada = null;
         String contrasena_dada1 = null;
         String contrasena_dada2 = null;
+
+        RSA rsa = new RSA();
+        Probarbase64 base = new Probarbase64("");
+        
+        KeyPair pairRSA = rsa.crearParClaves();
+        PublicKey publicKeyRSA = pairRSA.getPublic();
+        bbdd.insertarUsuario("admin", base.base64PublicKey(publicKeyRSA), "admin");
 
         //while estado sea login o registro
         while(usuarioValidado==false /*&& (interfaz.dameEstado()==EstadoInterfaz.Login || interfaz.dameEstado()==EstadoInterfaz.Registro)*/){
@@ -49,15 +60,14 @@ public class ProyectoCS {
             if(interfaz.dameEstado()==EstadoInterfaz.Login){
                 usuario_dado=interfaz.dameNombreLogin();
                 contrasena_dada = interfaz.dameContrasenaLogin();
-
                 
                 //Comprobacion de login bien hecho
-                //existeUsuario = bbdd.existeUsuario(usuario_dado);
-                existeUsuario=true;
+                existeUsuario = bbdd.existeUsuario(usuario_dado);
+                //existeUsuario=true;
                 if(existeUsuario==true){
                     String contrasena_bbdd=bbdd.recogerPassword(usuario_dado);
                     //String contrasena_bbdd=contrasena_dada;
-                    if(contrasena_bbdd == contrasena_dada){
+                    if(contrasena_bbdd.equals(contrasena_dada)){
                         usuarioValidado=true;
                         interfaz.ExitoLogin();
                     }else{
@@ -71,10 +81,10 @@ public class ProyectoCS {
                 }
             }
             //Registro
+            
             if(interfaz.dameEstado()==EstadoInterfaz.Registro){
                     AES aes = new AES();
-                    RSA rsa = new RSA();
-                    Probarbase64 base = new Probarbase64("");
+                   // Probarbase64 base = new Probarbase64("");
 
                     usuario_dado=interfaz.dameNombreRegistro();
                     contrasena_dada1 = interfaz.dameContrasena1Registro();
@@ -84,8 +94,8 @@ public class ProyectoCS {
                     Boolean existe=true;   
                     if(existe==false){                                      //si el usuario no existe lo creamos
                         if(contrasena_dada1==contrasena_dada2){             //si las contrasenas coinciden
-                            KeyPair pairRSA = rsa.crearParClaves();
-                            PublicKey publicKeyRSA = pairRSA.getPublic();
+                          //  KeyPair pairRSA = rsa.crearParClaves();
+                          //  PublicKey publicKeyRSA = pairRSA.getPublic();
 
                             bbdd.insertarUsuario(usuario_dado, base.base64PublicKey(publicKeyRSA), contrasena_dada1);   //insertamos el usuario
                             interfaz.ExitoRegistro();
@@ -171,7 +181,7 @@ public class ProyectoCS {
          * Interfaz anyadir estado
          * 
          */
-        
+        SecretKey supuestaclaveAES = null;
         while ((usuarioValidado==true /*&& (interfaz.dameEstado()==EstadoInterfaz.Encriptar || interfaz.dameEstado()==EstadoInterfaz.Desencriptar)*/) /*&& (interfaz.estado=="encriptar" || interfaz.estado=="desencriptar")*/) {
             System.out.print("");
            
@@ -181,42 +191,39 @@ public class ProyectoCS {
                     System.out.println("");
                     /************* */
                         AES aes = new AES();
-                        RSA rsa = new RSA();
-                        Probarbase64 base = new Probarbase64("");
                         String path = interfaz.damePathFichero();
 
                         File f = new File(path);
                         String nombre_archivo = f.getName();
                         SecretKey clave = aes.getAESKey();
+
+                        supuestaclaveAES = clave;
+
                         String clave_string = base.base64SecretKey(clave);
-                        
-                        KeyPair pairRSA = rsa.crearParClaves();
-                        SecretKey keyAESEncrypted = aes.getAESKey();
 
                         PublicKey publicKey = pairRSA.getPublic();
                         PrivateKey privateKey = pairRSA.getPrivate();
 
                         byte[] claveEncriptada = rsa.encryptKey(clave,publicKey);
-                        String claveEncriptadaString = new String(claveEncriptada);  
-                    
+                        String claveEncriptadaString = base.bytebase64(claveEncriptada);
+
                         //convertimos las claves a base64
                         String publicRSAKeyString = base.base64PublicKey(publicKey);
                         String privateRSAKeyString = base.base64PrivateKey(privateKey);
+
+                        //mete la clave en la bbdd en la tabla de archivos
+                        bbdd.insertarClave(nombre_archivo, claveEncriptadaString, usuario_dado);
 
                         //coge el nombre del fichero
                         nombre_archivo = nombre_archivo.substring(0, nombre_archivo.lastIndexOf('.'));
 
                         //se guarda en fichero la clave privada de RSA
                         base.stringToFile(privateRSAKeyString, "encript/"+nombre_archivo+".key");
-
-                        
-                        //mete la clave en la bbdd en la tabla de archivos
-                        bbdd.insertarClave(nombre_archivo, claveEncriptadaString, usuario_dado);
-                        
                         
                         // mete en la carpeta encript el archivo con su_nombre.enc
                         base.bFichero(aes.encryptFile(path, clave), "encript/"+nombre_archivo+".enc");
 
+                        interfaz.ExitoEncriptar();
 
                     /************* */
                     //Encript encriptar = new Encript(interfaz.pathEncriptar);
@@ -228,29 +235,30 @@ public class ProyectoCS {
                     /*************/
                     //String path = interfaz.pathDesencriptar;
                     AES aes = new AES();
-                    RSA rsa = new RSA();
-                    Probarbase64 base = new Probarbase64("");
                     String path = interfaz.damePathFichero();
-                    
                     File f = new File(path);                    //cogemos el file de desencriptar
                     String nombre_archivo = f.getName();        //cogemos el nombre que tenga
                     nombre_archivo = nombre_archivo.substring(0, nombre_archivo.lastIndexOf('.'));  //quitamos lo q hay despues del ."enc"
-                    
-                    String keyRSA = nombre_archivo+".key";                      //pongo como es el nombre de la key
+                
+                    String subpath = path.substring(0,path.lastIndexOf('\\'))+"\\";
+                    String keyRSA = subpath+nombre_archivo+".key";                      //pongo como es el nombre de la key
                     //File fKeyRSA = new File(keyRSA);                          //cojo el archivo
                     String keyRSAString = base.fileToString(keyRSA);            //cojo el archivo y lo paso a String
+                                       
                     PrivateKey privKey = base.asciiToPrivateKey(keyRSAString);  //paso el string a PrivateKey
 
                     String archivo_decript = bbdd.recogerNombre(nombre_archivo);    //coges el nombre del archivo de la bbdd
                     String clave = bbdd.recogerClave(nombre_archivo);               //cogemos la clave AES de ese archivo
-                    byte[] clave_bytes = clave.getBytes();
+
+                    SecretKey claveTest = base.asciiSecretKey(clave);
+
+                    byte[] clave_bytes = claveTest.getEncoded();
                     SecretKey claveAES = rsa.decryptKey(clave_bytes, privKey);                          //desencriptamos la clave AES con la privada de RSA
-                    
+
                     base.bFichero(aes.decryptFile(path,claveAES), "decript/"+archivo_decript);   //pasamos de base64 la clave AES a Secret Key
                                                                                                                     //desencriptamos y 
                                                                                                                     // convertimos a fichero
-                    f.delete(); //borramos el archivo de la carpeta
-
+                    interfaz.ExitoDesencriptar();
                     /*************/
                     // interfaz.pathDesencriptar = "";
 

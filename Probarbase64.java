@@ -45,6 +45,10 @@ public class Probarbase64 {
         String encoded = Base64.getEncoder().encodeToString(authBytes);
         return encoded;
 	}
+	public String bytebase64(byte[] authBytes) {
+        String encoded = Base64.getEncoder().encodeToString(authBytes);
+        return encoded;
+	}
 	
 	public String base64SecretKey(SecretKey key) {
 		String encodedKey = Base64.getEncoder().encodeToString(key.getEncoded());

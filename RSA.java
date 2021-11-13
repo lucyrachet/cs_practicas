@@ -45,7 +45,7 @@ public class RSA{
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.DECRYPT_MODE, prk);
         decryptedKey = cipher.doFinal(sKey);
-        return new SecretKeySpec(decryptedKey, 0, decryptedKey.length, "RSA");
+        return new SecretKeySpec(decryptedKey, 0, decryptedKey.length, "AES");
     }
 
     /*public static void main(String[] args) throws NoSuchAlgorithmException, InvalidKeyException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException {

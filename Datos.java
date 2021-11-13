@@ -77,20 +77,7 @@ public class Datos {
     }
     
     //Metodo que elimina el archivo para evitar que si se comprime de nuevo, no de error de primary key duplicada
-    public void eliminar(String nombre_archivo){
-        try{
-            Connection con = crearConexion();
-            String sql =  "DELETE FROM archivoclaves WHERE nombre= ?";
-            PreparedStatement pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, nombre_archivo);
-            pstmt.executeUpdate(); 
-            con.close();
-        }catch(Exception e){
-            System.out.println("No se ha podido eliminar la fila que contiene el archivo: "+nombre_archivo);
-            System.err.println(e);
-        }
-        
-    }
+
 
     //Se le pasa por parametro un STRING de tanto el usuario, su clavePublica y su contraseña en HASH que se insertan en la bbdd
     public void insertarUsuario (String nombre_usuario, String clavePublica, String password){

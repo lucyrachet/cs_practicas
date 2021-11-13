@@ -22,7 +22,7 @@ public class AES{
 
     public SecretKey getAESKey() throws NoSuchAlgorithmException {
         KeyGenerator keyGen = KeyGenerator.getInstance("AES");
-        keyGen.init(128, SecureRandom.getInstanceStrong());
+        keyGen.init(128);
         return keyGen.generateKey();
     }
 
@@ -40,6 +40,7 @@ public class AES{
     }
 
     public byte[] decryptFile(String path, SecretKey sKey) throws Exception {
+        System.out.println("path: "+ path);
         try {
                          // Determine si la clave es correcta
             if (sKey == null) {
