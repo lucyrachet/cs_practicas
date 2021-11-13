@@ -24,38 +24,79 @@ public class ProyectoCS {
         Boolean usuarioValidado=false;
         String usuario_dado = null;
         String contrasena_dada = null;
+        String contrasena_dada1 = null;
+        String contrasena_dada2 = null;
 
         //while estado sea login o registro
-        // while(interfaz.estado=="login" || interfaz.estado=="registro"){
-        //     System.out.print("");
-        //     if(interfaz.pathLogin.isBlank()==false|| interfaz.pathRegistro.isBlank()==false){
-        //         if(interfaz.pathLogin.isBlank()==false){
-        //             //Encriptar
-        //             System.out.println(interfaz.pathLogin);
-        //             /************* */
-                        
-        //             interfaz.pathLogin = "";
-        //         } else{
-        //             //Desencriptar
-        //             Decript desencriptar = new Decript(interfaz.pathRegistro);
-        //             interfaz.pathRegistro = "";
+        while(usuarioValidado==false && (interfaz.estado=="login" || interfaz.estado=="registro")){
+            System.out.print("");
+            if(interfaz.pathLogin.isBlank()==false|| interfaz.pathRegistro.isBlank()==false){
+                if(interfaz.pathLogin.isBlank()==false){
+                    //Login
+                    System.out.println(interfaz.pathLogin);
+                    /************* */
+                    usuario_dado=interfaz.dameNombreUsuario();
+                    contrasena_dada = interfaz.dameContrasenaLogin();
 
-        //         }
-        //     }
-        // }
+                    //Comprobacion de login bien hecho
+                    existeUsuario = bbdd.existeUsuario(usuario_dado);
+
+                    if(existeUsuario==true){
+                        String contrasena_bbdd=bbdd.recogerPassword(usuario_dado);
+
+                        if(contrasena_bbdd == contrasena_dada){
+                            usuarioValidado=true;
+                        }else{
+                            //?????? no se que puede hacer para comunicarlo
+                            System.out.println("Las contrasenas no coinciden");
+                        }
+                    }
+
+                    interfaz.pathLogin = "";
+                } else{
+                    //Registro
+                    //Decript desencriptar = new Decript(interfaz.pathRegistro);
+                    /***************/
+
+                    AES aes = new AES();
+                    RSA rsa = new RSA();
+                    Probarbase64 base = new Probarbase64("");
+
+                    usuario_dado=interfaz.dameNombreUsuario();
+                    contrasena_dada1 = interfaz.dameContrasena1Registro();
+                    contrasena_dada2 = interfaz.dameContrasena2Registro();
+
+                    Boolean existe=bbdd.existeUsuario(usuario_dado);    
+                    if(existe==false){                                      //si el usuario no existe lo creamos
+                        if(contrasena_dada1==contrasena_dada2){             //si las contrasenas coinciden
+                            KeyPair pairRSA = rsa.getRSAKeys();
+                            PublicKey publicKeyRSA = pairRSA.getPublic();
+
+                            bbdd.insertarUsuario(usuario_dado, base.base64PublicKey(publicKeyRSA), contrasena_dada1);   //insertamos el usuario
+                        }
+                    }else{
+                        System.out.println("El usuario ya existe elija otro nombre");
+                    }
+
+                    /***************/
+                    interfaz.pathRegistro = "";
+
+                }
+            }
+        }
 
 
         /********* */
-        //Comprobacion de login bien hecho
-        existeUsuario = bbdd.existeUsuario(usuario_dado);
+        // //Comprobacion de login bien hecho
+        // existeUsuario = bbdd.existeUsuario(usuario_dado);
 
-        if(existeUsuario==true){
-            String contrasena_bbdd=bbdd.recogerPassword(usuario_dado);
+        // if(existeUsuario==true){
+        //     String contrasena_bbdd=bbdd.recogerPassword(usuario_dado);
 
-            if(contrasena_bbdd == contrasena_dada){
-                usuarioValidado=true;
-            }
-        }
+        //     if(contrasena_bbdd == contrasena_dada){
+        //         usuarioValidado=true;
+        //     }
+        // }
 
         //while estado sea encriptar o desencriptar
         /***********************
