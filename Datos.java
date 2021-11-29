@@ -127,11 +127,11 @@ public class Datos {
 
 
     //Se le pasa por parametro un STRING de tanto el usuario, su clavePublica y su contraseña en HASH que se insertan en la bbdd
-    public void insertarUsuario (String nombre_usuario, String clavePublica, String password){
+    public void insertarUsuario (String nombre_usuario, String clavePublica, String password, int tipo){
         try{
             Connection con = crearConexion();
             Statement stm=con.createStatement();
-            stm.execute("insert into usuarios values('"+nombre_usuario+"','"+clavePublica+"','"+password+"')");
+            stm.execute("insert into usuarios values('"+nombre_usuario+"','"+clavePublica+"','"+password+"',"+tipo+")");
             con.close();
         }catch(Exception e){
             System.out.println("No se ha podido insertar la clavePublica del usuario: "+nombre_usuario+" en la bbdd");
@@ -177,6 +177,25 @@ public class Datos {
             System.err.println(e);
         }
         return password;
+    }
+
+    public String recogerTipo(String nombre_usuario){
+        String tipo="";
+        try{
+            Connection con = crearConexion();
+
+            PreparedStatement pstmt = con.prepareStatement("select password from usuarios where nombre like ?");
+            pstmt.setString(1, nombre_usuario + "%");
+            ResultSet rs = pstmt.executeQuery(); 
+            if(rs.next()){
+                tipo=rs.getString(1);
+            }
+            con.close();
+        }catch(SQLException e){
+            System.out.println("No se ha podido encontrar la contraseña para el usuario: "+nombre_usuario);
+            System.err.println(e);
+        }
+        return tipo;
     }
 
     //Comprueba si existe algún usuario 
