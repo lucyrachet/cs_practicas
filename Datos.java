@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.ArrayList;
 public class Datos {
 
     public Datos(){}
@@ -23,11 +24,11 @@ public class Datos {
     }
 
     //Se le pasa por parametro un STRING de tanto el archivo, la clave y el usuario del cual es el archivo y se insertan en la bbdd
-    public void insertarClave (String nombre_archivo, String clave, String usuario){
+    public void insertarClave (String nombre_archivo, String clave, String usuario, int tipo){
         try{
             Connection con = crearConexion();
             Statement stm=con.createStatement();
-            stm.execute("insert into archivoclaves values('"+nombre_archivo+"','"+clave+"','"+usuario+"')");
+            stm.execute("insert into archivoclaves values('"+nombre_archivo+"','"+clave+"','"+usuario+"',"+tipo+")");
             con.close();
         }catch(Exception e){
             System.out.println("No se ha podido insertar la clave del archivo: "+nombre_archivo+" en la bbdd");
@@ -74,6 +75,52 @@ public class Datos {
             System.err.println(e);
         }
         return clave;
+    }
+
+    public String recogerTipo(String nombre_archivo){
+        String tipo="";
+        try{
+            Connection con = crearConexion();
+
+            PreparedStatement pstmt = con.prepareStatement("select t.nombre from archivoclaves a,tiposarchivo t where a.nombre like ? AND a.tipo = t.id");
+            pstmt.setString(1, nombre_archivo + "%");
+
+            ResultSet rs = pstmt.executeQuery();
+            
+            if(rs.next()){
+                tipo=rs.getString(1);
+            }
+            con.close();
+        }catch(Exception e){
+            System.out.println("No se ha podido encontrar el tipo para el archivo: "+nombre_archivo);
+            System.err.println(e);
+        }
+        return tipo;
+    }
+
+    //Recoge todos los archivos que hay en la base de datos, cada string contendrá la información de un archivo
+    //separado por el símbolo de ";"
+    public ArrayList<String> recogerArchivos(){
+        ArrayList<String> archivos = new ArrayList<>();
+        String datos = "";
+        try{
+            Connection con = crearConexion();
+
+            PreparedStatement pstmt = con.prepareStatement("select * from archivoclaves");
+
+            ResultSet rs = pstmt.executeQuery();
+            
+            while(rs.next()){
+                datos+=rs.getString(1)+";"+rs.getString(2)+";"+rs.getString(3)+";"+rs.getString(4);
+                archivos.add(datos);
+                datos = "";
+            }
+            con.close();
+        }catch(Exception e){
+            System.out.println("No se ha podido ejecutar la recuperación de la lista de archivos");
+            System.err.println(e);
+        }
+        return archivos;
     }
     
     //Metodo que elimina el archivo para evitar que si se comprime de nuevo, no de error de primary key duplicada
@@ -155,15 +202,22 @@ public class Datos {
     }
     //Ejemplo de los métodos que se pueden realizar con esta clase, deben de ejecutarse "parrafo x parrafo"
     
-    /*
+    
     public static void main(String[] args){
         Datos bbdd = new Datos();
 
+        ArrayList<String> datos = bbdd.recogerArchivos(); 
+
+        for(int i=0;i<datos.size();i++){
+            System.out.println("Archivo: "+datos.get(i));
+        }
+
+        /*
         bbdd.insertarUsuario("usuario1", "clavep1", "password1");
         bbdd.insertarUsuario("usuario2", "clavep2", "password2");
         
-        bbdd.insertarClave("archivo1", "clave1","usuario1");
-        bbdd.insertarClave("archivo2", "clave2","usuario2");
+        bbdd.insertarClave("archivo1", "clave1","admin",2);
+        bbdd.insertarClave("archivo2", "clave2","admin",4);
 
         System.out.println("La clave del archivo 1: "+bbdd.recogerClave("archivo1"));
         System.out.println("La clave del archivo 2: "+bbdd.recogerClave("archivo2"));
@@ -179,7 +233,8 @@ public class Datos {
         }else{
             System.out.println("No existe el usuario");
         }
+        */
     }
-    */
+    
     
 }
