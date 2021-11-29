@@ -57,7 +57,7 @@ public class ProyectoCS {
                             
                             //PASO A LA FASE 2
                             usuarioValidado=true;
-
+                            estadoCS = EstadoCS.SinEstado;
                             interfaz.ExitoLogin();
                             System.out.println("Inicio de sesión exitoso");
                             if(usuario_dado.equals("admin")){
@@ -66,10 +66,12 @@ public class ProyectoCS {
                         }else{
                             System.out.println("Error en inicio de sesión");
                             interfaz.ErrorLogin();
+                            estadoCS = EstadoCS.SinEstado;
                         }
                     }else{
                         System.out.println("Error en inicio de sesión");
                         interfaz.ErrorLogin();
+                        estadoCS = EstadoCS.SinEstado;
                     }
                     break;
 
@@ -87,20 +89,27 @@ public class ProyectoCS {
                     Boolean existe=bbdd.existeUsuario(usuario_dado); 
                     //Boolean existe=true;   
                     if(existe==false){                                      //si el usuario no existe lo creamos
-                        if(contrasena_dada1==contrasena_dada2){             //si las contrasenas coinciden
+                        if(contrasena_dada1.equals(contrasena_dada2)){             //si las contrasenas coinciden
                             KeyPair pairRSA = rsa.crearParClaves();         //generamos par de claves
                             PublicKey publicKeyRSA = pairRSA.getPublic();   //cogemos la publica y la metemos en base de datos
                             PrivateKey privateKeyRSA = pairRSA.getPrivate();   //cogemos la privada 
-                                                                                
+                            
+                            //TODO: no funciona
                             base.bFichero(base.base64PrivateKey(privateKeyRSA).getBytes(), "datos/"+usuario_dado+".pvk");   //guardamos rsa privada en un archivo
                             //TODO: bbdd.insertarUsuario(usuario_dado, base.base64PublicKey(publicKeyRSA), contrasena_dada1);   //insertamos el usuario
+                            usuarioValidado = true;
+                            estadoCS = EstadoCS.SinEstado;
                             interfaz.ExitoRegistro();
-                            System.out.println("Éxito en registrar usuario");
+                            System.out.println("Éxito al registrar usuario");
                         }else{
+                            System.out.println("Error al registrar usuario");
                             interfaz.ErrorRegistro("Las contrasenas no coinciden");
+                            estadoCS = EstadoCS.SinEstado;
                         }
                     }else{
+                        System.out.println("Error al registrar usuario");
                         interfaz.ErrorRegistro("El usuario ya existe.");
+                        estadoCS = EstadoCS.SinEstado;
                     }
                     break;
 

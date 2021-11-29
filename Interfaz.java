@@ -270,9 +270,10 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
         ponerPanel(panelExito);
     }
     
-    public void Registro(String _nombre, String _pass){
+    public void Registro(String _nombre, String _pass, String _pass2){
         nombreRegistro = _nombre;
         contrasena1Registro = _pass;
+        contrasena2Registo = _pass2;
         cambiarEstado(EstadoCS.Registro);    
     }
     
