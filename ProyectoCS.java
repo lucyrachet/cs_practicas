@@ -192,11 +192,7 @@ public class ProyectoCS {
                     break;
             }
 
-           
-            if(estadoCS==EstadoCS.LeerRespuesta){
-                //TODO: Solicitar fichero por cliente servidor
-            }
-
+            
             
            
                 if(esAdmin==true){
@@ -279,7 +275,7 @@ public class ProyectoCS {
                     
 
                 }
-            
+                
         }
       
     }
