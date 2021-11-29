@@ -1,4 +1,5 @@
 //import javax.crypto.SecretKey;
+import java.io.Console;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -33,41 +34,41 @@ public class ProyectoCS {
 */
 
         //----------PRIMERA FASE-----------//
-
-        //SIN ESTADO HASTA IDENTIFICACIÓN        
+        System.out.println("----------PRIMERA FASE-----------");
+        //SIN ESTADO HASTA IDENTIFICACIÓN     
         while(usuarioValidado==false){
             System.out.print("");
 
+            switch(estadoCS){
 
-            //ESTADO LOGIN
-            if(estadoCS==EstadoCS.Login){
-                usuario_dado=interfaz.dameNombreLogin();
-                contrasena_dada = interfaz.dameContrasenaLogin();
-                
-                //Comprobacion de login bien hecho
-                existeUsuario = bbdd.existeUsuario(usuario_dado);
-                if(existeUsuario==true){
-                    String contrasena_bbdd=bbdd.recogerPassword(usuario_dado);
-                    if(contrasena_bbdd.equals(contrasena_dada)){
-                        
-                        //SALIR DEL BUCLE
-                        usuarioValidado=true;
+                //ESTADO LOGIN
+                case Login:
+                    usuario_dado=interfaz.dameNombreLogin();
+                    contrasena_dada = interfaz.dameContrasenaLogin();
+                    
+                    //Comprobacion de login bien hecho
+                    existeUsuario = bbdd.existeUsuario(usuario_dado);
+                    if(existeUsuario==true){
+                        String contrasena_bbdd=bbdd.recogerPassword(usuario_dado);
+                        if(contrasena_bbdd.equals(contrasena_dada)){
+                            
+                            //SALIR DEL BUCLE
+                            usuarioValidado=true;
 
-                        interfaz.ExitoLogin();
-                        if(usuario_dado.equals("admin")){
-                            esAdmin = true;
+                            interfaz.ExitoLogin();
+                            if(usuario_dado.equals("admin")){
+                                esAdmin = true;
+                            }
+                        }else{
+                            interfaz.ErrorLogin();
                         }
                     }else{
                         interfaz.ErrorLogin();
                     }
-                }else{
-                    interfaz.ErrorLogin();
-                }
-            }
-            
+                    break;
 
-            //ESTADO REGISTRO
-            if(estadoCS==EstadoCS.Registro){
+                //ESTADO REGISTRO
+                case Registro:
                     //AES aes = new AES();
                     RSA rsa = new RSA();
                     Probarbase64 base = new Probarbase64("");
@@ -93,13 +94,20 @@ public class ProyectoCS {
                     }else{
                         interfaz.ErrorRegistro("El usuario ya existe.");
                     }
+                    break;
 
+                
+                //Aqui llegan los estados de la fase 2 y SinEstado
+                default:
+                    if(estadoCS!=EstadoCS.SinEstado){
+                        System.err.println("No pueden haber estados de la FASE 2 en la FASE 1");
+                    }
+                    break;
             }
-            System.out.print("");
-            
         }
 
         //----------SEGUNDA FASE-----------//
+        System.out.println("----------SEGUNDA FASE-----------");
         //SIN ESTADO hasta acción de la interfaz
 
         //SecretKey supuestaclaveAES = null;
@@ -108,12 +116,14 @@ public class ProyectoCS {
 
             switch (estadoCS){
 
-                //Obtener lista de ficheros con el usuario y permiso [LLamado desde: Login,Registro,Desencriptar,Encriptar]
+                //ESTADO OBTENER FICHEROS
+                    //Obtener lista de ficheros con el usuario y permiso [LLamado desde: Login,Registro,Desencriptar,Encriptar]
                 case ObtenerFicheros:
                     //TODO: Obtener ficheros con BBDD
                     break;
 
-                //Solicitar un fichero para desencriptar [Llamado desde: interfaz]
+                //ESTADO SOLICITAR FICHERO
+                    //Solicitar un fichero para desencriptar [Llamado desde: interfaz]
                 case SolicitarFichero:
                     //TODO: Solicitar fichero por cliente servidor
                     TipoSolicitud solicitud = TipoSolicitud.TuMismo; //= solicitud();
@@ -137,7 +147,8 @@ public class ProyectoCS {
                     }
                     break;
                 
-                //Comprobar que haya una respuesta [LLamado desde: SolicitarFichero]
+                //ESTADO ESPERAR RESPUESTA
+                    //Comprobar que haya una respuesta [LLamado desde: SolicitarFichero]
                 case EsperarRespuesta:
                     //TODO: Comprobar que haya una respuesta en la carpeta (se puede poner cooldown para que no consuma mucho)
 
@@ -145,31 +156,39 @@ public class ProyectoCS {
                     estadoCS = EstadoCS.LeerRespuesta;
                     break;
                 
-                //Procesamos los datos de la respuesta [LLamado desde: EsperarRespuesta]
+                //ESTADO LEER RESPUESTA
+                    //Procesamos los datos de la respuesta [LLamado desde: EsperarRespuesta]
                 case LeerRespuesta:
                     //TODO: Leer el archivo de respuesta y procesar los datos
                     //Devuelve el estado Desencriptar cuando termina el proceso
                     estadoCS = EstadoCS.Desencriptar;
                     break;
-
-                //Desencriptamos el archivo [Llamado desde: LeerRespuesta,SolicitarFichero]
+                
+                //ESTADO DESENCRIPTAR
+                    //Desencriptamos el archivo [Llamado desde: LeerRespuesta,SolicitarFichero]
                 case Desencriptar:
                     break;
-
-                //Compartir los ficheros haciendo un hilo de ejecución [Llamado desde: interfaz]
+                
+                //ESTADO COMPARTIR FICHEROS
+                    //Compartir los ficheros haciendo un hilo de ejecución [Llamado desde: interfaz]
                 case CompartirFicheros:
                     break;
                 
-                //Dejar de compartir los ficheros
+                //ESTADO DEJAR DE COMPARTIR
+                    //Dejar de compartir los ficheros [Llamado desde: interfaz]
                 case DejarDeCompartir:
                     break;
 
-                //Encriptar un fichero [Llamado desde: interfaz]
+                //ESTADO ENCRIPTAR
+                    //Encriptar un fichero [Llamado desde: interfaz]
                 case Encriptar:
                     break;
                 
+                //Aqui entraran los estados de la fase 1 y SinEstado
                 default:
-                    //Aqui entraran los estados de la fase 1 y SinEstado
+                    if(estadoCS!=EstadoCS.SinEstado){
+                        System.err.println("No pueden haber estados de la FASE 1 en la FASE 2");
+                    }
                     break;
             }
 
