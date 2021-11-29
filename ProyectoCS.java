@@ -95,8 +95,8 @@ public class ProyectoCS {
                             PrivateKey privateKeyRSA = pairRSA.getPrivate();   //cogemos la privada 
                             
                             //TODO: no funciona
-                            base.bFichero(base.base64PrivateKey(privateKeyRSA).getBytes(), "datos/"+usuario_dado+".pvk");   //guardamos rsa privada en un archivo
-                            //TODO: bbdd.insertarUsuario(usuario_dado, base.base64PublicKey(publicKeyRSA), contrasena_dada1);   //insertamos el usuario
+                            //base.bFichero(base.base64PrivateKey(privateKeyRSA).getBytes(), "datos/"+usuario_dado+".pvk");   //guardamos rsa privada en un archivo
+                            bbdd.insertarUsuario(usuario_dado, base.base64PublicKey(publicKeyRSA), contrasena_dada1,1);   //insertamos el usuario
                             usuarioValidado = true;
                             estadoCS = EstadoCS.SinEstado;
                             interfaz.ExitoRegistro();
