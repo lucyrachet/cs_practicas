@@ -6,7 +6,7 @@ public class CompartirCS extends Thread {
         @Override
         public void run() {
             while(ProyectoCS.estadoCS!=EstadoCS.DejarDeCompartir){
-                //TODO: hacer solicitud
+                //TODO: Hacer lógica atender solicitud
     
             }
         }
@@ -20,7 +20,7 @@ public class CompartirCS extends Thread {
     @Override
     public void run() {
         while(ProyectoCS.estadoCS!=EstadoCS.DejarDeCompartir){
-            /* TODO:
+            /* TODO: comprobar si hay una solicitud
             if(HAY SOLICITUD){
                 solicitud = new AtenderSolicitud();
                 solicitud.start();
