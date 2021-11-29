@@ -77,7 +77,7 @@ public class Datos {
         return clave;
     }
 
-    public String recogerTipo(String nombre_archivo){
+    public String recogerTipoUsuario(String nombre_archivo){
         String tipo="";
         try{
             Connection con = crearConexion();
@@ -184,7 +184,7 @@ public class Datos {
         try{
             Connection con = crearConexion();
 
-            PreparedStatement pstmt = con.prepareStatement("select password from usuarios where nombre like ?");
+            PreparedStatement pstmt = con.prepareStatement("select t.nombre from usuarios u,tiposarchivo t where u.nombre like ? AND u.acceso = t.id");
             pstmt.setString(1, nombre_usuario + "%");
             ResultSet rs = pstmt.executeQuery(); 
             if(rs.next()){
