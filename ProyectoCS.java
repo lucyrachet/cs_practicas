@@ -9,7 +9,7 @@ public class ProyectoCS {
     public static EstadoCS estadoCS = EstadoCS.SinEstado;
     
     public static void main(String[] args) throws Exception {
-        Interfaz interfaz = new Interfaz(estadoCS);
+        Interfaz interfaz = new Interfaz();
 
         //interfaz.setVisible(true);
         
@@ -45,6 +45,7 @@ public class ProyectoCS {
 
                 //ESTADO LOGIN
                 case Login:
+                    System.out.println("Intentando iniciar sesión");
                     usuario_dado=interfaz.dameNombreLogin();
                     contrasena_dada = interfaz.dameContrasenaLogin();
                     
@@ -54,23 +55,27 @@ public class ProyectoCS {
                         String contrasena_bbdd=bbdd.recogerPassword(usuario_dado);
                         if(contrasena_bbdd.equals(contrasena_dada)){
                             
-                            //SALIR DEL BUCLE
+                            //PASO A LA FASE 2
                             usuarioValidado=true;
 
                             interfaz.ExitoLogin();
+                            System.out.println("Inicio de sesión exitoso");
                             if(usuario_dado.equals("admin")){
                                 esAdmin = true;
                             }
                         }else{
+                            System.out.println("Error en inicio de sesión");
                             interfaz.ErrorLogin();
                         }
                     }else{
+                        System.out.println("Error en inicio de sesión");
                         interfaz.ErrorLogin();
                     }
                     break;
 
                 //ESTADO REGISTRO
                 case Registro:
+                    System.out.println("Intentando registrar usuario");
                     //AES aes = new AES();
                     RSA rsa = new RSA();
                     Probarbase64 base = new Probarbase64("");
@@ -90,6 +95,7 @@ public class ProyectoCS {
                             base.bFichero(base.base64PrivateKey(privateKeyRSA).getBytes(), "datos/"+usuario_dado+".pvk");   //guardamos rsa privada en un archivo
                             //TODO: bbdd.insertarUsuario(usuario_dado, base.base64PublicKey(publicKeyRSA), contrasena_dada1);   //insertamos el usuario
                             interfaz.ExitoRegistro();
+                            System.out.println("Éxito en registrar usuario");
                         }else{
                             interfaz.ErrorRegistro("Las contrasenas no coinciden");
                         }
