@@ -1,18 +1,14 @@
-import java.io.File;
-import javax.crypto.SecretKey;
-
-import com.mysql.cj.jdbc.SuspendableXAConnection;
-
+//import javax.crypto.SecretKey;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
 
-
 public class ProyectoCS {
     public static void main(String[] args) throws Exception {
         
-        Interfaz interfaz = new Interfaz();
+        EstadoCS estadoCS = EstadoCS.SinEstado;
+        Interfaz interfaz = new Interfaz(estadoCS);
 
         //interfaz.setVisible(true);
         
@@ -35,41 +31,44 @@ public class ProyectoCS {
         PublicKey publicKeyRSA = pairRSA.getPublic();
         bbdd.insertarUsuario("admin", base.base64PublicKey(publicKeyRSA), "admin");
 */
-        
+
+        //----------PRIMERA FASE-----------//
+
+        //SIN ESTADO HASTA IDENTIFICACIÓN        
         while(usuarioValidado==false){
             System.out.print("");
-            
-            if(interfaz.dameEstado()==EstadoInterfaz.Login){
+
+
+            //ESTADO LOGIN
+            if(estadoCS==EstadoCS.Login){
                 usuario_dado=interfaz.dameNombreLogin();
                 contrasena_dada = interfaz.dameContrasenaLogin();
                 
                 //Comprobacion de login bien hecho
                 existeUsuario = bbdd.existeUsuario(usuario_dado);
-                //existeUsuario=true;
                 if(existeUsuario==true){
                     String contrasena_bbdd=bbdd.recogerPassword(usuario_dado);
-                    //String contrasena_bbdd=contrasena_dada;
                     if(contrasena_bbdd.equals(contrasena_dada)){
+                        
+                        //SALIR DEL BUCLE
                         usuarioValidado=true;
+
                         interfaz.ExitoLogin();
                         if(usuario_dado.equals("admin")){
                             esAdmin = true;
                         }
-                        
                     }else{
-                        //?????? no se que puede hacer para comunicarlo
                         interfaz.ErrorLogin();
-                        //System.out.println("Las contrasenas no coinciden");
-
                     }
                 }else{
                     interfaz.ErrorLogin();
                 }
             }
-            //Registro
             
-            if(interfaz.dameEstado()==EstadoInterfaz.Registro){
-                    AES aes = new AES();
+
+            //ESTADO REGISTRO
+            if(estadoCS==EstadoCS.Registro){
+                    //AES aes = new AES();
                     RSA rsa = new RSA();
                     Probarbase64 base = new Probarbase64("");
 
@@ -100,14 +99,90 @@ public class ProyectoCS {
             
         }
 
+        //----------SEGUNDA FASE-----------//
+        //SIN ESTADO hasta acción de la interfaz
 
-        SecretKey supuestaclaveAES = null;
+        //SecretKey supuestaclaveAES = null;
         while (usuarioValidado==true ) {    
             System.out.print("");
+
+            switch (estadoCS){
+
+                //Obtener lista de ficheros con el usuario y permiso [LLamado desde: Login,Registro,Desencriptar,Encriptar]
+                case ObtenerFicheros:
+                    //TODO: Obtener ficheros con BBDD
+                    break;
+
+                //Solicitar un fichero para desencriptar [Llamado desde: interfaz]
+                case SolicitarFichero:
+                    //TODO: Solicitar fichero por cliente servidor
+                    TipoSolicitud solicitud = TipoSolicitud.TuMismo; //= solicitud();
+                    switch(solicitud){
+                        case OtroUsuario:
+                            //TODO: Enviar solicitud al usuario, permisos y te tiene que responder
+
+                            //Devuelve el estado EsperarRespuesta
+                            estadoCS=EstadoCS.EsperarRespuesta;
+                            break;
+                        case Servidor:
+                            //TODO: Enviar solicitud al servidor y este revisa tus permisos
+
+                            //Devuelve el estado EsperarRespuesta
+                            estadoCS=EstadoCS.EsperarRespuesta;
+                            break;
+                        case TuMismo:
+                            //Devuelve el estado Desencriptar
+                            estadoCS=EstadoCS.Desencriptar;
+                            break;               
+                    }
+                    break;
+                
+                //Comprobar que haya una respuesta [LLamado desde: SolicitarFichero]
+                case EsperarRespuesta:
+                    //TODO: Comprobar que haya una respuesta en la carpeta (se puede poner cooldown para que no consuma mucho)
+
+                    //Devuelve el estado LeerRespuesta si hay respuesta
+                    estadoCS = EstadoCS.LeerRespuesta;
+                    break;
+                
+                //Procesamos los datos de la respuesta [LLamado desde: EsperarRespuesta]
+                case LeerRespuesta:
+                    //TODO: Leer el archivo de respuesta y procesar los datos
+                    //Devuelve el estado Desencriptar cuando termina el proceso
+                    estadoCS = EstadoCS.Desencriptar;
+                    break;
+
+                //Desencriptamos el archivo [Llamado desde: LeerRespuesta,SolicitarFichero]
+                case Desencriptar:
+                    break;
+
+                //Compartir los ficheros haciendo un hilo de ejecución [Llamado desde: interfaz]
+                case CompartirFicheros:
+                    break;
+                
+                //Dejar de compartir los ficheros
+                case DejarDeCompartir:
+                    break;
+
+                //Encriptar un fichero [Llamado desde: interfaz]
+                case Encriptar:
+                    break;
+                
+                default:
+                    //Aqui entraran los estados de la fase 1 y SinEstado
+                    break;
+            }
+
+           
+            if(estadoCS==EstadoCS.LeerRespuesta){
+                //TODO: Solicitar fichero por cliente servidor
+            }
+
+            
            
                 if(esAdmin==true){
 
-                    if(interfaz.dameEstado()==EstadoInterfaz.Encriptar){
+                    if(estadoCS==EstadoCS.Encriptar){
                         //Encriptar
                         System.out.println("");
                         /************* */
@@ -152,7 +227,7 @@ public class ProyectoCS {
                     }
                 }
 
-                if(interfaz.dameEstado()==EstadoInterfaz.Desencriptar){
+                if(estadoCS==EstadoCS.Desencriptar){
                     //Desencriptar
                     //Decript desencriptar = new Decript(interfaz.pathDesencriptar);
                     /*************/

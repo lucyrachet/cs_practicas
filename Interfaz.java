@@ -16,14 +16,12 @@ import javax.swing.UIManager;
  * @author luism
  */
 
-enum EstadoInterfaz{
-    SinEstado,Login,Registro,Encriptar,Desencriptar
-}
+
 
 public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
     
     private int xMouse,yMouse;
-    private EstadoInterfaz estado;
+    private EstadoCS estado;
     private String pathFichero,nombreLogin,contrasenaLogin,nombreRegistro,contrasena1Registro,contrasena2Registo;
     //private String optionsPathEncriptar,optionsPathDesencriptar;
     
@@ -35,8 +33,8 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
     /**
      * Creates new form Interfaz
      */
-    public Interfaz() {
-        estado = EstadoInterfaz.SinEstado;
+    public Interfaz( EstadoCS _estado) {
+        estado = _estado;
         
         try{
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -262,16 +260,16 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
     public void Login(String _nombre, String _pass){
         nombreLogin = _nombre;
         contrasenaLogin = _pass;
-        cambiarEstado(EstadoInterfaz.Login);
+        cambiarEstado(EstadoCS.Login);
     }
     
     public void ErrorLogin(){
-        cambiarEstado(EstadoInterfaz.SinEstado);
+        cambiarEstado(EstadoCS.SinEstado);
         panelIniciarSesion.Error();
     }
     
     public void ExitoLogin(){
-        cambiarEstado(EstadoInterfaz.SinEstado);
+        cambiarEstado(EstadoCS.SinEstado);
         panelExito.Exito("Has iniciado sesión correctamente");
         ponerPanel(panelExito);
     }
@@ -279,16 +277,16 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
     public void Registro(String _nombre, String _pass){
         nombreRegistro = _nombre;
         contrasena1Registro = _pass;
-        cambiarEstado(EstadoInterfaz.Registro);    
+        cambiarEstado(EstadoCS.Registro);    
     }
     
     public void ErrorRegistro(String _error){
-        cambiarEstado(EstadoInterfaz.SinEstado);
+        cambiarEstado(EstadoCS.SinEstado);
         panelRegistro.Error(_error);
     }
     
     public void ExitoRegistro(){
-        cambiarEstado(EstadoInterfaz.SinEstado);
+        cambiarEstado(EstadoCS.SinEstado);
         panelExito.Exito("Te has registrado correctamente");
         ponerPanel(panelExito);
         
@@ -296,29 +294,29 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
     
     public void Encriptar(String _path){
         pathFichero = _path;
-        cambiarEstado(EstadoInterfaz.Encriptar);
+        cambiarEstado(EstadoCS.Encriptar);
     }
 
     public void ExitoEncriptar(){
         panelInicio.ExitoEncriptar();
-        cambiarEstado(EstadoInterfaz.SinEstado);
+        cambiarEstado(EstadoCS.SinEstado);
     }
     
     public void Desencriptar(String _path){
         pathFichero = _path;
-        cambiarEstado(EstadoInterfaz.Desencriptar);
+        cambiarEstado(EstadoCS.Desencriptar);
     }
     public void ExitoDesencriptar(){
         panelInicio.ExitoDesencriptar();
-        cambiarEstado(EstadoInterfaz.SinEstado);
+        cambiarEstado(EstadoCS.SinEstado);
     }
 
     @Override
-    public EstadoInterfaz dameEstado() {
+    public EstadoCS dameEstado() {
         return estado;
     }
 
-    public void cambiarEstado(EstadoInterfaz _estado){
+    public void cambiarEstado(EstadoCS _estado){
         estado = _estado;
         //System.out.println("DEBERIA ENTRAR AQUI");
     }

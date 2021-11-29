@@ -14,7 +14,7 @@ public interface Interfaz_interface {
     
     
     //Metodos estado
-    public EstadoInterfaz dameEstado();
+    public EstadoCS dameEstado();
 
     //Metodos para encriptar y desencriptar
     public String damePathFichero();
