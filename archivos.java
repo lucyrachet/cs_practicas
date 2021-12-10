@@ -37,6 +37,8 @@ public class archivos {
                 PublicKey clavePublica = base.asciiToPublicKey(clavePublicaUsr);
 
                 byte[] bytes = rsa.encryptKey(claveAES, clavePublica);
+                base.bFichero(bytes, "datos/"+nombre_user+"/respuestas/"+nombre_archivo+".key");
+                base.bFichero(AES.encryptFile("datos/admin/archivos/"+nombre_archivo, claveAES), "datos/"+nombre_user+"/respuestas/"+nombre_archivo+".enc");
 
             } catch (Exception e) {
                 System.err.println(e);
