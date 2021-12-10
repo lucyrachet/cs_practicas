@@ -50,6 +50,7 @@ public class archivos {
         }
     }
 
+    //Desencripta el archivo que se genere en su carpeta de respuestas
     public void desencriptarArchivo(String nombre_archivo,String nombre_user,PrivateKey privKeyUser) throws Exception{
         Datos datos = new Datos();
         Probarbase64 base = new Probarbase64("");
