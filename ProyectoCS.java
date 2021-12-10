@@ -232,7 +232,7 @@ public class ProyectoCS {
                     byte[] clave_bytes = claveTest.getEncoded();
                     SecretKey claveAES = rsa.decryptKey(clave_bytes, privKey);                          //desencriptamos la clave AES con la privada de RSA
 
-                    base.bFichero(aes.decryptFile(path,claveAES), "decript/"+archivo_decript);   //pasamos de base64 la clave AES a Secret Key
+                    base.bFichero(aes.decryptFile(path,claveAES), "datos/"+usuario_dado+"/decript/"+archivo_decript);   //pasamos de base64 la clave AES a Secret Key
                                                                                                                     //desencriptamos y 
                                                                                                                     // convertimos a fichero
                     interfaz.ExitoDesencriptar();
@@ -242,12 +242,12 @@ public class ProyectoCS {
                 //ESTADO ENCRIPTAR
                     //Encriptar un fichero [Llamado desde: interfaz]
                 case Encriptar:
-                    AES aes = new AES();
-                    String path = interfaz.damePathFichero();
+                    //AES aes = new AES();
+                    String pathEnc = interfaz.damePathFichero();
 
-                    File f = new File(path);
-                    String nombre_archivo = f.getName();
-                    SecretKey clave = aes.getAESKey();
+                    File fEnc = new File(pathEnc);
+                    nombre_archivo = fEnc.getName();
+                    clave = aes.getAESKey();
 
                     //supuestaclaveAES = clave;
 
