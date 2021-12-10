@@ -10,10 +10,10 @@ import javax.crypto.SecretKey;
 
 
 public class ProyectoCS {
+    public static EstadoCS estadoCS = EstadoCS.SinEstado;
+    
     public static void main(String[] args) throws Exception {
-        
-        EstadoCS estadoCS = EstadoCS.SinEstado;
-        Interfaz interfaz = new Interfaz(estadoCS);
+        Interfaz interfaz = new Interfaz();
 
         //interfaz.setVisible(true);
         
@@ -28,6 +28,8 @@ public class ProyectoCS {
         String contrasena_dada = null;
         String contrasena_dada1 = null;
         String contrasena_dada2 = null;
+
+        CompartirCS compartirCS = null;
 /*
         RSA rsa = new RSA();
         Probarbase64 base = new Probarbase64("");
@@ -47,6 +49,7 @@ public class ProyectoCS {
 
                 //ESTADO LOGIN
                 case Login:
+                    System.out.println("Intentando iniciar sesión");
                     usuario_dado=interfaz.dameNombreLogin();
                     contrasena_dada = interfaz.dameContrasenaLogin();
                     
@@ -64,18 +67,23 @@ public class ProyectoCS {
                         String contrasena_bbdd=bbdd.recogerPassword(usuario_dado);
                         if(contrasena_bbdd.equals(pswbbdd)){
                             
-                            //SALIR DEL BUCLE
+                            //PASO A LA FASE 2
                             usuarioValidado=true;
-
+                            estadoCS = EstadoCS.SinEstado;
                             interfaz.ExitoLogin();
+                            System.out.println("Inicio de sesión exitoso");
                             if(usuario_dado.equals("admin")){
                                 esAdmin = true;
                             }
                         }else{
+                            System.out.println("Error en inicio de sesión");
                             interfaz.ErrorLogin();
+                            estadoCS = EstadoCS.SinEstado;
                         }
                     }else{
+                        System.out.println("Error en inicio de sesión");
                         interfaz.ErrorLogin();
+                        estadoCS = EstadoCS.SinEstado;
                     }
                     break;
 
@@ -105,14 +113,19 @@ public class ProyectoCS {
                             SecretKey skAES = base.asciiSecretKey(claveAES);
                             String clavepvstring = aes.encryptString(base.base64PrivateKey(privateKeyRSA), skAES);
                             
-                            base.bFichero(clavepvstring.getBytes(), "datos/"+usuario_dado+".pvk");   //guardamos rsa privada en un archivo
+                            base.bFichero(clavepvstring.getBytes(), "datos/"+usuario_dado+"/"+usuario_dado+".pvk");   //guardamos rsa privada en un archivo
                             bbdd.insertarUsuario(usuario_dado, base.base64PublicKey(publicKeyRSA), pswbbdd);   //insertamos el usuario
                             interfaz.ExitoRegistro();
+                            System.out.println("Éxito al registrar usuario");
                         }else{
+                            System.out.println("Error al registrar usuario");
                             interfaz.ErrorRegistro("Las contrasenas no coinciden");
+                            estadoCS = EstadoCS.SinEstado;
                         }
                     }else{
+                        System.out.println("Error al registrar usuario");
                         interfaz.ErrorRegistro("El usuario ya existe.");
+                        estadoCS = EstadoCS.SinEstado;
                     }
                     break;
 
@@ -131,13 +144,13 @@ public class ProyectoCS {
         //SIN ESTADO hasta acción de la interfaz
 
         //SecretKey supuestaclaveAES = null;
-        while (usuarioValidado==true ) {    
+        while (usuarioValidado==true ) {
             System.out.print("");
 
             switch (estadoCS){
 
                 //ESTADO OBTENER FICHEROS
-                    //Obtener lista de ficheros con el usuario y permiso [LLamado desde: Login,Registro,Desencriptar,Encriptar]
+                    //Obtener lista de ficheros con el usuario y permiso [LLamado desde interfaz]
                 case ObtenerFicheros:
                     //TODO: Obtener ficheros con BBDD
                     break;
@@ -188,20 +201,28 @@ public class ProyectoCS {
                     //Desencriptamos el archivo [Llamado desde: LeerRespuesta,SolicitarFichero]
                 case Desencriptar:
                     break;
-                
+
+                //ESTADO ENCRIPTAR
+                    //Encriptar un fichero [Llamado desde: interfaz]
+                case Encriptar:
+                    break;
+
                 //ESTADO COMPARTIR FICHEROS
                     //Compartir los ficheros haciendo un hilo de ejecución [Llamado desde: interfaz]
                 case CompartirFicheros:
+                    compartirCS = new CompartirCS();
+                    compartirCS.start();
+                    //Devuelve el estado SIN ESTADO
+                    estadoCS = EstadoCS.SinEstado;
                     break;
                 
                 //ESTADO DEJAR DE COMPARTIR
                     //Dejar de compartir los ficheros [Llamado desde: interfaz]
                 case DejarDeCompartir:
-                    break;
-
-                //ESTADO ENCRIPTAR
-                    //Encriptar un fichero [Llamado desde: interfaz]
-                case Encriptar:
+                    //Al cambiar el estado a dejar de compartir los hilos se tienen que destruir
+                    if(!compartirCS.isAlive()){
+                        estadoCS = EstadoCS.SinEstado;
+                    }
                     break;
                 
                 //Aqui entraran los estados de la fase 1 y SinEstado
