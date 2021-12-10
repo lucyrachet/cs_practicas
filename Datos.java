@@ -126,6 +126,36 @@ public class Datos {
         }
         return archivos;
     }
+
+    //Crea un arraylist de string con los datos según el permiso introducido
+    public ArrayList<String> recogerArchivosporTipo(int permiso){
+        ArrayList<String> archivos = new ArrayList<>();
+        String datos = "";
+        try{
+            Connection con = crearConexion();
+            PreparedStatement pstmt = con.prepareStatement("select nombre,usuario from archivoclaves where tipo="+permiso);
+            
+            if(permiso==1){
+                pstmt = con.prepareStatement("select nombre,usuario from archivoclaves");
+            }
+            
+            //PreparedStatement pstmt = con.prepareStatement("select * from archivoclaves");
+
+            ResultSet rs = pstmt.executeQuery();
+            
+            while(rs.next()){
+                //datos+=rs.getString(1)+";"+rs.getString(2)+";"+rs.getString(3)+";"+rs.getString(4);
+                datos+=rs.getString(1)+" ("+rs.getString(2)+")";
+                archivos.add(datos);
+                datos = "";
+            }
+            con.close();
+        }catch(Exception e){
+            System.out.println("No se ha podido ejecutar la recuperación de la lista de archivos");
+            System.err.println(e);
+        }
+        return archivos;
+    }
     
 
     //Se le pasa por parametro un STRING de tanto el usuario, su clavePublica y su contraseña en HASH que se insertan en la bbdd
