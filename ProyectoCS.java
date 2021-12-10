@@ -117,7 +117,7 @@ public class ProyectoCS {
                             SecretKey skAES = base.asciiSecretKey(claveAES);
                             String clavepvstring = aes.encryptString(base.base64PrivateKey(privateKeyRSA), skAES);
                             
-                            base.bFichero(clavepvstring.getBytes(), "datos/"+usuario_dado+"/"+usuario_dado+".pvk");   //guardamos rsa privada en un archivo
+                            base.bFichero(clavepvstring.getBytes(), "datos/"+usuario_dado+"/"+usuario_dado+".pvk");             //guardamos rsa privada en un archivo
                             bbdd.insertarUsuario(usuario_dado, base.base64PublicKey(publicKeyRSA), pswbbdd,tipo_permiso_dado);   //insertamos el usuario
                             
                             //base.stringToFile(base.base64PrivateKey(privateKeyRSA), "datos/"+usuario_dado+".pvk");
@@ -224,7 +224,7 @@ public class ProyectoCS {
 
                     int mitadHash = keyRSAString.length()/2;
                     String primeraMitad = keyRSAString.substring(0, mitadHash);
-                    SecretKey skhashpsw = aes.getAESKeyPSW(primeraMitad);
+                    SecretKey skhashpsw = base.asciiSecretKey(primeraMitad);
                     keyRSAString = aes.decryptString(keyRSAString, skhashpsw);   //desencriptamos el .key con la 1a mitad del hash
                     
                     PrivateKey privKey = base.asciiToPrivateKey(keyRSAString);  //paso el string a PrivateKey
@@ -248,42 +248,53 @@ public class ProyectoCS {
                     //Encriptar un fichero [Llamado desde: interfaz]
                 case Encriptar:
                     //AES aes = new AES();
+                    aes = new AES();
+                    rsa = new RSA();
+                    base = new Probarbase64("");
                     path = interfaz.damePathFichero();
 
                     File fEnc = new File(path);
                     nombre_archivo = fEnc.getName();
-                    clave = aes.getAESKey();
+                    SecretKey claveEnc = aes.getAESKey();
 
                     //supuestaclaveAES = clave;
 
-                    String clave_string = base.base64SecretKey(clave);
+                    String clave_string = base.base64SecretKey(claveEnc);
 
                     //cogemos la clave publica del usuario
                     String publicKeyString = bbdd.recogerClavePublica(usuario_dado);
                     PublicKey publicKey =  base.asciiToPublicKey(publicKeyString);
                     // PublicKey publicKey = pairRSA.getPublic();
-                    // cogemos la clave privada del archivo y usuario
-                    //String privateKeyString = bbdd.
+                    // cogemos la clave privada del usuario que es el .pvk
+                    String pvkUsuario = base.fileToString("datos/"+usuario_dado+"/"+usuario_dado+".pvk");
+                    //De string pasamos a SecretKey
+                    PrivateKey privateKey = base.asciiToPrivateKey(pvkUsuario);
                     // PrivateKey privateKey = pairRSA.getPrivate();
 
-                    byte[] claveEncriptada = rsa.encryptKey(clave,publicKey);           //encriptamos la clave publica
+                    byte[] claveEncriptada = rsa.encryptKey(claveEnc,publicKey);           //encriptamos la clave publica
                     String claveEncriptadaString = base.bytebase64(claveEncriptada);    //en string
 
                     //convertimos las claves a base64
                     String publicRSAKeyString = base.base64PublicKey(publicKey);
-                    //String privateRSAKeyString = base.base64PrivateKey(privateKey);
+                    String privateRSAKeyString = base.base64PrivateKey(privateKey);
 
                     //mete la clave en la bbdd en la tabla de archivos
+                    int tipo = -1;
+                    String extension = "";
+                    int index = nombre_archivo.lastIndexOf('.');
+                    if (index > 0) {
+                        extension = nombre_archivo.substring(index + 1);
+                    }
                     bbdd.insertarClave(nombre_archivo, claveEncriptadaString, usuario_dado, 1);
 
                     //coge el nombre del fichero
                     nombre_archivo = nombre_archivo.substring(0, nombre_archivo.lastIndexOf('.'));
 
                     //se guarda en fichero la clave privada de RSA
-                    //base.stringToFile(privateRSAKeyString, "datos/"+usuario_dado+"/encript/"+nombre_archivo+".key");
+                    base.stringToFile(privateRSAKeyString, "datos/"+usuario_dado+"/encript/"+nombre_archivo+".key");
                     
                     // mete en la carpeta encript el archivo con su_nombre.enc
-                    base.bFichero(aes.encryptFile(path, clave),  "datos/"+usuario_dado+"/encript/"+nombre_archivo+".enc");
+                    base.bFichero(aes.encryptFile(path, claveEnc),  "datos/"+usuario_dado+"/encript/"+nombre_archivo+".enc");
 
                     interfaz.ExitoEncriptar();
                     break;
