@@ -241,6 +241,45 @@ public class ProyectoCS {
                 //ESTADO ENCRIPTAR
                     //Encriptar un fichero [Llamado desde: interfaz]
                 case Encriptar:
+                    AES aes = new AES();
+                    String path = interfaz.damePathFichero();
+
+                    File f = new File(path);
+                    String nombre_archivo = f.getName();
+                    SecretKey clave = aes.getAESKey();
+
+                    //supuestaclaveAES = clave;
+
+                    String clave_string = base.base64SecretKey(clave);
+
+                    //cogemos la clave publica del usuario
+                    String publicKeyString = bbdd.recogerClavePublica(usuario_dado);
+                    PublicKey publicKey =  base.asciiToPublicKey(publicKeyString);
+                    // PublicKey publicKey = pairRSA.getPublic();
+                    // cogemos la clave privada del archivo y usuario
+                    String privateKeyString = bbdd.
+                    // PrivateKey privateKey = pairRSA.getPrivate();
+
+                    byte[] claveEncriptada = rsa.encryptKey(clave,publicKey);           //encriptamos la clave publica
+                    String claveEncriptadaString = base.bytebase64(claveEncriptada);    //en string
+
+                    //convertimos las claves a base64
+                    String publicRSAKeyString = base.base64PublicKey(publicKey);
+                    String privateRSAKeyString = base.base64PrivateKey(privateKey);
+
+                    //mete la clave en la bbdd en la tabla de archivos
+                    bbdd.insertarClave(nombre_archivo, claveEncriptadaString, usuario_dado, 1);
+
+                    //coge el nombre del fichero
+                    nombre_archivo = nombre_archivo.substring(0, nombre_archivo.lastIndexOf('.'));
+
+                    //se guarda en fichero la clave privada de RSA
+                    base.stringToFile(privateRSAKeyString, "datos/"+usuario_dado+"/encript/"+nombre_archivo+".key");
+                    
+                    // mete en la carpeta encript el archivo con su_nombre.enc
+                    base.bFichero(aes.encryptFile(path, clave),  "datos/"+usuario_dado+"/encript/"+nombre_archivo+".enc");
+
+                    interfaz.ExitoEncriptar();
                     break;
 
                 //ESTADO COMPARTIR FICHEROS
