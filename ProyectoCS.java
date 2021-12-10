@@ -1,5 +1,6 @@
 //import javax.crypto.SecretKey;
 import java.io.Console;
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyPair;
 import java.security.MessageDigest;
@@ -28,6 +29,7 @@ public class ProyectoCS {
         String contrasena_dada = null;
         String contrasena_dada1 = null;
         String contrasena_dada2 = null;
+        int tipo_permiso_dado = 0;
 
         CompartirCS compartirCS = null;
 /*
@@ -84,6 +86,7 @@ public class ProyectoCS {
                         System.out.println("Error en inicio de sesión");
                         interfaz.ErrorLogin();
                         estadoCS = EstadoCS.SinEstado;
+                        //a
                     }
                     break;
 
@@ -96,7 +99,7 @@ public class ProyectoCS {
                     usuario_dado=interfaz.dameNombreRegistro();
                     contrasena_dada1 = interfaz.dameContrasena1Registro();
                     contrasena_dada2 = interfaz.dameContrasena2Registro();
-                    
+                    tipo_permiso_dado = interfaz.dameTipoPermisoRegistro();
 
                     Boolean existe=bbdd.existeUsuario(usuario_dado); 
                     //Boolean existe=true;   
@@ -115,7 +118,7 @@ public class ProyectoCS {
                             String clavepvstring = aes.encryptString(base.base64PrivateKey(privateKeyRSA), skAES);
                             
                             base.bFichero(clavepvstring.getBytes(), "datos/"+usuario_dado+"/"+usuario_dado+".pvk");   //guardamos rsa privada en un archivo
-                            bbdd.insertarUsuario(usuario_dado, base.base64PublicKey(publicKeyRSA), pswbbdd);   //insertamos el usuario
+                            bbdd.insertarUsuario(usuario_dado, base.base64PublicKey(publicKeyRSA), pswbbdd,tipo_permiso_dado);   //insertamos el usuario
                             
                             //base.stringToFile(base.base64PrivateKey(privateKeyRSA), "datos/"+usuario_dado+".pvk");
                             //base.bFichero(base.base64PrivateKey(privateKeyRSA).getBytes(), "datos/"+usuario_dado+".pvk");   //guardamos rsa privada en un archivo
@@ -206,11 +209,83 @@ public class ProyectoCS {
                 //ESTADO DESENCRIPTAR
                     //Desencriptamos el archivo [Llamado desde: LeerRespuesta,SolicitarFichero]
                 case Desencriptar:
+                    Probarbase64 base = new Probarbase64("");
+                    AES aes = new AES();
+                    RSA rsa = new RSA();
+                    String path = interfaz.damePathFichero();
+                    File f = new File(path);                    //cogemos el file de desencriptar
+                    String nombre_archivo = f.getName();        //cogemos el nombre que tenga
+                    nombre_archivo = nombre_archivo.substring(0, nombre_archivo.lastIndexOf('.'));  //quitamos lo q hay despues del ."enc"
+                
+                    String subpath = path.substring(0,path.lastIndexOf('\\'))+"\\";
+                    String keyRSA = subpath+nombre_archivo+".key";                      //pongo como es el nombre de la key
+                    //File fKeyRSA = new File(keyRSA);                          //cojo el archivo
+                    String keyRSAString = base.fileToString(keyRSA);            //cojo el archivo y lo paso a String
+
+                    int mitadHash = keyRSAString.length()/2;
+                    String primeraMitad = keyRSAString.substring(0, mitadHash);
+                    SecretKey skhashpsw = aes.getAESKeyPSW(primeraMitad);
+                    keyRSAString = aes.decryptString(keyRSAString, skhashpsw);   //desencriptamos el .key con la 1a mitad del hash
+                    
+                    PrivateKey privKey = base.asciiToPrivateKey(keyRSAString);  //paso el string a PrivateKey
+
+                    String archivo_decript = bbdd.recogerNombre(nombre_archivo);    //coges el nombre del archivo de la bbdd
+                    String clave = bbdd.recogerClave(nombre_archivo);               //cogemos la clave AES de ese archivo
+
+                    SecretKey claveTest = base.asciiSecretKey(clave);
+
+                    byte[] clave_bytes = claveTest.getEncoded();
+                    SecretKey claveAES = rsa.decryptKey(clave_bytes, privKey);                          //desencriptamos la clave AES con la privada de RSA
+
+                    base.bFichero(aes.decryptFile(path,claveAES), "datos/"+usuario_dado+"/decript/"+archivo_decript);   //pasamos de base64 la clave AES a Secret Key
+                                                                                                                    //desencriptamos y 
+                                                                                                                    // convertimos a fichero
+                    interfaz.ExitoDesencriptar();
+                    
                     break;
 
                 //ESTADO ENCRIPTAR
                     //Encriptar un fichero [Llamado desde: interfaz]
                 case Encriptar:
+                    //AES aes = new AES();
+                    path = interfaz.damePathFichero();
+
+                    File fEnc = new File(path);
+                    nombre_archivo = fEnc.getName();
+                    clave = aes.getAESKey();
+
+                    //supuestaclaveAES = clave;
+
+                    String clave_string = base.base64SecretKey(clave);
+
+                    //cogemos la clave publica del usuario
+                    String publicKeyString = bbdd.recogerClavePublica(usuario_dado);
+                    PublicKey publicKey =  base.asciiToPublicKey(publicKeyString);
+                    // PublicKey publicKey = pairRSA.getPublic();
+                    // cogemos la clave privada del archivo y usuario
+                    //String privateKeyString = bbdd.
+                    // PrivateKey privateKey = pairRSA.getPrivate();
+
+                    byte[] claveEncriptada = rsa.encryptKey(clave,publicKey);           //encriptamos la clave publica
+                    String claveEncriptadaString = base.bytebase64(claveEncriptada);    //en string
+
+                    //convertimos las claves a base64
+                    String publicRSAKeyString = base.base64PublicKey(publicKey);
+                    //String privateRSAKeyString = base.base64PrivateKey(privateKey);
+
+                    //mete la clave en la bbdd en la tabla de archivos
+                    bbdd.insertarClave(nombre_archivo, claveEncriptadaString, usuario_dado, 1);
+
+                    //coge el nombre del fichero
+                    nombre_archivo = nombre_archivo.substring(0, nombre_archivo.lastIndexOf('.'));
+
+                    //se guarda en fichero la clave privada de RSA
+                    //base.stringToFile(privateRSAKeyString, "datos/"+usuario_dado+"/encript/"+nombre_archivo+".key");
+                    
+                    // mete en la carpeta encript el archivo con su_nombre.enc
+                    base.bFichero(aes.encryptFile(path, clave),  "datos/"+usuario_dado+"/encript/"+nombre_archivo+".enc");
+
+                    interfaz.ExitoEncriptar();
                     break;
 
                 //ESTADO COMPARTIR FICHEROS
@@ -320,16 +395,7 @@ public class ProyectoCS {
                     //                                                                                                 // convertimos a fichero
                     // interfaz.ExitoDesencriptar();
                     
-                    /**TERCERA PRACTICA */
-                    Probarbase64 base = new Probarbase64("");
-                    //admin pilla Kpublica USER
-                    String kPublicaUserString = bbdd.recogerClavePublica(usuario_dado);
-                    PublicKey kPublicaUser = base.asciiToPublicKey(kPublicaUserString);
-                    //admin desencripta con su kpriv y encripta con kpublica user
-                    //Paso 1: admin desencripta con su kpriv
                     
-                    //manda archivo encriptado a USER
-                    //user desencripta con su kprivada
                 }
                 
         }
