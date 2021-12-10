@@ -1,5 +1,6 @@
 //import javax.crypto.SecretKey;
 import java.io.Console;
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyPair;
 import java.security.MessageDigest;
@@ -207,6 +208,34 @@ public class ProyectoCS {
                 //ESTADO DESENCRIPTAR
                     //Desencriptamos el archivo [Llamado desde: LeerRespuesta,SolicitarFichero]
                 case Desencriptar:
+                    Probarbase64 base = new Probarbase64("");
+                    AES aes = new AES();
+                    RSA rsa = new RSA();
+                    String path = interfaz.damePathFichero();
+                    File f = new File(path);                    //cogemos el file de desencriptar
+                    String nombre_archivo = f.getName();        //cogemos el nombre que tenga
+                    nombre_archivo = nombre_archivo.substring(0, nombre_archivo.lastIndexOf('.'));  //quitamos lo q hay despues del ."enc"
+                
+                    String subpath = path.substring(0,path.lastIndexOf('\\'))+"\\";
+                    String keyRSA = subpath+nombre_archivo+".key";                      //pongo como es el nombre de la key
+                    //File fKeyRSA = new File(keyRSA);                          //cojo el archivo
+                    String keyRSAString = base.fileToString(keyRSA);            //cojo el archivo y lo paso a String
+                                       
+                    PrivateKey privKey = base.asciiToPrivateKey(keyRSAString);  //paso el string a PrivateKey
+
+                    String archivo_decript = bbdd.recogerNombre(nombre_archivo);    //coges el nombre del archivo de la bbdd
+                    String clave = bbdd.recogerClave(nombre_archivo);               //cogemos la clave AES de ese archivo
+
+                    SecretKey claveTest = base.asciiSecretKey(clave);
+
+                    byte[] clave_bytes = claveTest.getEncoded();
+                    SecretKey claveAES = rsa.decryptKey(clave_bytes, privKey);                          //desencriptamos la clave AES con la privada de RSA
+
+                    base.bFichero(aes.decryptFile(path,claveAES), "decript/"+archivo_decript);   //pasamos de base64 la clave AES a Secret Key
+                                                                                                                    //desencriptamos y 
+                                                                                                                    // convertimos a fichero
+                    interfaz.ExitoDesencriptar();
+                    
                     break;
 
                 //ESTADO ENCRIPTAR
@@ -321,16 +350,7 @@ public class ProyectoCS {
                     //                                                                                                 // convertimos a fichero
                     // interfaz.ExitoDesencriptar();
                     
-                    /**TERCERA PRACTICA */
-                    Probarbase64 base = new Probarbase64("");
-                    //admin pilla Kpublica USER
-                    String kPublicaUserString = bbdd.recogerClavePublica(usuario_dado);
-                    PublicKey kPublicaUser = base.asciiToPublicKey(kPublicaUserString);
-                    //admin desencripta con su kpriv y encripta con kpublica user
-                    //Paso 1: admin desencripta con su kpriv
                     
-                    //manda archivo encriptado a USER
-                    //user desencripta con su kprivada
                 }
                 
         }
