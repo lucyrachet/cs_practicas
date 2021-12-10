@@ -23,7 +23,10 @@ public class archivos {
                 String keyRSAString = base.fileToString(keyRSA);                //cojo el archivo y lo paso a String
 
                 //DESENCRIPTAR CON AES DE ADMIN
-                String aesAdmin = ""; //METER AQUI EL AES DEL ADMIN
+                String aesAdmin = "datos/admin/aesadmin.key";
+                aesAdmin= base.fileToString(aesAdmin);
+
+                //String aesAdmin = ""; //METER AQUI EL AES DEL ADMIN
                 SecretKey claveAESAdmin = base.asciiSecretKey(aesAdmin);
 
                 PrivateKey privKey = base.asciiToPrivateKey(aes.decryptString(keyRSAString, claveAESAdmin));      //paso el string a PrivateKey
@@ -38,7 +41,7 @@ public class archivos {
 
                 byte[] bytes = rsa.encryptKey(claveAES, clavePublica);
                 base.bFichero(bytes, "datos/"+nombre_user+"/respuestas/"+nombre_archivo+".key");
-                base.bFichero(AES.encryptFile("datos/admin/archivos/"+nombre_archivo, claveAES), "datos/"+nombre_user+"/respuestas/"+nombre_archivo+".enc");
+                base.bFichero(AES.encryptFile("datos/admin/archivos/"+archivo_decript, claveAES), "datos/"+nombre_user+"/respuestas/"+nombre_archivo+".enc");
 
             } catch (Exception e) {
                 System.err.println(e);
