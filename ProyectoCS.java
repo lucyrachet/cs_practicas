@@ -267,7 +267,7 @@ public class ProyectoCS {
                     // PublicKey publicKey = pairRSA.getPublic();
                     // cogemos la clave privada del usuario que es el .pvk
                     String pvkUsuario = base.fileToString("datos/"+usuario_dado+"/"+usuario_dado+".pvk");
-                    //De string pasamos a SecretKey
+                    //De string pasamos a PrivateKey
                     PrivateKey privateKey = base.asciiToPrivateKey(pvkUsuario);
                     // PrivateKey privateKey = pairRSA.getPrivate();
 
@@ -285,18 +285,47 @@ public class ProyectoCS {
                     if (index > 0) {
                         extension = nombre_archivo.substring(index + 1);
                     }
-                    bbdd.insertarClave(nombre_archivo, claveEncriptadaString, usuario_dado, 1);
+                    if(extension.equals("")==false){
+                        switch(extension){
+                            //audio
+                            case ".mp3":
+                            case ".wav":
+                            case ".midi":
+                                tipo = 2;
+                            //imagen
+                            case ".jpg":
+                            case ".jpeg":
+                            case ".png":
+                            case ".gif":
+                            case ".tiff":
+                            case ".psd":
+                            case ".raw":
+                                tipo = 3;
+                            //video
+                            case ".flv":
+                            case ".vob":
+                            case ".mp4":
+                            case ".avi":
+                            case ".viv":
+                            case ".mpg":
+                            case ".mkv":
+                                tipo = 4;
+                            
+                        }
+                    }
+                    if(tipo!=-1){
 
-                    //coge el nombre del fichero
-                    nombre_archivo = nombre_archivo.substring(0, nombre_archivo.lastIndexOf('.'));
-
-                    //se guarda en fichero la clave privada de RSA
-                    base.stringToFile(privateRSAKeyString, "datos/"+usuario_dado+"/encript/"+nombre_archivo+".key");
-                    
-                    // mete en la carpeta encript el archivo con su_nombre.enc
-                    base.bFichero(aes.encryptFile(path, claveEnc),  "datos/"+usuario_dado+"/encript/"+nombre_archivo+".enc");
-
-                    interfaz.ExitoEncriptar();
+                        bbdd.insertarClave(nombre_archivo, claveEncriptadaString, usuario_dado, tipo);
+    
+                        //coge el nombre del fichero
+                        nombre_archivo = nombre_archivo.substring(0, nombre_archivo.lastIndexOf('.'));
+    
+                        //se guarda en fichero la clave privada de RSA
+                        base.stringToFile(privateRSAKeyString, "datos/"+usuario_dado+"/encript/"+nombre_archivo+".key");
+                        // mete en la carpeta encript el archivo con su_nombre.enc
+                        base.bFichero(aes.encryptFile(path, claveEnc),  "datos/"+usuario_dado+"/encript/"+nombre_archivo+".enc");
+                        interfaz.ExitoEncriptar();
+                    }
                     break;
 
                 //ESTADO COMPARTIR FICHEROS
