@@ -5,6 +5,7 @@
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -21,13 +22,14 @@ import javax.swing.UIManager;
 public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
     
     private int xMouse,yMouse,tipoPermisoRegistro;
-    private String pathFichero,nombreLogin,contrasenaLogin,nombreRegistro,contrasena1Registro,contrasena2Registo;
+    private String pathFichero,nombreLogin,contrasenaLogin,nombreRegistro,contrasena1Registro,contrasena2Registo,nombreArchivoSolicitud;
     //private String optionsPathEncriptar,optionsPathDesencriptar;
     
     public PanelIniciarSesion panelIniciarSesion;
     public PanelRegistro panelRegistro;
     public PanelInicio panelInicio;
     public PanelExito panelExito;
+    public PanelObtenerFicheros panelObtenerFicheros;
    
     /**
      * Creates new form Interfaz
@@ -49,6 +51,7 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
         panelRegistro = new PanelRegistro(this);
         panelInicio = new PanelInicio(this);
         panelExito = new PanelExito(this);
+        panelObtenerFicheros = new PanelObtenerFicheros(this);
         
         this.ponerPanel(panelIniciarSesion);
         
@@ -71,6 +74,8 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
         cerrar = new javax.swing.JLabel();
         tituloHeader = new javax.swing.JLabel();
         Footer = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
         Authors = new javax.swing.JLabel();
         Main = new javax.swing.JPanel();
         tituloPanel = new javax.swing.JPanel();
@@ -134,7 +139,23 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
 
         getContentPane().add(Header, java.awt.BorderLayout.PAGE_START);
 
-        Footer.setPreferredSize(new java.awt.Dimension(800, 30));
+        Footer.setPreferredSize(new java.awt.Dimension(800, 65));
+        Footer.setLayout(new java.awt.BorderLayout());
+
+        jPanel1.setPreferredSize(new java.awt.Dimension(200, 65));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 65, Short.MAX_VALUE)
+        );
+
+        Footer.add(jPanel1, java.awt.BorderLayout.LINE_END);
 
         Authors.setBackground(new java.awt.Color(92, 122, 234));
         Authors.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -142,23 +163,30 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
         Authors.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Authors.setText(" Britt Hooghiemstra, Luis Morata, Santos Muñoz, Lucía Oliva");
 
-        javax.swing.GroupLayout FooterLayout = new javax.swing.GroupLayout(Footer);
-        Footer.setLayout(FooterLayout);
-        FooterLayout.setHorizontalGroup(
-            FooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Authors, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(246, Short.MAX_VALUE)
+                .addComponent(Authors, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(137, 137, 137))
         );
-        FooterLayout.setVerticalGroup(
-            FooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Authors, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 35, Short.MAX_VALUE)
+                .addComponent(Authors, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        Footer.add(jPanel2, java.awt.BorderLayout.LINE_START);
 
         getContentPane().add(Footer, java.awt.BorderLayout.PAGE_END);
 
         Main.setBackground(new java.awt.Color(230, 230, 230));
         Main.setLayout(new java.awt.BorderLayout());
 
-        tituloPanel.setPreferredSize(new java.awt.Dimension(800, 80));
+        tituloPanel.setPreferredSize(new java.awt.Dimension(800, 90));
 
         tituloMain.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         tituloMain.setForeground(new java.awt.Color(92, 122, 234));
@@ -177,8 +205,9 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
         tituloPanelLayout.setVerticalGroup(
             tituloPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tituloPanelLayout.createSequentialGroup()
-                .addGap(0, 40, Short.MAX_VALUE)
-                .addComponent(tituloMain, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(27, Short.MAX_VALUE)
+                .addComponent(tituloMain, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
         );
 
         Main.add(tituloPanel, java.awt.BorderLayout.PAGE_START);
@@ -191,7 +220,7 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
         );
         contentLayout.setVerticalGroup(
             contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 355, Short.MAX_VALUE)
+            .addGap(0, 310, Short.MAX_VALUE)
         );
 
         Main.add(content, java.awt.BorderLayout.CENTER);
@@ -240,6 +269,8 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
     private javax.swing.JPanel Main;
     private javax.swing.JLabel cerrar;
     private javax.swing.JPanel content;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel tituloHeader;
     private javax.swing.JLabel tituloMain;
     private javax.swing.JPanel tituloPanel;
@@ -297,6 +328,21 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
         panelInicio.ExitoEncriptar();
     }
     
+    public void SetEstadoObtenerFicheros(){
+        cambiarEstado(EstadoCS.ObtenerFicheros);
+    }
+    
+    public void ObtenerFicheros(ArrayList<String> _datos){
+        panelObtenerFicheros.PonerValores(_datos);
+        ponerPanel(panelObtenerFicheros);
+    }
+    
+    public void SolicitarFichero(String _nombre){
+        nombreArchivoSolicitud = _nombre;
+        cambiarEstado(EstadoCS.SolicitarFichero);
+        
+    }
+    
     public void Desencriptar(String _path){
         pathFichero = _path;
         cambiarEstado(EstadoCS.Desencriptar);
@@ -343,6 +389,12 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
     public int dameTipoPermisoRegistro() {
         return tipoPermisoRegistro;
     }
+    
+    @Override
+    public String dameNombreArchivoSolicitud() {
+        return nombreArchivoSolicitud;
+    }
+
 
     
 }

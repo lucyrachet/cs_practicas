@@ -26,6 +26,7 @@ public interface Interfaz_interface {
     public String dameContrasena1Registro();
     public String dameContrasena2Registro();
     public int dameTipoPermisoRegistro();
+    public String dameNombreArchivoSolicitud();
 
     
     //public abstract void setVisible(Boolean visible);

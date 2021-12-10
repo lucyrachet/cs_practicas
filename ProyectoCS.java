@@ -29,6 +29,7 @@ public class ProyectoCS {
         String contrasena_dada = null;
         String contrasena_dada1 = null;
         String contrasena_dada2 = null;
+        String nombre_archivo_dado = null;
         int tipo_permiso_dado = 0;
 
         CompartirCS compartirCS = null;
@@ -161,12 +162,17 @@ public class ProyectoCS {
                 //ESTADO OBTENER FICHEROS
                     //Obtener lista de ficheros con el usuario y permiso [LLamado desde interfaz]
                 case ObtenerFicheros:
-                    //TODO: Obtener ficheros con BBDD
+                    interfaz.ObtenerFicheros(bbdd.recogerArchivos());
+                    estadoCS = EstadoCS.SinEstado;
                     break;
 
                 //ESTADO SOLICITAR FICHERO
                     //Solicitar un fichero para desencriptar [Llamado desde: interfaz]
                 case SolicitarFichero:
+                    nombre_archivo_dado = interfaz.dameNombreArchivoSolicitud();
+                    System.out.println(nombre_archivo_dado);
+                    estadoCS = EstadoCS.SinEstado;
+                    /*
                     //TODO: Solicitar fichero por cliente servidor
                     TipoSolicitud solicitud = TipoSolicitud.TuMismo; //= solicitud();
                     switch(solicitud){
@@ -187,6 +193,7 @@ public class ProyectoCS {
                             estadoCS=EstadoCS.Desencriptar;
                             break;               
                     }
+                    */
                     break;
                 
                 //ESTADO ESPERAR RESPUESTA
