@@ -20,7 +20,7 @@ import javax.swing.UIManager;
 
 public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
     
-    private int xMouse,yMouse;
+    private int xMouse,yMouse,tipoPermisoRegistro;
     private String pathFichero,nombreLogin,contrasenaLogin,nombreRegistro,contrasena1Registro,contrasena2Registo;
     //private String optionsPathEncriptar,optionsPathDesencriptar;
     
@@ -270,10 +270,11 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
         ponerPanel(panelExito);
     }
     
-    public void Registro(String _nombre, String _pass, String _pass2){
+    public void Registro(String _nombre, String _pass, String _pass2, int _tipoPermiso){
         nombreRegistro = _nombre;
         contrasena1Registro = _pass;
         contrasena2Registo = _pass2;
+        tipoPermisoRegistro = _tipoPermiso+1;
         cambiarEstado(EstadoCS.Registro);    
     }
     
@@ -337,6 +338,10 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
     @Override
     public String dameContrasena2Registro() {
         return contrasena2Registo;
+    }
+    @Override
+    public int dameTipoPermisoRegistro() {
+        return tipoPermisoRegistro;
     }
 
     

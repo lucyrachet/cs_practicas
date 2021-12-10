@@ -46,7 +46,7 @@ public class PanelRegistro extends javax.swing.JPanel {
         yaTienesCuenta = new javax.swing.JLabel();
         error = new javax.swing.JLabel();
         nombreLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        tipoPermiso = new javax.swing.JComboBox<>();
 
         setPreferredSize(new java.awt.Dimension(800, 355));
         setLayout(new java.awt.BorderLayout());
@@ -171,8 +171,8 @@ public class PanelRegistro extends javax.swing.JPanel {
         nombreLabel1.setLabelFor(nombre);
         nombreLabel1.setText("Nombre");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos los archivos", "Audios", "Imágenes", "Videos" }));
-        jComboBox1.setSelectedIndex(2);
+        tipoPermiso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos los archivos", "Audios", "Imágenes", "Videos" }));
+        tipoPermiso.setSelectedIndex(2);
 
         javax.swing.GroupLayout PanelCentralLayout = new javax.swing.GroupLayout(PanelCentral);
         PanelCentral.setLayout(PanelCentralLayout);
@@ -209,7 +209,7 @@ public class PanelRegistro extends javax.swing.JPanel {
                         .addGap(176, 176, 176)
                         .addComponent(repetirPassLabel))
                     .addGroup(PanelCentralLayout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tipoPermiso, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
                         .addComponent(repetirPass, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
@@ -231,7 +231,7 @@ public class PanelRegistro extends javax.swing.JPanel {
                     .addComponent(repetirPassLabel))
                 .addGap(3, 3, 3)
                 .addGroup(PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tipoPermiso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(repetirPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(error)
@@ -248,7 +248,7 @@ public class PanelRegistro extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void EntrarTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EntrarTxtMouseClicked
-        interfaz.Registro(nombre.getText(), String.valueOf(pass.getPassword()), String.valueOf(repetirPass.getPassword()));
+        interfaz.Registro(nombre.getText(), String.valueOf(pass.getPassword()), String.valueOf(repetirPass.getPassword()),tipoPermiso.getSelectedIndex());
     }//GEN-LAST:event_EntrarTxtMouseClicked
 
     private void EntrarTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EntrarTxtMouseEntered
@@ -282,7 +282,6 @@ public class PanelRegistro extends javax.swing.JPanel {
     private javax.swing.JPanel PanelIzquierdo;
     private javax.swing.JLabel error;
     private javax.swing.JLabel iniciarSesion;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField nombre;
     private javax.swing.JLabel nombreLabel;
@@ -291,6 +290,7 @@ public class PanelRegistro extends javax.swing.JPanel {
     private javax.swing.JLabel passLabel;
     private javax.swing.JPasswordField repetirPass;
     private javax.swing.JLabel repetirPassLabel;
+    private javax.swing.JComboBox<String> tipoPermiso;
     private javax.swing.JLabel tituloPanel;
     private javax.swing.JLabel yaTienesCuenta;
     // End of variables declaration//GEN-END:variables

@@ -25,6 +25,8 @@ public interface Interfaz_interface {
     public String dameNombreRegistro();
     public String dameContrasena1Registro();
     public String dameContrasena2Registro();
+    public int dameTipoPermisoRegistro();
+
     
     //public abstract void setVisible(Boolean visible);
     // public abstract String dameNombreUsuario();         //devuelve el nombre que haya introducido en el login
