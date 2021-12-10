@@ -1,8 +1,12 @@
 //import javax.crypto.SecretKey;
 import java.io.Console;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyPair;
+import java.security.MessageDigest;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+
+import javax.crypto.SecretKey;
 
 
 public class ProyectoCS {
@@ -52,8 +56,16 @@ public class ProyectoCS {
                     //Comprobacion de login bien hecho
                     existeUsuario = bbdd.existeUsuario(usuario_dado);
                     if(existeUsuario==true){
+                        Probarbase64 base = new Probarbase64("");
+                        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+                        byte[] hash = digest.digest(contrasena_dada.getBytes(StandardCharsets.UTF_8));
+                
+                        String hashpsw = base.bytebase64(hash);
+                        String pswbbdd = hashpsw.substring(hashpsw.length()/2);
+                        String claveAES = hashpsw.substring(0, hashpsw.length()/2);
+
                         String contrasena_bbdd=bbdd.recogerPassword(usuario_dado);
-                        if(contrasena_bbdd.equals(contrasena_dada)){
+                        if(contrasena_bbdd.equals(pswbbdd)){
                             
                             //PASO A LA FASE 2
                             usuarioValidado=true;
@@ -78,27 +90,36 @@ public class ProyectoCS {
 
                 //ESTADO REGISTRO
                 case Registro:
-                    System.out.println("Intentando registrar usuario");
-                    //AES aes = new AES();
+                    AES aes = new AES();
                     RSA rsa = new RSA();
                     Probarbase64 base = new Probarbase64("");
 
                     usuario_dado=interfaz.dameNombreRegistro();
                     contrasena_dada1 = interfaz.dameContrasena1Registro();
                     contrasena_dada2 = interfaz.dameContrasena2Registro();
+                    
 
                     Boolean existe=bbdd.existeUsuario(usuario_dado); 
-                    //Boolean existe=false;   
-                    if(existe==false){                                      //si el usuario no existe lo creamos
-                        if(contrasena_dada1.equals(contrasena_dada2)){             //si las contrasenas coinciden
+                    //Boolean existe=true;   
+                    if(existe==false){                           //si el usuario no existe lo creamos    
+                        if(contrasena_dada1.equals(contrasena_dada2)){             //si las contrasenas coinciden    
+                            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+                            byte[] hash = digest.digest(contrasena_dada1.getBytes(StandardCharsets.UTF_8));
+                    
+                            String hashpsw = base.bytebase64(hash);  
+                            String pswbbdd = hashpsw.substring(hashpsw.length()/2);
+                            String claveAES = hashpsw.substring(0,hashpsw.length()/2);
                             KeyPair pairRSA = rsa.crearParClaves();         //generamos par de claves
                             PublicKey publicKeyRSA = pairRSA.getPublic();   //cogemos la publica y la metemos en base de datos
                             PrivateKey privateKeyRSA = pairRSA.getPrivate();   //cogemos la privada 
+                            SecretKey skAES = base.asciiSecretKey(claveAES);
+                            String clavepvstring = aes.encryptString(base.base64PrivateKey(privateKeyRSA), skAES);
                             
+                            base.bFichero(clavepvstring.getBytes(), "datos/"+usuario_dado+"/"+usuario_dado+".pvk");   //guardamos rsa privada en un archivo
+                            bbdd.insertarUsuario(usuario_dado, base.base64PublicKey(publicKeyRSA), pswbbdd);   //insertamos el usuario
                             
-                            base.stringToFile(base.base64PrivateKey(privateKeyRSA), "datos/"+usuario_dado+".pvk");
+                            //base.stringToFile(base.base64PrivateKey(privateKeyRSA), "datos/"+usuario_dado+".pvk");
                             //base.bFichero(base.base64PrivateKey(privateKeyRSA).getBytes(), "datos/"+usuario_dado+".pvk");   //guardamos rsa privada en un archivo
-                            bbdd.insertarUsuario(usuario_dado, base.base64PublicKey(publicKeyRSA), contrasena_dada1,1);   //insertamos el usuario
                             usuarioValidado = true;
                             estadoCS = EstadoCS.SinEstado;
                             interfaz.ExitoRegistro();
