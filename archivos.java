@@ -9,6 +9,7 @@ import javax.crypto.SecretKey;
 
 public class archivos {
     
+    //Guarda el archivo encriptado en la carpeta del usuario junto a una clave AES encriptada con su clave pública 
     public void accederArchivo(String nombre_archivo,String nombre_user){
         Datos datos = new Datos();
         Probarbase64 base = new Probarbase64("");
@@ -23,7 +24,6 @@ public class archivos {
                 File fKeyRSA = new File(keyRSA);                                                //cojo el archivo
                 String keyRSAString = base.fileToString(keyRSA);                                //cojo el archivo y lo paso a String
 
-                //DESENCRIPTAR CON AES DE ADMIN
                 String aesAdmin = "datos/admin/aesadmin.key";
                 aesAdmin= base.fileToString(aesAdmin);
 
@@ -48,5 +48,27 @@ public class archivos {
                 System.err.println(e);
             }  
         }
+    }
+
+    public void desencriptarArchivo(String nombre_archivo,String nombre_user,PrivateKey privKeyUser) throws Exception{
+        Datos datos = new Datos();
+        Probarbase64 base = new Probarbase64("");
+        AES aes = new AES();
+        RSA rsa = new RSA();
+
+        accederArchivo(nombre_archivo, nombre_user);
+
+        String archivo_decript = datos.recogerNombre(nombre_archivo);           //coges el nombre del archivo de la bbdd
+        String clave = datos.recogerClave(nombre_archivo);                      //cogemos la clave AES de ese archivo
+
+        SecretKey claveAES = rsa.decryptKey(clave.getBytes(), privKeyUser);     //desencriptamos la clave AES con la privada de RSA
+
+        base.bFichero(aes.decryptFile("datos/"+nombre_user+"/respuestas/"+nombre_archivo+".enc",claveAES), "datos/"+nombre_user+"/decript/"+archivo_decript);
+    
+        File deleteKey = new File("datos/"+nombre_user+"/respuestas/"+nombre_archivo+".key");
+        File deleteArchivo = new File("datos/"+nombre_user+"/respuestas/"+nombre_archivo+".enc");
+
+        deleteKey.delete();
+        deleteArchivo.delete();
     }
 }
