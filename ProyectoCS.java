@@ -175,6 +175,7 @@ public class ProyectoCS {
                     /*
                     //TODO: Solicitar fichero por cliente servidor
                     TipoSolicitud solicitud = TipoSolicitud.TuMismo; //= solicitud();
+
                     switch(solicitud){
                         case OtroUsuario:
                             //TODO: Enviar solicitud al usuario, permisos y te tiene que responder
@@ -199,8 +200,21 @@ public class ProyectoCS {
                 //ESTADO ESPERAR RESPUESTA
                     //Comprobar que haya una respuesta [LLamado desde: SolicitarFichero]
                 case EsperarRespuesta:
-                    //TODO: Comprobar que haya una respuesta en la carpeta (se puede poner cooldown para que no consuma mucho)
-
+                //TODO: Comprobar que haya una respuesta en la carpeta (se puede poner cooldown para que no consuma mucho)
+                    String directorioActual = System.getProperty("user.dir");
+                    String directorioCheck = directorioActual+"/datos/"+usuario_dado+"/respuestas";
+                    File ruta = new File(directorioCheck);
+                    while(true){
+                        String[] archivos = ruta.list();
+                        if(archivos.length > 0){
+                            /*foreach(String arch : archivos){
+                                if(arch.equals(usuario_dado)){
+                                    break;
+                                }
+                            }*/
+                            break;
+                        }
+                    }
                     //Devuelve el estado LeerRespuesta si hay respuesta
                     estadoCS = EstadoCS.LeerRespuesta;
                     break;
@@ -219,6 +233,7 @@ public class ProyectoCS {
                     Probarbase64 base = new Probarbase64("");
                     AES aes = new AES();
                     RSA rsa = new RSA();
+                    archivos metodo = new archivos();
                     String path = interfaz.damePathFichero();
                     File f = new File(path);                    //cogemos el file de desencriptar
                     String nombre_archivo = f.getName();        //cogemos el nombre que tenga
@@ -235,16 +250,23 @@ public class ProyectoCS {
                     keyRSAString = aes.decryptString(keyRSAString, skhashpsw);   //desencriptamos el .key con la 1a mitad del hash
                     
                     PrivateKey privKey = base.asciiToPrivateKey(keyRSAString);  //paso el string a PrivateKey
-
+                    
                     String archivo_decript = bbdd.recogerNombre(nombre_archivo);    //coges el nombre del archivo de la bbdd
+                    /*
                     String clave = bbdd.recogerClave(nombre_archivo);               //cogemos la clave AES de ese archivo
 
                     SecretKey claveTest = base.asciiSecretKey(clave);
 
                     byte[] clave_bytes = claveTest.getEncoded();
                     SecretKey claveAES = rsa.decryptKey(clave_bytes, privKey);                          //desencriptamos la clave AES con la privada de RSA
+                    */
+                    //para desencriptar necesitamos el nombre del usaurio que lo ha subido
+                    
+                    String[] nombre_user_duenyo = nombre_archivo_dado.split("(");
+                    String nombre_duenyo = nombre_user_duenyo[1].substring(0, nombre_user_duenyo.length-1);
 
-                    base.bFichero(aes.decryptFile(path,claveAES), "datos/"+usuario_dado+"/decript/"+archivo_decript);   //pasamos de base64 la clave AES a Secret Key
+                    metodo.desencriptarArchivo(archivo_decript, nombre_duenyo, privKey);
+                    //base.bFichero(aes.decryptFile(path,claveAES), "datos/"+usuario_dado+"/decript/"+archivo_decript);   //pasamos de base64 la clave AES a Secret Key
                                                                                                                     //desencriptamos y 
                                                                                                                     // convertimos a fichero
                     interfaz.ExitoDesencriptar();
@@ -331,8 +353,10 @@ public class ProyectoCS {
                         base.stringToFile(privateRSAKeyString, "datos/"+usuario_dado+"/encript/"+nombre_archivo+".key");
                         // mete en la carpeta encript el archivo con su_nombre.enc
                         base.bFichero(aes.encryptFile(path, claveEnc),  "datos/"+usuario_dado+"/encript/"+nombre_archivo+".enc");
-                        interfaz.ExitoEncriptar();
                     }
+
+                    interfaz.ExitoEncriptar();
+
                     break;
 
                 //ESTADO COMPARTIR FICHEROS
