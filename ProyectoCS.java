@@ -96,6 +96,7 @@ public class ProyectoCS {
                     usuario_dado=interfaz.dameNombreRegistro();
                     contrasena_dada1 = interfaz.dameContrasena1Registro();
                     contrasena_dada2 = interfaz.dameContrasena2Registro();
+                    
 
                     Boolean existe=bbdd.existeUsuario(usuario_dado); 
                     //Boolean existe=true;   
@@ -115,6 +116,11 @@ public class ProyectoCS {
                             
                             base.bFichero(clavepvstring.getBytes(), "datos/"+usuario_dado+"/"+usuario_dado+".pvk");   //guardamos rsa privada en un archivo
                             bbdd.insertarUsuario(usuario_dado, base.base64PublicKey(publicKeyRSA), pswbbdd);   //insertamos el usuario
+                            
+                            //base.stringToFile(base.base64PrivateKey(privateKeyRSA), "datos/"+usuario_dado+".pvk");
+                            //base.bFichero(base.base64PrivateKey(privateKeyRSA).getBytes(), "datos/"+usuario_dado+".pvk");   //guardamos rsa privada en un archivo
+                            usuarioValidado = true;
+                            estadoCS = EstadoCS.SinEstado;
                             interfaz.ExitoRegistro();
                             System.out.println("Éxito al registrar usuario");
                         }else{
@@ -314,7 +320,16 @@ public class ProyectoCS {
                     //                                                                                                 // convertimos a fichero
                     // interfaz.ExitoDesencriptar();
                     
-
+                    /**TERCERA PRACTICA */
+                    Probarbase64 base = new Probarbase64("");
+                    //admin pilla Kpublica USER
+                    String kPublicaUserString = bbdd.recogerClavePublica(usuario_dado);
+                    PublicKey kPublicaUser = base.asciiToPublicKey(kPublicaUserString);
+                    //admin desencripta con su kpriv y encripta con kpublica user
+                    //Paso 1: admin desencripta con su kpriv
+                    
+                    //manda archivo encriptado a USER
+                    //user desencripta con su kprivada
                 }
                 
         }
