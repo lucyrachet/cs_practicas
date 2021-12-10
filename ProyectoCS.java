@@ -221,7 +221,12 @@ public class ProyectoCS {
                     String keyRSA = subpath+nombre_archivo+".key";                      //pongo como es el nombre de la key
                     //File fKeyRSA = new File(keyRSA);                          //cojo el archivo
                     String keyRSAString = base.fileToString(keyRSA);            //cojo el archivo y lo paso a String
-                                       
+
+                    int mitadHash = keyRSAString.length()/2;
+                    String primeraMitad = keyRSAString.substring(0, mitadHash);
+                    SecretKey skhashpsw = aes.getAESKeyPSW(primeraMitad);
+                    keyRSAString = aes.decryptString(keyRSAString, skhashpsw);   //desencriptamos el .key con la 1a mitad del hash
+                    
                     PrivateKey privKey = base.asciiToPrivateKey(keyRSAString);  //paso el string a PrivateKey
 
                     String archivo_decript = bbdd.recogerNombre(nombre_archivo);    //coges el nombre del archivo de la bbdd
