@@ -72,6 +72,7 @@ public class ProyectoCS {
                         System.out.println("Error en inicio de sesión");
                         interfaz.ErrorLogin();
                         estadoCS = EstadoCS.SinEstado;
+                        //a
                     }
                     break;
 
