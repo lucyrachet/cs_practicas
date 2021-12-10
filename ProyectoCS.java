@@ -117,7 +117,7 @@ public class ProyectoCS {
                             SecretKey skAES = base.asciiSecretKey(claveAES);
                             String clavepvstring = aes.encryptString(base.base64PrivateKey(privateKeyRSA), skAES);
                             
-                            //Unobase.bFichero(clavepvstring.getBytes(), "datos/"+usuario_dado+"/"+usuario_dado+".pvk");   //guardamos rsa privada en un archivo
+                            base.bFichero(clavepvstring.getBytes(), "datos/"+usuario_dado+"/"+usuario_dado+".pvk");   //guardamos rsa privada en un archivo
                             bbdd.insertarUsuario(usuario_dado, base.base64PublicKey(publicKeyRSA), pswbbdd,tipo_permiso_dado);   //insertamos el usuario
                             
                             //base.stringToFile(base.base64PrivateKey(privateKeyRSA), "datos/"+usuario_dado+".pvk");
@@ -243,9 +243,9 @@ public class ProyectoCS {
                     //Encriptar un fichero [Llamado desde: interfaz]
                 case Encriptar:
                     //AES aes = new AES();
-                    String pathEnc = interfaz.damePathFichero();
+                    path = interfaz.damePathFichero();
 
-                    File fEnc = new File(pathEnc);
+                    File fEnc = new File(path);
                     nombre_archivo = fEnc.getName();
                     clave = aes.getAESKey();
 
