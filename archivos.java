@@ -8,6 +8,7 @@ import java.security.spec.InvalidKeySpecException;
 import javax.crypto.SecretKey;
 
 public class archivos {
+    
     public void accederArchivo(String nombre_archivo,String nombre_user){
         Datos datos = new Datos();
         Probarbase64 base = new Probarbase64("");
@@ -19,8 +20,8 @@ public class archivos {
             RSA rsa = new RSA();
             try {
                 String keyRSA = "datos/"+nombre_user+"/"+nombre_user+".pvk";                    //pongo como es el nombre de la key
-                File fKeyRSA = new File(keyRSA);                                //cojo el archivo
-                String keyRSAString = base.fileToString(keyRSA);                //cojo el archivo y lo paso a String
+                File fKeyRSA = new File(keyRSA);                                                //cojo el archivo
+                String keyRSAString = base.fileToString(keyRSA);                                //cojo el archivo y lo paso a String
 
                 //DESENCRIPTAR CON AES DE ADMIN
                 String aesAdmin = "datos/admin/aesadmin.key";
