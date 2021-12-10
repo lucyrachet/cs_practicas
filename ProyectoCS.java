@@ -29,6 +29,7 @@ public class ProyectoCS {
         String contrasena_dada = null;
         String contrasena_dada1 = null;
         String contrasena_dada2 = null;
+        int tipo_permiso_dado = 0;
 
         CompartirCS compartirCS = null;
 /*
@@ -98,7 +99,7 @@ public class ProyectoCS {
                     usuario_dado=interfaz.dameNombreRegistro();
                     contrasena_dada1 = interfaz.dameContrasena1Registro();
                     contrasena_dada2 = interfaz.dameContrasena2Registro();
-                    
+                    tipo_permiso_dado = interfaz.dameTipoPermisoRegistro();
 
                     Boolean existe=bbdd.existeUsuario(usuario_dado); 
                     //Boolean existe=true;   
@@ -116,8 +117,8 @@ public class ProyectoCS {
                             SecretKey skAES = base.asciiSecretKey(claveAES);
                             String clavepvstring = aes.encryptString(base.base64PrivateKey(privateKeyRSA), skAES);
                             
-                            base.bFichero(clavepvstring.getBytes(), "datos/"+usuario_dado+"/"+usuario_dado+".pvk");   //guardamos rsa privada en un archivo
-                            bbdd.insertarUsuario(usuario_dado, base.base64PublicKey(publicKeyRSA), pswbbdd);   //insertamos el usuario
+                            //Unobase.bFichero(clavepvstring.getBytes(), "datos/"+usuario_dado+"/"+usuario_dado+".pvk");   //guardamos rsa privada en un archivo
+                            bbdd.insertarUsuario(usuario_dado, base.base64PublicKey(publicKeyRSA), pswbbdd,tipo_permiso_dado);   //insertamos el usuario
                             
                             //base.stringToFile(base.base64PrivateKey(privateKeyRSA), "datos/"+usuario_dado+".pvk");
                             //base.bFichero(base.base64PrivateKey(privateKeyRSA).getBytes(), "datos/"+usuario_dado+".pvk");   //guardamos rsa privada en un archivo
