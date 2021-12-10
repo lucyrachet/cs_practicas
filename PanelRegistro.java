@@ -31,7 +31,6 @@ public class PanelRegistro extends javax.swing.JPanel {
 
         PanelDerecho = new javax.swing.JPanel();
         PanelIzquierdo = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
         PanelCentral = new javax.swing.JPanel();
         tituloPanel = new javax.swing.JLabel();
         nombreLabel = new javax.swing.JLabel();
@@ -59,7 +58,7 @@ public class PanelRegistro extends javax.swing.JPanel {
         );
         PanelDerechoLayout.setVerticalGroup(
             PanelDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 330, Short.MAX_VALUE)
+            .addGap(0, 310, Short.MAX_VALUE)
         );
 
         add(PanelDerecho, java.awt.BorderLayout.LINE_START);
@@ -72,25 +71,10 @@ public class PanelRegistro extends javax.swing.JPanel {
         );
         PanelIzquierdoLayout.setVerticalGroup(
             PanelIzquierdoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 330, Short.MAX_VALUE)
+            .addGap(0, 310, Short.MAX_VALUE)
         );
 
         add(PanelIzquierdo, java.awt.BorderLayout.LINE_END);
-
-        jPanel1.setPreferredSize(new java.awt.Dimension(800, 25));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 25, Short.MAX_VALUE)
-        );
-
-        add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
         tituloPanel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         tituloPanel.setForeground(new java.awt.Color(92, 122, 234));
@@ -178,7 +162,7 @@ public class PanelRegistro extends javax.swing.JPanel {
         PanelCentral.setLayout(PanelCentralLayout);
         PanelCentralLayout.setHorizontalGroup(
             PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tituloPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(tituloPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelCentralLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,8 +200,9 @@ public class PanelRegistro extends javax.swing.JPanel {
         PanelCentralLayout.setVerticalGroup(
             PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelCentralLayout.createSequentialGroup()
+                .addGap(9, 9, 9)
                 .addComponent(tituloPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(nombreLabel1)
                     .addComponent(passLabel))
@@ -248,6 +233,7 @@ public class PanelRegistro extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void EntrarTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EntrarTxtMouseClicked
+        error.setText("");
         interfaz.Registro(nombre.getText(), String.valueOf(pass.getPassword()), String.valueOf(repetirPass.getPassword()),tipoPermiso.getSelectedIndex());
     }//GEN-LAST:event_EntrarTxtMouseClicked
 
@@ -282,7 +268,6 @@ public class PanelRegistro extends javax.swing.JPanel {
     private javax.swing.JPanel PanelIzquierdo;
     private javax.swing.JLabel error;
     private javax.swing.JLabel iniciarSesion;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField nombre;
     private javax.swing.JLabel nombreLabel;
     private javax.swing.JLabel nombreLabel1;

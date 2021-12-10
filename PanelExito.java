@@ -32,7 +32,6 @@ public class PanelExito extends javax.swing.JPanel {
 
         PanelDerecho = new javax.swing.JPanel();
         PanelIzquierdo = new javax.swing.JPanel();
-        PanelArriba = new javax.swing.JPanel();
         PanelCentral = new javax.swing.JPanel();
         tituloPanel = new javax.swing.JLabel();
         Entrar = new javax.swing.JPanel();
@@ -49,7 +48,7 @@ public class PanelExito extends javax.swing.JPanel {
         );
         PanelDerechoLayout.setVerticalGroup(
             PanelDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 325, Short.MAX_VALUE)
+            .addGap(0, 310, Short.MAX_VALUE)
         );
 
         add(PanelDerecho, java.awt.BorderLayout.LINE_START);
@@ -62,25 +61,10 @@ public class PanelExito extends javax.swing.JPanel {
         );
         PanelIzquierdoLayout.setVerticalGroup(
             PanelIzquierdoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 325, Short.MAX_VALUE)
+            .addGap(0, 310, Short.MAX_VALUE)
         );
 
         add(PanelIzquierdo, java.awt.BorderLayout.LINE_END);
-
-        PanelArriba.setPreferredSize(new java.awt.Dimension(800, 30));
-
-        javax.swing.GroupLayout PanelArribaLayout = new javax.swing.GroupLayout(PanelArriba);
-        PanelArriba.setLayout(PanelArribaLayout);
-        PanelArribaLayout.setHorizontalGroup(
-            PanelArribaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
-        );
-        PanelArribaLayout.setVerticalGroup(
-            PanelArribaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-
-        add(PanelArriba, java.awt.BorderLayout.PAGE_START);
 
         tituloPanel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         tituloPanel.setForeground(new java.awt.Color(92, 122, 234));
@@ -135,7 +119,7 @@ public class PanelExito extends javax.swing.JPanel {
                 .addComponent(tituloPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(Entrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(141, Short.MAX_VALUE))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
 
         add(PanelCentral, java.awt.BorderLayout.CENTER);
@@ -159,7 +143,6 @@ public class PanelExito extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Entrar;
     private javax.swing.JLabel EntrarTxt;
-    private javax.swing.JPanel PanelArriba;
     private javax.swing.JPanel PanelCentral;
     private javax.swing.JPanel PanelDerecho;
     private javax.swing.JPanel PanelIzquierdo;
