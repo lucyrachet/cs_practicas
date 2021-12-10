@@ -155,7 +155,7 @@ public class Probarbase64 {
 			authBytes = Files.readAllBytes(archivoruta.toPath());
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
         
@@ -191,7 +191,7 @@ public class Probarbase64 {
 		try {
 			archivoByte = Files.readAllBytes(archivocod.toPath());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		//final byte[] authBytes = base.getBytes(StandardCharsets.UTF_8);
@@ -228,10 +228,10 @@ public class Probarbase64 {
                 fos.write(bytes.get(i));
                 hecho=true;
              } catch (FileNotFoundException e) {
-     			// TODO Auto-generated catch block
+     			
      			e.printStackTrace();
      		} catch (IOException e) {
-     			// TODO Auto-generated catch block
+     			
      			e.printStackTrace();
      		}
         }
@@ -299,10 +299,10 @@ public class Probarbase64 {
                 fos.write(bytes.get(i));
                 hecho=true;
              } catch (FileNotFoundException e) {
-     			// TODO Auto-generated catch block
+     			
      			e.printStackTrace();
      		} catch (IOException e) {
-     			// TODO Auto-generated catch block
+     			
      			e.printStackTrace();
      		}
         }
@@ -332,7 +332,7 @@ public class Probarbase64 {
 			try {
 				lista.add(new String(Files.readAllBytes(Paths.get(archivo.getAbsolutePath())), StandardCharsets.UTF_8));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
@@ -349,7 +349,7 @@ public class Probarbase64 {
 		try {
 			lista.add(new String(Files.readAllBytes(Paths.get(archivoruta.getAbsolutePath())), StandardCharsets.UTF_8));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 

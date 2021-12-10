@@ -56,6 +56,7 @@ public class Datos {
         return clave;
     }
 
+    //Recoge el nombre del archivo
     public String recogerNombre(String nombre_archivo){
         String clave="";
         try{
@@ -77,7 +78,8 @@ public class Datos {
         return clave;
     }
 
-    public String recogerTipo(String nombre_archivo){
+    //devuelve el tipo del archivo
+    public String recogerTipoArchivo(String nombre_archivo){
         String tipo="";
         try{
             Connection con = crearConexion();
@@ -123,15 +125,13 @@ public class Datos {
         return archivos;
     }
     
-    //Metodo que elimina el archivo para evitar que si se comprime de nuevo, no de error de primary key duplicada
-
 
     //Se le pasa por parametro un STRING de tanto el usuario, su clavePublica y su contraseña en HASH que se insertan en la bbdd
-    public void insertarUsuario (String nombre_usuario, String clavePublica, String password){
+    public void insertarUsuario (String nombre_usuario, String clavePublica, String password, int tipo){
         try{
             Connection con = crearConexion();
             Statement stm=con.createStatement();
-            stm.execute("insert into usuarios values('"+nombre_usuario+"','"+clavePublica+"','"+password+"')");
+            stm.execute("insert into usuarios values('"+nombre_usuario+"','"+clavePublica+"','"+password+"',"+tipo+")");
             con.close();
         }catch(Exception e){
             System.out.println("No se ha podido insertar la clavePublica del usuario: "+nombre_usuario+" en la bbdd");
@@ -179,6 +179,26 @@ public class Datos {
         return password;
     }
 
+    //Recoge los permisos del usuario
+    public String recogerTipoUsuario(String nombre_usuario){
+        String tipo="";
+        try{
+            Connection con = crearConexion();
+
+            PreparedStatement pstmt = con.prepareStatement("select t.nombre from usuarios u,tiposarchivo t where u.nombre like ? AND u.acceso = t.id");
+            pstmt.setString(1, nombre_usuario + "%");
+            ResultSet rs = pstmt.executeQuery(); 
+            if(rs.next()){
+                tipo=rs.getString(1);
+            }
+            con.close();
+        }catch(SQLException e){
+            System.out.println("No se ha podido encontrar la contraseña para el usuario: "+nombre_usuario);
+            System.err.println(e);
+        }
+        return tipo;
+    }
+
     //Comprueba si existe algún usuario 
     public Boolean existeUsuario(String nombre_usuario){
         Boolean existe=false;
@@ -200,9 +220,71 @@ public class Datos {
         }
         return existe;
     }
+    
+    //Devuelve todos los permisos posibles
+    public ArrayList<String> recogerPermisos(){
+        ArrayList<String> tipos = new ArrayList<>();
+        try{
+            Connection con = crearConexion();
+
+            PreparedStatement pstmt = con.prepareStatement("select nombre from tiposarchivo");
+            ResultSet rs = pstmt.executeQuery();
+            
+            while(rs.next()){
+                tipos.add(rs.getString(1));
+            }
+            con.close();
+        }catch(Exception e){
+            System.out.println("No se ha podido ejecutar la recuperación de la lista de tipos de permisos");
+            System.err.println(e);
+        }
+        return tipos;
+    }
+
+    //Devuelve el id a partir del nombre del permiso
+    public int recogerIDpermiso(String nombre_tipo){
+        int id = 0;
+        
+        try{
+            Connection con = crearConexion();
+
+            PreparedStatement pstmt = con.prepareStatement("select id from tiposarchivo where nombre like ?");
+            pstmt.setString(1, nombre_tipo + "%");
+            ResultSet rs = pstmt.executeQuery(); 
+            if(rs.next()){
+                id = rs.getInt(1);
+            }
+            con.close();
+        }catch(SQLException e){
+            System.out.println("No se ha podido encontrar el id del permiso: "+nombre_tipo);
+            System.err.println(e);
+        }
+
+        return id;
+    }
+
+    //Devuelve el nombre a partir del int
+    public String recogerNombrePermiso(int id){
+        String nombre = "";
+        
+        try{
+            Connection con = crearConexion();
+
+            PreparedStatement pstmt = con.prepareStatement("select nombre from tiposarchivo where id="+id);
+            ResultSet rs = pstmt.executeQuery(); 
+            if(rs.next()){
+                nombre = rs.getString(1);
+            }
+            con.close();
+        }catch(SQLException e){
+            System.out.println("No se ha podido encontrar el nombre del permiso: "+id);
+            System.err.println(e);
+        }
+
+        return nombre;
+    }
+
     //Ejemplo de los métodos que se pueden realizar con esta clase, deben de ejecutarse "parrafo x parrafo"
-    
-    
     public static void main(String[] args){
         Datos bbdd = new Datos();
 

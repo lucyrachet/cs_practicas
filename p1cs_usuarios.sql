@@ -24,9 +24,12 @@ DROP TABLE IF EXISTS `usuarios`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuarios` (
   `nombre` varchar(256) NOT NULL,
-  `clavePublica` varchar(256) DEFAULT NULL,
+  `clavePublica` varchar(512) DEFAULT NULL,
   `password` varchar(256) DEFAULT NULL,
-  PRIMARY KEY (`nombre`)
+  `acceso` int DEFAULT NULL,
+  PRIMARY KEY (`nombre`),
+  KEY `acceso_idx` (`acceso`),
+  CONSTRAINT `FK_usuarios_acceso` FOREIGN KEY (`acceso`) REFERENCES `tiposarchivo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -36,7 +39,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES ('usuario1','clavep1','password1'),('usuario2','clavep2','password2');
+INSERT INTO `usuarios` VALUES ('admin','MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnF1Zk7yXqHoFB+UnPLssBOmAIkAPr3/l+QlgQp6U0Aat5zVjiZvLi886c7ULtIJaD8qjSQa7/ciYkEI27FL3+FKgVxpQNC0VsAsIxukxkCSjM6aX258hKv4uow37/DIll8NsgpugjUV4mCuRSfNYyeh2TL7l94a0v4sXZj2A33h/G9NtrvS8BgpxEILASlJcxljYDS1koeiyIYvqsvWlmVI34MTsZBBxsnWqvTLJVX78q22frLYgjlRFCDkouneOH9NQVgD0vKrst0EH9zPXnXPWL5Oaf+h5Gj3cgr9ewxnS3I8tWG7wgSNOIpvA+X8UmybS5klcLW+0PWmGZP8VXQIDAQAB','lq/v9pAg56zADIXN4thLC/iHgd5y1l3WRau69WVf1pg=',1);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-09 21:50:15
+-- Dump completed on 2021-11-29 12:35:34

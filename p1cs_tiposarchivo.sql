@@ -16,32 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `archivoclaves`
+-- Table structure for table `tiposarchivo`
 --
 
-DROP TABLE IF EXISTS `archivoclaves`;
+DROP TABLE IF EXISTS `tiposarchivo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `archivoclaves` (
-  `nombre` varchar(256) NOT NULL,
-  `clave` varchar(512) NOT NULL,
-  `usuario` varchar(256) DEFAULT NULL,
-  `tipo` int DEFAULT NULL,
-  KEY `usuario_idx` (`usuario`),
-  KEY `FK_archivoclaves_tipo_idx` (`tipo`),
-  CONSTRAINT `FK_archivoclaves_tipo` FOREIGN KEY (`tipo`) REFERENCES `tiposarchivo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `usuario` FOREIGN KEY (`usuario`) REFERENCES `usuarios` (`nombre`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `tiposarchivo` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `archivoclaves`
+-- Dumping data for table `tiposarchivo`
 --
 
-LOCK TABLES `archivoclaves` WRITE;
-/*!40000 ALTER TABLE `archivoclaves` DISABLE KEYS */;
-INSERT INTO `archivoclaves` VALUES ('ciudad.jpg','kWT0RrmeITfpJA4xcDuWDBLtHXpD96j4LgIhtxETlgc8LJzCX7HQAJLUlLhx0bl86cS8Db0WwDN8Mw0ae20A9gP4C8dihUiJmaAE1V2sNvvnO44OicaojcakkI9Q7QeFS7CAIuUQh11eTUeYVdYtTe4UmvvpZkKilWmV/8OIs+KapW9HEiHSLd9pmgDYvah0PwttSvlhAXryKejVQFtQR7OHQpzrOAwYr8ERmUTQy7QB5WKRw53duN/ysVROLD2eij5cWgp54mjAd0jRh9sK+zN1NaGQZpiRjmcnTO1kf8t3Hh9r9VcJgncfPwf8tdMyX6/RJoy2UBeRkl1tIwwStw==','admin',3),('archivo1','clave1','admin',3),('archivo2','clave2','admin',3);
-/*!40000 ALTER TABLE `archivoclaves` ENABLE KEYS */;
+LOCK TABLES `tiposarchivo` WRITE;
+/*!40000 ALTER TABLE `tiposarchivo` DISABLE KEYS */;
+INSERT INTO `tiposarchivo` VALUES (1,'todo'),(2,'audio'),(3,'imagen'),(4,'video');
+/*!40000 ALTER TABLE `tiposarchivo` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

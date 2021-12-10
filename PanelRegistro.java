@@ -45,6 +45,8 @@ public class PanelRegistro extends javax.swing.JPanel {
         iniciarSesion = new javax.swing.JLabel();
         yaTienesCuenta = new javax.swing.JLabel();
         error = new javax.swing.JLabel();
+        nombreLabel1 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setPreferredSize(new java.awt.Dimension(800, 355));
         setLayout(new java.awt.BorderLayout());
@@ -98,7 +100,7 @@ public class PanelRegistro extends javax.swing.JPanel {
         nombreLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         nombreLabel.setForeground(new java.awt.Color(92, 122, 234));
         nombreLabel.setLabelFor(nombre);
-        nombreLabel.setText("Nombre");
+        nombreLabel.setText("Tipo de archivos");
 
         nombre.setToolTipText("");
 
@@ -164,6 +166,14 @@ public class PanelRegistro extends javax.swing.JPanel {
         error.setForeground(new java.awt.Color(255, 102, 102));
         error.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
+        nombreLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        nombreLabel1.setForeground(new java.awt.Color(92, 122, 234));
+        nombreLabel1.setLabelFor(nombre);
+        nombreLabel1.setText("Nombre");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos los archivos", "Audios", "Imágenes", "Videos" }));
+        jComboBox1.setSelectedIndex(2);
+
         javax.swing.GroupLayout PanelCentralLayout = new javax.swing.GroupLayout(PanelCentral);
         PanelCentral.setLayout(PanelCentralLayout);
         PanelCentralLayout.setHorizontalGroup(
@@ -172,45 +182,60 @@ public class PanelRegistro extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelCentralLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Entrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(error, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(PanelCentralLayout.createSequentialGroup()
-                        .addGap(70, 70, 70)
+                        .addGap(30, 30, 30)
+                        .addComponent(Entrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PanelCentralLayout.createSequentialGroup()
+                        .addGap(100, 100, 100)
                         .addComponent(yaTienesCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(PanelCentralLayout.createSequentialGroup()
-                        .addGap(90, 90, 90)
+                        .addGap(120, 120, 120)
                         .addComponent(iniciarSesion)))
-                .addGap(168, 168, 168))
+                .addGap(142, 142, 142))
             .addGroup(PanelCentralLayout.createSequentialGroup()
-                .addGap(150, 150, 150)
+                .addGap(40, 40, 40)
                 .addGroup(PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nombreLabel)
-                    .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(passLabel)
-                    .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(repetirPassLabel)
-                    .addGroup(PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(repetirPass, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
-                        .addComponent(error, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(PanelCentralLayout.createSequentialGroup()
+                        .addComponent(nombreLabel1)
+                        .addGap(230, 230, 230)
+                        .addComponent(passLabel))
+                    .addGroup(PanelCentralLayout.createSequentialGroup()
+                        .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(PanelCentralLayout.createSequentialGroup()
+                        .addComponent(nombreLabel)
+                        .addGap(176, 176, 176)
+                        .addComponent(repetirPassLabel))
+                    .addGroup(PanelCentralLayout.createSequentialGroup()
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(repetirPass, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         PanelCentralLayout.setVerticalGroup(
             PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelCentralLayout.createSequentialGroup()
                 .addComponent(tituloPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(nombreLabel)
+                .addGap(20, 20, 20)
+                .addGroup(PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nombreLabel1)
+                    .addComponent(passLabel))
                 .addGap(3, 3, 3)
-                .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(passLabel)
+                .addGroup(PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(nombreLabel)
+                    .addComponent(repetirPassLabel))
                 .addGap(3, 3, 3)
-                .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(repetirPassLabel)
-                .addGap(3, 3, 3)
-                .addComponent(repetirPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(repetirPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(error)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Entrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21)
                 .addComponent(yaTienesCuenta)
@@ -223,7 +248,7 @@ public class PanelRegistro extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void EntrarTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EntrarTxtMouseClicked
-        interfaz.Login(nombre.getText(), String.valueOf(pass.getPassword()));
+        interfaz.Registro(nombre.getText(), String.valueOf(pass.getPassword()), String.valueOf(repetirPass.getPassword()));
     }//GEN-LAST:event_EntrarTxtMouseClicked
 
     private void EntrarTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EntrarTxtMouseEntered
@@ -257,9 +282,11 @@ public class PanelRegistro extends javax.swing.JPanel {
     private javax.swing.JPanel PanelIzquierdo;
     private javax.swing.JLabel error;
     private javax.swing.JLabel iniciarSesion;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField nombre;
     private javax.swing.JLabel nombreLabel;
+    private javax.swing.JLabel nombreLabel1;
     private javax.swing.JPasswordField pass;
     private javax.swing.JLabel passLabel;
     private javax.swing.JPasswordField repetirPass;

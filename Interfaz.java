@@ -21,7 +21,6 @@ import javax.swing.UIManager;
 public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
     
     private int xMouse,yMouse;
-    private EstadoCS estado;
     private String pathFichero,nombreLogin,contrasenaLogin,nombreRegistro,contrasena1Registro,contrasena2Registo;
     //private String optionsPathEncriptar,optionsPathDesencriptar;
     
@@ -33,8 +32,7 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
     /**
      * Creates new form Interfaz
      */
-    public Interfaz( EstadoCS _estado) {
-        estado = _estado;
+    public Interfaz() {
         
         try{
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -264,29 +262,26 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
     }
     
     public void ErrorLogin(){
-        cambiarEstado(EstadoCS.SinEstado);
         panelIniciarSesion.Error();
     }
     
     public void ExitoLogin(){
-        cambiarEstado(EstadoCS.SinEstado);
         panelExito.Exito("Has iniciado sesión correctamente");
         ponerPanel(panelExito);
     }
     
-    public void Registro(String _nombre, String _pass){
+    public void Registro(String _nombre, String _pass, String _pass2){
         nombreRegistro = _nombre;
         contrasena1Registro = _pass;
+        contrasena2Registo = _pass2;
         cambiarEstado(EstadoCS.Registro);    
     }
     
     public void ErrorRegistro(String _error){
-        cambiarEstado(EstadoCS.SinEstado);
         panelRegistro.Error(_error);
     }
     
     public void ExitoRegistro(){
-        cambiarEstado(EstadoCS.SinEstado);
         panelExito.Exito("Te has registrado correctamente");
         ponerPanel(panelExito);
         
@@ -299,7 +294,6 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
 
     public void ExitoEncriptar(){
         panelInicio.ExitoEncriptar();
-        cambiarEstado(EstadoCS.SinEstado);
     }
     
     public void Desencriptar(String _path){
@@ -308,17 +302,11 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
     }
     public void ExitoDesencriptar(){
         panelInicio.ExitoDesencriptar();
-        cambiarEstado(EstadoCS.SinEstado);
     }
 
     @Override
-    public EstadoCS dameEstado() {
-        return estado;
-    }
-
     public void cambiarEstado(EstadoCS _estado){
-        estado = _estado;
-        //System.out.println("DEBERIA ENTRAR AQUI");
+        ProyectoCS.estadoCS = _estado;
     }
     
     @Override
