@@ -242,11 +242,11 @@ public class PanelInicio extends javax.swing.JPanel {
     private javax.swing.JPanel Desencriptar;
     private javax.swing.JLabel DesencriptarTxt;
     private javax.swing.JPanel Encriptar;
-    private javax.swing.JPanel Encriptar1;
-    private javax.swing.JPanel Encriptar2;
+    //private javax.swing.JPanel Encriptar1;
+    //private javax.swing.JPanel Encriptar2;
     private javax.swing.JLabel EncriptarTxt;
-    private javax.swing.JLabel EncriptarTxt1;
-    private javax.swing.JLabel EncriptarTxt2;
+    //private javax.swing.JLabel EncriptarTxt1;
+    //private javax.swing.JLabel EncriptarTxt2;
     private javax.swing.JPanel PanelCentral;
     private javax.swing.JPanel PanelDerecho;
     private javax.swing.JPanel Panelizquierdo;
