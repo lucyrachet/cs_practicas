@@ -102,16 +102,16 @@ public class ProyectoCS {
                     Probarbase64 base = new Probarbase64("");
 
                     usuario_dado=interfaz.dameNombreRegistro();
-                    contrasena_dada1 = interfaz.dameContrasena1Registro();
+                    contrasena_dada = interfaz.dameContrasena1Registro();
                     contrasena_dada2 = interfaz.dameContrasena2Registro();
                     tipo_permiso_dado = interfaz.dameTipoPermisoRegistro();
 
                     Boolean existe=bbdd.existeUsuario(usuario_dado); 
                     //Boolean existe=true;   
                     if(existe==false){                           //si el usuario no existe lo creamos    
-                        if(contrasena_dada1.equals(contrasena_dada2)){             //si las contrasenas coinciden    
+                        if(contrasena_dada.equals(contrasena_dada2)){             //si las contrasenas coinciden    
                             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-                            byte[] hash = digest.digest(contrasena_dada1.getBytes(StandardCharsets.UTF_8));
+                            byte[] hash = digest.digest(contrasena_dada.getBytes(StandardCharsets.UTF_8));
                     
                             String hashpsw = base.bytebase64(hash);  
                             String pswbbdd = hashpsw.substring(hashpsw.length()/2);
@@ -265,15 +265,41 @@ public class ProyectoCS {
                     AES aes = new AES();
                     RSA rsa = new RSA();
                     archivos metodo = new archivos();
+
+                    //COGER FICHERO ENCRIPTADO
                     String path = interfaz.damePathFichero();
                     File f = new File(path);                    //cogemos el file de desencriptar
                     String nombre_archivo = f.getName();        //cogemos el nombre que tenga
+                    
+
+                    //COGER CLAVE PRIVADA USUARIO
+                    String subpath = path.substring(0,path.lastIndexOf('\\'));
+                    subpath = subpath.substring(0,subpath.lastIndexOf('\\'))+"\\";
+                    
+                    String keyRSA = subpath+usuario_dado+".pvk";        
+                    String keyRSAString = base.fileToString(keyRSA);
+
+                        //COGER AES DE LA CONTRASEÑA
+                    MessageDigest digest = MessageDigest.getInstance("SHA-256");
+                    byte[] hash = digest.digest(contrasena_dada.getBytes(StandardCharsets.UTF_8));
+                    
+                    String hashpsw = base.bytebase64(hash);  
+                    String clave = hashpsw.substring(0,hashpsw.length()/2);
+                    SecretKey claveAES = base.asciiSecretKey(clave);
+                        //DESENCRIPTAR ARCHIVO .pvk
+                    String clavePrivadaString = AES.decryptString(keyRSAString, claveAES);
+                    PrivateKey clavePrivada = base.asciiToPrivateKey(clavePrivadaString);
+
+                    //DESENCRIPTAMOS COSIS
+                    metodo.desencriptarArchivo(nombre_archivo, usuario_dado, clavePrivada);
+                /*
                     nombre_archivo = nombre_archivo.substring(0, nombre_archivo.lastIndexOf('.'));  //quitamos lo q hay despues del ."enc"
-                
+                    
                     String subpath = path.substring(0,path.lastIndexOf('\\'))+"\\";
-                    String keyRSA = subpath+nombre_archivo+".key";                      //pongo como es el nombre de la key
-                    //File fKeyRSA = new File(keyRSA);                          //cojo el archivo
-                    String keyRSAString = base.fileToString(keyRSA);            //cojo el archivo y lo paso a String
+                    
+                    String keyRSA = subpath+nombre_archivo+".key";         
+                    //File fKeyRSA = new File(keyRSA);           
+                    String keyRSAString = base.fileToString(keyRSA);        
 
                     int mitadHash = keyRSAString.length()/2;
                     String primeraMitad = keyRSAString.substring(0, mitadHash);
@@ -283,14 +309,14 @@ public class ProyectoCS {
                     PrivateKey privKey = base.asciiToPrivateKey(keyRSAString);  //paso el string a PrivateKey
                     
                     String archivo_decript = bbdd.recogerNombre(nombre_archivo);    //coges el nombre del archivo de la bbdd
-                    /*
+                    
                     String clave = bbdd.recogerClave(nombre_archivo);               //cogemos la clave AES de ese archivo
 
                     SecretKey claveTest = base.asciiSecretKey(clave);
 
                     byte[] clave_bytes = claveTest.getEncoded();
                     SecretKey claveAES = rsa.decryptKey(clave_bytes, privKey);                          //desencriptamos la clave AES con la privada de RSA
-                    */
+                    
                     //para desencriptar necesitamos el nombre del usaurio que lo ha subido
                     
                     String[] nombre_user_duenyo = nombre_archivo_dado.split("(");
@@ -300,6 +326,7 @@ public class ProyectoCS {
                     //base.bFichero(aes.decryptFile(path,claveAES), "datos/"+usuario_dado+"/decript/"+archivo_decript);   //pasamos de base64 la clave AES a Secret Key
                                                                                                                     //desencriptamos y 
                                                                                                                     // convertimos a fichero
+                    */
                     interfaz.ExitoDesencriptar();
                     estadoCS = EstadoCS.SinEstado;
                     break;
@@ -358,6 +385,7 @@ public class ProyectoCS {
                             case ".mp3":
                             case ".wav":
                             case ".midi":
+                            case ".ogg":
                                 tipo = 2;
                                 break;
                             //imagen
