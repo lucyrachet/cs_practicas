@@ -179,10 +179,17 @@ public class ProyectoCS {
                     nombre_archivo_dado = interfaz.dameNombreArchivoSolicitud();
                     System.out.println(nombre_archivo_dado);
                     estadoCS = EstadoCS.SinEstado;
-                    /*
+                    
                     //TODO: Solicitar fichero por cliente servidor
-                    TipoSolicitud solicitud = TipoSolicitud.TuMismo; //= solicitud();
-                    String usuario = _nombre.split(" ")[1].substring(1, _nombre.split(" ")[1].length()-1);
+                    TipoSolicitud solicitud = null; //= solicitud();
+                    String usuario = nombre_archivo_dado.split(" ")[1].substring(1, nombre_archivo_dado.split(" ")[1].length()-1);
+                    if(usuario_dado.equals(usuario)){
+                        solicitud = TipoSolicitud.TuMismo;
+
+                    }else if(usuario.equals("admin")){
+                        solicitud = TipoSolicitud.Servidor;
+                    }
+                    
                     switch(solicitud){
                         case OtroUsuario:
                             //TODO: Enviar solicitud al usuario, permisos y te tiene que responder
@@ -201,7 +208,7 @@ public class ProyectoCS {
                             estadoCS=EstadoCS.Desencriptar;
                             break;               
                     }
-                    */
+                    
                     break;
                 
                 //ESTADO ESPERAR RESPUESTA
