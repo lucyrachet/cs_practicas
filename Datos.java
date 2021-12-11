@@ -37,12 +37,12 @@ public class Datos {
     }
 
     //Se le pasa por parametro el nombre del archivo (ya que la clave supuestamente no se conoce) y se recoge la clave
-    public String recogerClave(String nombre_archivo){
+    public String recogerClave(String nombre_archivo, String usuario){
         String clave="";
         try{
             Connection con = crearConexion();
 
-            PreparedStatement pstmt = con.prepareStatement("select clave from archivoclaves where nombre like ?");
+            PreparedStatement pstmt = con.prepareStatement("select clave from archivoclaves where nombre like ? AND usuario='"+usuario+"'");
             pstmt.setString(1, nombre_archivo + "%");
             ResultSet rs = pstmt.executeQuery(); 
             if(rs.next()){

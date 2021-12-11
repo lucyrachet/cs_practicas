@@ -19,10 +19,10 @@ public class archivos {
         nombre_archivo = nombre_archivo.substring(0, nombre_archivo.lastIndexOf('.'));
         System.out.println("Datos pasados: nombre = "+nombre_user+" | archivo = "+nombre_archivo);
 
-        if(datos.existeUsuario(nombre_user) && !datos.recogerClave(nombre_archivo).equals("")){
+        if(datos.existeUsuario(nombre_user) && !datos.recogerClave(nombre_archivo,"admin").equals("")){
             System.out.println("toi dentro chicos");
             String clavePublicaUsr = datos.recogerClavePublica(nombre_user);
-            String claveArchivo = datos.recogerClave(nombre_archivo);
+            String claveArchivo = datos.recogerClave(nombre_archivo,"admin");
             RSA rsa = new RSA();
             try {
                 String keyRSA = "datos/"+nombre_user+"/"+nombre_user+".pvk";                    //pongo como es el nombre de la key
@@ -40,7 +40,7 @@ public class archivos {
                 
                 //COGER CLAVE AES DEL ARCHIVO
                 String archivo_decript = datos.recogerNombre(nombre_archivo);           //coges el nombre del archivo de la bbdd
-                String clave = datos.recogerClave(nombre_archivo);                      //cogemos la clave AES de ese archivo
+                String clave = datos.recogerClave(nombre_archivo,"admin");                      //cogemos la clave AES de ese archivo
 
                 SecretKey claveAESencripted = base.asciiSecretKey(clave);
                 SecretKey claveAES = rsa.decryptKey(claveAESencripted.getEncoded(), privKey);     //desencriptamos la clave AES con la privada de RSA
@@ -70,6 +70,7 @@ public class archivos {
         }
     }
 
+    /*
     //Desencripta el archivo que se genere en su carpeta de respuestas
     public void desencriptarArchivo(String nombre_archivo,String nombre_user,PrivateKey privKeyUser) throws Exception{
         Datos datos = new Datos();
@@ -95,5 +96,5 @@ public class archivos {
         deleteKey.delete();
         deleteArchivo.delete();
         
-    }
+    }*/
 }

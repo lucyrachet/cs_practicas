@@ -1,7 +1,7 @@
 import java.io.File;
 
 public class Decript {
-    public Decript(String path) throws Exception{
+    /*public Decript(String path) throws Exception{
         AES aes = new AES();
         Probarbase64 base = new Probarbase64("");
         Datos bbdd = new Datos();
@@ -16,7 +16,7 @@ public class Decript {
         base.bFichero(aes.decryptFile(path, base.asciiSecretKey(clave)), "decript/"+archivo_decript);
 
         f.delete();
-    }
+    }*/
 
     /*
     public static void main(String[] args){

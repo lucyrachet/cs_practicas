@@ -213,6 +213,12 @@ public class ProyectoCS {
                             break;
                         case TuMismo:
                             //Devuelve el estado Desencriptar
+                            String archivo_decript = bbdd.recogerNombre(nombreArchivo);           //coges el nombre del archivo de la bbdd
+                            String clave2 = bbdd.recogerClave(nombreArchivo,usuario_dado);                      //cogemos la clave AES de ese archivo
+
+                            System.out.println(archivo_decript);
+                            System.out.println(clave2);
+
                             estadoCS=EstadoCS.Desencriptar;
                             break;               
                     }
@@ -293,8 +299,12 @@ public class ProyectoCS {
                     //MOVIDO DESDE DESENCRIPTAR ARCHIVO
                     nombre_archivo = nombre_archivo.substring(0, nombre_archivo.lastIndexOf('.'));
 
+                    
                     String archivo_decript = bbdd.recogerNombre(nombre_archivo);           //coges el nombre del archivo de la bbdd
-                    String clave2 = bbdd.recogerClave(nombre_archivo);                      //cogemos la clave AES de ese archivo
+                    String clave2 = bbdd.recogerClave(nombre_archivo,usuario_dado);                      //cogemos la clave AES de ese archivo
+
+                    System.out.println(archivo_decript);
+                    System.out.println(clave2);
 
                     SecretKey claveAESencripted = base.asciiSecretKey(clave2);
                     SecretKey claveAES2 = rsa.decryptKey(claveAESencripted.getEncoded(), clavePrivada);     //desencriptamos la clave AES con la privada de RSA
