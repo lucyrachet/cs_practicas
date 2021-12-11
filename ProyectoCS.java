@@ -289,7 +289,24 @@ public class ProyectoCS {
                     PrivateKey clavePrivada = base.asciiToPrivateKey(clavePrivadaString);
 
                     //DESENCRIPTAMOS COSIS
-                    metodo.desencriptarArchivo(nombre_archivo, usuario_dado, clavePrivada);
+                    //metodo.desencriptarArchivo(nombre_archivo, usuario_dado, clavePrivada);
+                    //MOVIDO DESDE DESENCRIPTAR ARCHIVO
+                    nombre_archivo = nombre_archivo.substring(0, nombre_archivo.lastIndexOf('.'));
+
+                    String archivo_decript = bbdd.recogerNombre(nombre_archivo);           //coges el nombre del archivo de la bbdd
+                    String clave2 = bbdd.recogerClave(nombre_archivo);                      //cogemos la clave AES de ese archivo
+
+                    SecretKey claveAESencripted = base.asciiSecretKey(clave2);
+                    SecretKey claveAES2 = rsa.decryptKey(claveAESencripted.getEncoded(), clavePrivada);     //desencriptamos la clave AES con la privada de RSA
+
+                    base.bFichero(aes.decryptFile("datos/"+usuario_dado+"/respuestas/"+nombre_archivo+".enc",claveAES2), "datos/"+usuario_dado+"/decript/"+archivo_decript);
+                
+                    File deleteKey = new File("datos/"+usuario_dado+"/respuestas/"+nombre_archivo+".key");
+                    File deleteArchivo = new File("datos/"+usuario_dado+"/respuestas/"+nombre_archivo+".enc");
+                    
+                    deleteKey.delete();
+                    deleteArchivo.delete();
+                    //---------------------------------
                 /*
                     nombre_archivo = nombre_archivo.substring(0, nombre_archivo.lastIndexOf('.'));  //quitamos lo q hay despues del ."enc"
                     
