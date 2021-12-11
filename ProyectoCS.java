@@ -78,8 +78,8 @@ public class ProyectoCS {
                             if(usuario_dado.equals("admin")){
                                 esAdmin = true;
                                 //TODO: que el administrador este buscando peticiones creando el hilo de compartirCS
-                                //compartirCS = new CompartirCS();
-                                //compartirCS.start();
+                                compartirCS = new CompartirCS();
+                                compartirCS.start();
 
                             }
                         }else{
@@ -124,7 +124,8 @@ public class ProyectoCS {
                             base.crearCarpeta("datos/"+usuario_dado);
                             base.bFichero(clavepvstring.getBytes(), "datos/"+usuario_dado+"/"+usuario_dado+".pvk");             //guardamos rsa privada en un archivo
                             bbdd.insertarUsuario(usuario_dado, base.base64PublicKey(publicKeyRSA), pswbbdd,tipo_permiso_dado);   //insertamos el usuario
-                            
+                            base.crearCarpeta("datos/"+usuario_dado+"/solicitudes");
+                            base.crearCarpeta("datos/"+usuario_dado+"/respuestas");
                             //base.stringToFile(base.base64PrivateKey(privateKeyRSA), "datos/"+usuario_dado+".pvk");
                             //base.bFichero(base.base64PrivateKey(privateKeyRSA).getBytes(), "datos/"+usuario_dado+".pvk");   //guardamos rsa privada en un archivo
                             usuarioValidado = true;
