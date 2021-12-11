@@ -179,16 +179,17 @@ public class ProyectoCS {
                     System.out.println(nombre_archivo_dado);
                     estadoCS = EstadoCS.SinEstado;
                     
-                    //TODO: Solicitar fichero por cliente servidor
+                    
                     TipoSolicitud solicitud = null; //= solicitud();
                     String usuario = nombre_archivo_dado.split(" ")[1].substring(1, nombre_archivo_dado.split(" ")[1].length()-1);
+                    String nombreArchivo = nombre_archivo_dado.split(" ")[0].substring(0, nombre_archivo_dado.indexOf("."));
                     if(usuario_dado.equals(usuario)){
                         solicitud = TipoSolicitud.TuMismo;
 
                     }else if(usuario.equals("admin")){
                         solicitud = TipoSolicitud.Servidor;
                     }
-                    
+
                     switch(solicitud){
                         case OtroUsuario:
                             //TODO: Enviar solicitud al usuario, permisos y te tiene que responder
@@ -197,8 +198,10 @@ public class ProyectoCS {
                             estadoCS=EstadoCS.EsperarRespuesta;
                             break;
                         case Servidor:
-                            //TODO: Enviar solicitud al servidor y este revisa tus permisos
-
+                            
+                            String directorioActual = System.getProperty("user.dir");
+                            File fakefile = new File(directorioActual+"\\datos\\admin\\solicitudes\\"+nombreArchivo+"_"+usuario+".txt");
+                            fakefile.createNewFile();   //creamos el nuevo archivo con forma "nombrearchivo_usuario.txt"
                             //Devuelve el estado EsperarRespuesta
                             estadoCS=EstadoCS.EsperarRespuesta;
                             break;
