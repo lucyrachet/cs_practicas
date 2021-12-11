@@ -321,6 +321,7 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
     
     public void Encriptar(String _path){
         pathFichero = _path;
+        
         cambiarEstado(EstadoCS.Encriptar);
     }
 
@@ -340,7 +341,14 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
     public void SolicitarFichero(String _nombre){
         nombreArchivoSolicitud = _nombre;
         cambiarEstado(EstadoCS.SolicitarFichero);
-        
+        String directorioActual = System.getProperty("user.dir");
+        String archivo = _nombre.split(" ")[0];
+        System.out.println(archivo);
+        archivo = archivo.substring(0, archivo.indexOf("."));
+        System.out.println(archivo);
+        String usuario = _nombre.split(" ")[1].substring(1, _nombre.split(" ")[1].length()-1);
+        String directorioCheck = directorioActual+"\\datos\\"+usuario+"\\encript\\"+archivo+".enc";
+        Desencriptar(directorioCheck);
     }
     
     public void Desencriptar(String _path){

@@ -162,7 +162,7 @@ public class ProyectoCS {
                 //ESTADO OBTENER FICHEROS
                     //Obtener lista de ficheros con el usuario y permiso [LLamado desde interfaz]
                 case ObtenerFicheros:
-                    interfaz.ObtenerFicheros(bbdd.recogerArchivosporTipo());
+                    interfaz.ObtenerFicheros(bbdd.recogerArchivosporTipo(bbdd.recogerIDpermiso(bbdd.recogerTipoArchivo(usuario_dado))));
                     estadoCS = EstadoCS.SinEstado;
                     break;
 
