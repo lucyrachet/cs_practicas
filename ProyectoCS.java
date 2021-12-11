@@ -344,43 +344,8 @@ public class ProyectoCS {
                     
                     deleteKey.delete();
                     deleteArchivo.delete();
-                    //---------------------------------
-                /*
-                    nombre_archivo = nombre_archivo.substring(0, nombre_archivo.lastIndexOf('.'));  //quitamos lo q hay despues del ."enc"
                     
-                    String subpath = path.substring(0,path.lastIndexOf('\\'))+"\\";
-                    
-                    String keyRSA = subpath+nombre_archivo+".key";         
-                    //File fKeyRSA = new File(keyRSA);           
-                    String keyRSAString = base.fileToString(keyRSA);        
-
-                    int mitadHash = keyRSAString.length()/2;
-                    String primeraMitad = keyRSAString.substring(0, mitadHash);
-                    SecretKey skhashpsw = base.asciiSecretKey(primeraMitad);
-                    keyRSAString = AES.decryptString(keyRSAString, skhashpsw);   //desencriptamos el .key con la 1a mitad del hash
-                    
-                    PrivateKey privKey = base.asciiToPrivateKey(keyRSAString);  //paso el string a PrivateKey
-                    
-                    String archivo_decript = bbdd.recogerNombre(nombre_archivo);    //coges el nombre del archivo de la bbdd
-                    
-                    String clave = bbdd.recogerClave(nombre_archivo);               //cogemos la clave AES de ese archivo
-
-                    SecretKey claveTest = base.asciiSecretKey(clave);
-
-                    byte[] clave_bytes = claveTest.getEncoded();
-                    SecretKey claveAES = rsa.decryptKey(clave_bytes, privKey);                          //desencriptamos la clave AES con la privada de RSA
-                    
-                    //para desencriptar necesitamos el nombre del usaurio que lo ha subido
-                    
-                    String[] nombre_user_duenyo = nombre_archivo_dado.split("(");
-                    String nombre_duenyo = nombre_user_duenyo[1].substring(0, nombre_user_duenyo.length-1);
-
-                    metodo.desencriptarArchivo(archivo_decript, nombre_duenyo, privKey);
-                    //base.bFichero(aes.decryptFile(path,claveAES), "datos/"+usuario_dado+"/decript/"+archivo_decript);   //pasamos de base64 la clave AES a Secret Key
-                                                                                                                    //desencriptamos y 
-                                                                                                                    // convertimos a fichero
-                    */
-                    interfaz.ExitoDesencriptar();
+                    interfaz.ExitoDesencriptar(archivo_decript);
                     estadoCS = EstadoCS.SinEstado;
                     break;
 

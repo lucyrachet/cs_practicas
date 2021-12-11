@@ -30,6 +30,7 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
     public PanelInicio panelInicio;
     public PanelExito panelExito;
     public PanelObtenerFicheros panelObtenerFicheros;
+    public PanelEsperarRespuesta panelEsperarRespuesta;
    
     /**
      * Creates new form Interfaz
@@ -52,7 +53,8 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
         panelInicio = new PanelInicio(this);
         panelExito = new PanelExito(this);
         panelObtenerFicheros = new PanelObtenerFicheros(this);
-        
+        panelEsperarRespuesta = new PanelEsperarRespuesta(this);
+
         this.ponerPanel(panelIniciarSesion);
         
         this.setVisible(true);
@@ -341,24 +343,17 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
     public void SolicitarFichero(String _nombre){
         nombreArchivoSolicitud = _nombre;
         cambiarEstado(EstadoCS.SolicitarFichero);
-        String directorioActual = System.getProperty("user.dir");
-        String archivo = _nombre.split(" ")[0];
-        System.out.println(archivo);
-        archivo = archivo.substring(0, archivo.indexOf("."));
-        System.out.println(archivo);
-        String usuario = _nombre.split(" ")[1].substring(1, _nombre.split(" ")[1].length()-1);
-        String directorioCheck = directorioActual+"\\datos\\"+usuario+"\\encript\\"+archivo+".enc";
         //TODO: ya no existe el .enc
-        Desencriptar(directorioCheck);
+        Desencriptar();
     }
     
-    public void Desencriptar(String _path){
-        pathFichero = _path;
+    public void Desencriptar(){
         cambiarEstado(EstadoCS.Desencriptar);
-        ponerPanel(panelInicio);
+        ponerPanel(panelEsperarRespuesta);
     }
-    public void ExitoDesencriptar(){
-        panelInicio.ExitoDesencriptar();
+    public void ExitoDesencriptar(String _archivo){
+        ponerPanel(panelInicio);
+        panelInicio.ExitoDesencriptar(_archivo);
     }
 
     @Override

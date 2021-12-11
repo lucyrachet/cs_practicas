@@ -17,7 +17,7 @@ public class PanelInicio extends javax.swing.JPanel {
     /**
      * Creates new form panelPlantilla
      */
-    private final JFileChooser openEncriptar, openDesencriptar;
+    private final JFileChooser openEncriptar;
     Interfaz interfaz;
     String lastFile;
     public PanelInicio(Interfaz i) {
@@ -27,10 +27,7 @@ public class PanelInicio extends javax.swing.JPanel {
         encriptarResult.setText("");
         desencriptarResult.setText("");
         openEncriptar = new JFileChooser();
-        openEncriptar.setCurrentDirectory(new File("decript"));
-        openDesencriptar = new JFileChooser();
-        openDesencriptar.setCurrentDirectory(new File("encript"));
-        openDesencriptar.setFileFilter(new FileNameExtensionFilter("Encryted files","enc"));
+        openEncriptar.setCurrentDirectory(new File("archivos"));
     }
 
     /**
@@ -213,6 +210,8 @@ public class PanelInicio extends javax.swing.JPanel {
     }//GEN-LAST:event_EncriptarTxtMouseExited
 
     private void DesencriptarTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DesencriptarTxtMouseClicked
+        Desencriptar.setBackground(new Color(92,122,234));
+        DesencriptarTxt.setForeground(new Color(0,0,0));
         interfaz.SetEstadoObtenerFicheros();
         /*int returnValue = openDesencriptar.showOpenDialog(this);
         if(returnValue == JFileChooser.APPROVE_OPTION){
@@ -257,8 +256,8 @@ public class PanelInicio extends javax.swing.JPanel {
         if(!desencriptarResult.getText().equals("")) desencriptarResult.setText("");
         encriptarResult.setText("El archivo "+lastFile+" se ha encriptado correctamente");
     }
-    public void ExitoDesencriptar(){
+    public void ExitoDesencriptar(String _archivo){
         if(!encriptarResult.getText().equals("")) encriptarResult.setText("");
-        desencriptarResult.setText("El archivo "+lastFile+" se ha desencriptado correctamente");
+        desencriptarResult.setText("El archivo "+_archivo+" se ha desencriptado correctamente");
     }
 }

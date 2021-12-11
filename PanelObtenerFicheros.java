@@ -40,6 +40,8 @@ public class PanelObtenerFicheros extends javax.swing.JPanel {
         DesencriptarBotonTxt = new javax.swing.JLabel();
         scrollPanel = new javax.swing.JScrollPane();
         listaArchivos = new javax.swing.JList<>();
+        VolverBoton = new javax.swing.JPanel();
+        VolverBotonTxt = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(800, 355));
         setLayout(new java.awt.BorderLayout());
@@ -52,7 +54,7 @@ public class PanelObtenerFicheros extends javax.swing.JPanel {
         );
         PanelDerechoLayout.setVerticalGroup(
             PanelDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 310, Short.MAX_VALUE)
+            .addGap(0, 355, Short.MAX_VALUE)
         );
 
         add(PanelDerecho, java.awt.BorderLayout.LINE_START);
@@ -65,7 +67,7 @@ public class PanelObtenerFicheros extends javax.swing.JPanel {
         );
         PanelIzquierdoLayout.setVerticalGroup(
             PanelIzquierdoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 310, Short.MAX_VALUE)
+            .addGap(0, 355, Short.MAX_VALUE)
         );
 
         add(PanelIzquierdo, java.awt.BorderLayout.LINE_END);
@@ -97,15 +99,13 @@ public class PanelObtenerFicheros extends javax.swing.JPanel {
         DesencriptarBotonLayout.setHorizontalGroup(
             DesencriptarBotonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DesencriptarBotonLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(DesencriptarBotonTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(DesencriptarBotonTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(81, 81, 81))
         );
         DesencriptarBotonLayout.setVerticalGroup(
             DesencriptarBotonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DesencriptarBotonLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(DesencriptarBotonTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(DesencriptarBotonTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
         );
 
         listaArchivos.setBackground(new java.awt.Color(139, 163, 255));
@@ -119,19 +119,50 @@ public class PanelObtenerFicheros extends javax.swing.JPanel {
         listaArchivos.setSelectionBackground(new java.awt.Color(74, 108, 218));
         scrollPanel.setViewportView(listaArchivos);
 
+        VolverBoton.setBackground(new java.awt.Color(92, 122, 234));
+
+        VolverBotonTxt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        VolverBotonTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        VolverBotonTxt.setText("Volver");
+        VolverBotonTxt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                VolverBotonTxtMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                VolverBotonTxtMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                VolverBotonTxtMouseExited(evt);
+            }
+        });
+
+        javax.swing.GroupLayout VolverBotonLayout = new javax.swing.GroupLayout(VolverBoton);
+        VolverBoton.setLayout(VolverBotonLayout);
+        VolverBotonLayout.setHorizontalGroup(
+            VolverBotonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(VolverBotonLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(VolverBotonTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        VolverBotonLayout.setVerticalGroup(
+            VolverBotonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(VolverBotonTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout PanelCentralLayout = new javax.swing.GroupLayout(PanelCentral);
         PanelCentral.setLayout(PanelCentralLayout);
         PanelCentralLayout.setHorizontalGroup(
             PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(tituloPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(PanelCentralLayout.createSequentialGroup()
-                .addGroup(PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(119, 119, 119)
+                .addGroup(PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(scrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(PanelCentralLayout.createSequentialGroup()
-                        .addGap(119, 119, 119)
-                        .addComponent(scrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PanelCentralLayout.createSequentialGroup()
-                        .addGap(171, 171, 171)
-                        .addComponent(DesencriptarBoton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(VolverBoton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(DesencriptarBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         PanelCentralLayout.setVerticalGroup(
@@ -142,14 +173,18 @@ public class PanelObtenerFicheros extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(scrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(DesencriptarBoton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addGroup(PanelCentralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(DesencriptarBoton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(VolverBoton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         add(PanelCentral, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void DesencriptarBotonTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DesencriptarBotonTxtMouseClicked
+        DesencriptarBoton.setBackground(new Color(92,122,234));
+        DesencriptarBotonTxt.setForeground(new Color(0,0,0));
         interfaz.SolicitarFichero(listaArchivos.getSelectedValue());
     }//GEN-LAST:event_DesencriptarBotonTxtMouseClicked
 
@@ -163,13 +198,33 @@ public class PanelObtenerFicheros extends javax.swing.JPanel {
         DesencriptarBotonTxt.setForeground(new Color(0,0,0));
     }//GEN-LAST:event_DesencriptarBotonTxtMouseExited
 
+    private void VolverBotonTxtMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VolverBotonTxtMouseClicked
+        VolverBoton.setBackground(new Color(92,122,234));
+        VolverBotonTxt.setForeground(new Color(0,0,0));
+        interfaz.ponerPanel(interfaz.panelInicio);
+    }//GEN-LAST:event_VolverBotonTxtMouseClicked
+
+    private void VolverBotonTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VolverBotonTxtMouseEntered
+        VolverBoton.setBackground(new Color(61,39,155));
+        VolverBotonTxt.setForeground(new Color(230, 230, 230));
+    }//GEN-LAST:event_VolverBotonTxtMouseEntered
+
+    private void VolverBotonTxtMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VolverBotonTxtMouseExited
+        VolverBoton.setBackground(new Color(92,122,234));
+        VolverBotonTxt.setForeground(new Color(0,0,0));
+    }//GEN-LAST:event_VolverBotonTxtMouseExited
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel DesencriptarBoton;
+    private javax.swing.JPanel DesencriptarBoton1;
     private javax.swing.JLabel DesencriptarBotonTxt;
+    private javax.swing.JLabel DesencriptarBotonTxt1;
     private javax.swing.JPanel PanelCentral;
     private javax.swing.JPanel PanelDerecho;
     private javax.swing.JPanel PanelIzquierdo;
+    private javax.swing.JPanel VolverBoton;
+    private javax.swing.JLabel VolverBotonTxt;
     private javax.swing.JList<String> listaArchivos;
     private javax.swing.JScrollPane scrollPanel;
     private javax.swing.JLabel tituloPanel;
