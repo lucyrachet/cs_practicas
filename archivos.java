@@ -26,8 +26,6 @@ public class archivos {
 
                 String aesAdmin = "datos/admin/aesadmin.key";
                 aesAdmin= base.fileToString(aesAdmin);
-
-                //String aesAdmin = ""; //METER AQUI EL AES DEL ADMIN
                 SecretKey claveAESAdmin = base.asciiSecretKey(aesAdmin);
 
                 PrivateKey privKey = base.asciiToPrivateKey(AES.decryptString(keyRSAString, claveAESAdmin));      //paso el string a PrivateKey
