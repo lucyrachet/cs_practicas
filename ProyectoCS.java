@@ -220,10 +220,10 @@ public class ProyectoCS {
                             //String archivo_decript = bbdd.recogerNombre(nombreArchivo);           //coges el nombre del archivo de la bbdd
                             String clave2 = bbdd.recogerClave(nombreArchivo,usuario_dado);                      //cogemos la clave AES de ese archivo
 
-                            archivos archivos = new archivos();
-                            archivos.accederArchivo(nombreArchivo, usuario_dado);
+                            //archivos archivos = new archivos();
+                            //archivos.accederArchivo(nombreArchivo, usuario_dado);
 
-                            /*
+                            
                             //System.out.println(archivo_decript);
                             System.out.println(clave2);
                             //ALMACENAR LOS DATOS
@@ -239,7 +239,7 @@ public class ProyectoCS {
                             base.bFichero(clave2.getBytes(), "datos/"+usuario_dado+"/respuestas/"+nombreArchivo+".key");
                             base.bFichero(bytesArchivo, "datos/"+usuario_dado+"/respuestas/"+nombreArchivo+".enc");
 
-                            */
+                            
                             estadoCS=EstadoCS.EsperarRespuesta;
                             break;               
                     }
