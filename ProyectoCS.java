@@ -121,7 +121,7 @@ public class ProyectoCS {
                             PrivateKey privateKeyRSA = pairRSA.getPrivate();   //cogemos la privada 
                             SecretKey skAES = base.asciiSecretKey(claveAES);
                             String clavepvstring = aes.encryptString(base.base64PrivateKey(privateKeyRSA), skAES);
-                            
+                            base.crearCarpeta("datos/"+usuario_dado);
                             base.bFichero(clavepvstring.getBytes(), "datos/"+usuario_dado+"/"+usuario_dado+".pvk");             //guardamos rsa privada en un archivo
                             bbdd.insertarUsuario(usuario_dado, base.base64PublicKey(publicKeyRSA), pswbbdd,tipo_permiso_dado);   //insertamos el usuario
                             

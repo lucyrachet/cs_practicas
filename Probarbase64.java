@@ -277,6 +277,21 @@ public class Probarbase64 {
 		return contenido;
 	}
 
+	public void crearCarpeta(String path) {        
+		
+		
+		
+		//Instantiate the File class   
+		File f1 = new File(path);  
+		//Creating a folder using mkdir() method  
+		boolean bool = f1.mkdir();  
+		if(bool){  
+		   System.out.println("Folder is created successfully");  
+		}else{  
+		   System.out.println("Error Found!");  
+		}  
+	 }  
+
 	public boolean aFichero(List<String> cadena, ArrayList<String> salida){
         boolean hecho=false;
         List<byte[]> bytes =new ArrayList<byte[]>();
