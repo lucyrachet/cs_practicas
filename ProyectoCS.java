@@ -77,6 +77,10 @@ public class ProyectoCS {
                             System.out.println("Inicio de sesión exitoso");
                             if(usuario_dado.equals("admin")){
                                 esAdmin = true;
+                                //TODO: que el administrador este buscando peticiones creando el hilo de compartirCS
+                                //compartirCS = new CompartirCS();
+                                //compartirCS.start();
+
                             }
                         }else{
                             System.out.println("Error en inicio de sesión");
@@ -162,6 +166,8 @@ public class ProyectoCS {
                 //ESTADO OBTENER FICHEROS
                     //Obtener lista de ficheros con el usuario y permiso [LLamado desde interfaz]
                 case ObtenerFicheros:
+                    System.out.println(bbdd.recogerTipoArchivo(usuario_dado));
+                    System.out.println(bbdd.recogerIDpermiso(bbdd.recogerTipoArchivo(usuario_dado)));
                     interfaz.ObtenerFicheros(bbdd.recogerArchivosporTipo(bbdd.recogerIDpermiso(bbdd.recogerTipoArchivo(usuario_dado))));
                     estadoCS = EstadoCS.SinEstado;
                     break;
@@ -175,7 +181,7 @@ public class ProyectoCS {
                     /*
                     //TODO: Solicitar fichero por cliente servidor
                     TipoSolicitud solicitud = TipoSolicitud.TuMismo; //= solicitud();
-
+                    String usuario = _nombre.split(" ")[1].substring(1, _nombre.split(" ")[1].length()-1);
                     switch(solicitud){
                         case OtroUsuario:
                             //TODO: Enviar solicitud al usuario, permisos y te tiene que responder
@@ -366,6 +372,7 @@ public class ProyectoCS {
 
                     break;
 
+                //TODO: BORRAR LOS ESTADOS SI AL FINAL NO SE HACE
                 //ESTADO COMPARTIR FICHEROS
                     //Compartir los ficheros haciendo un hilo de ejecución [Llamado desde: interfaz]
                 case CompartirFicheros:
