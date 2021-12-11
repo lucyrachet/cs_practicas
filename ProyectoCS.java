@@ -166,6 +166,7 @@ public class ProyectoCS {
                 //ESTADO OBTENER FICHEROS
                     //Obtener lista de ficheros con el usuario y permiso [LLamado desde interfaz]
                 case ObtenerFicheros:
+                    System.out.println(usuario_dado);
                     System.out.println(bbdd.recogerTipoArchivo(usuario_dado));
                     System.out.println(bbdd.recogerIDpermiso(bbdd.recogerTipoArchivo(usuario_dado)));
                     interfaz.ObtenerFicheros(bbdd.recogerArchivosporTipo(bbdd.recogerIDpermiso(bbdd.recogerTipoArchivo(usuario_dado))));
