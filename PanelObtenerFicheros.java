@@ -20,7 +20,7 @@ public class PanelObtenerFicheros extends javax.swing.JPanel {
     public PanelObtenerFicheros(Interfaz i) {
         interfaz = i;
         initComponents();
-        listaArchivos.setModel(new DefaultListModel());
+        
     }
 
     /**
@@ -176,6 +176,7 @@ public class PanelObtenerFicheros extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     public void PonerValores(ArrayList<String> _datos){
+        listaArchivos.setModel(new DefaultListModel());
         DefaultListModel modelo = (DefaultListModel) listaArchivos.getModel();
         for(int i=0;i<_datos.size();i++){
             modelo.addElement(_datos.get(i));  

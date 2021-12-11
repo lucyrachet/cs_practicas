@@ -128,12 +128,12 @@ public class Datos {
     }
 
     //Crea un arraylist de string con los datos según el permiso introducido
-    public ArrayList<String> recogerArchivosporTipo(int permiso){
+    public ArrayList<String> recogerArchivos(String nombre, int permiso){
         ArrayList<String> archivos = new ArrayList<>();
         String datos = "";
         try{
             Connection con = crearConexion();
-            PreparedStatement pstmt = con.prepareStatement("select nombre,usuario from archivoclaves where tipo="+permiso);
+            PreparedStatement pstmt = con.prepareStatement("select nombre,usuario from archivoclaves where tipo="+permiso+" AND usuario='admin'");
             
             if(permiso==1){
                 pstmt = con.prepareStatement("select nombre,usuario from archivoclaves");
@@ -149,6 +149,24 @@ public class Datos {
                 archivos.add(datos);
                 datos = "";
             }
+
+            pstmt = con.prepareStatement("select nombre,usuario from archivoclaves where usuario='"+nombre+"'");
+            
+            if(permiso==1){
+                pstmt = con.prepareStatement("select nombre,usuario from archivoclaves");
+            }
+            
+            //PreparedStatement pstmt = con.prepareStatement("select * from archivoclaves");
+
+            rs = pstmt.executeQuery();
+            
+            while(rs.next()){
+                //datos+=rs.getString(1)+";"+rs.getString(2)+";"+rs.getString(3)+";"+rs.getString(4);
+                datos+=rs.getString(1)+" ("+rs.getString(2)+")";
+                archivos.add(datos);
+                datos = "";
+            }
+
             con.close();
         }catch(Exception e){
             System.out.println("No se ha podido ejecutar la recuperación de la lista de archivos");
