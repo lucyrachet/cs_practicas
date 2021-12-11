@@ -346,6 +346,7 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
     public void Desencriptar(String _path){
         pathFichero = _path;
         cambiarEstado(EstadoCS.Desencriptar);
+        ponerPanel(panelInicio);
     }
     public void ExitoDesencriptar(){
         panelInicio.ExitoDesencriptar();
