@@ -214,7 +214,8 @@ public class ProyectoCS {
                             }*/
                             break;
                         }
-                        Thread.currentThread().sleep(100);  //digamos que esto funciona
+                        Thread.currentThread();
+                        Thread.sleep(100);  //digamos que esto funciona
                     }
                     //Devuelve el estado LeerRespuesta si hay respuesta
                     estadoCS = EstadoCS.LeerRespuesta;
