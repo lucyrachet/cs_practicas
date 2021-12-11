@@ -225,7 +225,7 @@ public class Datos {
             }
             con.close();
         }catch(SQLException e){
-            System.out.println("No se ha podido encontrar la contraseña para el usuario: "+nombre_usuario);
+            System.out.println("No se ha podido encontrar el permiso para el usuario: "+nombre_usuario);
             System.err.println(e);
         }
         return tipo;
@@ -320,13 +320,15 @@ public class Datos {
     public static void main(String[] args){
         Datos bbdd = new Datos();
 
-        ArrayList<String> datos = bbdd.recogerArchivos(); 
+        System.out.println(bbdd.recogerTipoUsuario("test"));
+        System.out.println(bbdd.recogerIDpermiso(bbdd.recogerTipoUsuario("test")));
+        /*ArrayList<String> datos = bbdd.recogerArchivos(); 
 
         for(int i=0;i<datos.size();i++){
             System.out.println("Archivo: "+datos.get(i));
         }
 
-        /*
+        
         bbdd.insertarUsuario("usuario1", "clavep1", "password1");
         bbdd.insertarUsuario("usuario2", "clavep2", "password2");
         
