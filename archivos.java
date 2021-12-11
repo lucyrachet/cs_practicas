@@ -45,8 +45,6 @@ public class archivos {
                 SecretKey claveAESencripted = base.asciiSecretKey(clave);
                 SecretKey claveAES = rsa.decryptKey(claveAESencripted.getEncoded(), privKey);     //desencriptamos la clave AES con la privada de RSA
             
-                base.bFichero(aes.decryptFile("datos/admin/encript/"+nombre_archivo+".enc",claveAES), "datos/admin/decript/"+archivo_decript);
-
 
                 //COGER CLAVE PUBLICA DEL USUARIO
                 PublicKey clavePublica = base.asciiToPublicKey(clavePublicaUsr);
