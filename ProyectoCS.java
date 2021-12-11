@@ -214,6 +214,7 @@ public class ProyectoCS {
                             }*/
                             break;
                         }
+                        Thread.currentThread().sleep(100);  //digamos que esto funciona
                     }
                     //Devuelve el estado LeerRespuesta si hay respuesta
                     estadoCS = EstadoCS.LeerRespuesta;
@@ -223,6 +224,11 @@ public class ProyectoCS {
                     //Procesamos los datos de la respuesta [LLamado desde: EsperarRespuesta]
                 case LeerRespuesta:
                     //TODO: Leer el archivo de respuesta y procesar los datos
+                    String directorioLeer = "/datos/"+usuario_dado+"/respuestas";
+                    ruta = new File(directorioLeer);
+                    String[] archivos = ruta.list();
+                    String nombre_archiv = archivos[0];
+
                     //Devuelve el estado Desencriptar cuando termina el proceso
                     estadoCS = EstadoCS.Desencriptar;
                     break;
