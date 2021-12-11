@@ -348,6 +348,7 @@ public class Interfaz extends javax.swing.JFrame implements Interfaz_interface{
         System.out.println(archivo);
         String usuario = _nombre.split(" ")[1].substring(1, _nombre.split(" ")[1].length()-1);
         String directorioCheck = directorioActual+"\\datos\\"+usuario+"\\encript\\"+archivo+".enc";
+        //TODO: ya no existe el .enc
         Desencriptar(directorioCheck);
     }
     

@@ -2,6 +2,8 @@
 import java.io.Console;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.KeyPair;
 import java.security.MessageDigest;
 import java.security.PrivateKey;
@@ -31,6 +33,7 @@ public class ProyectoCS {
         String contrasena_dada2 = null;
         String nombre_archivo_dado = null;
         int tipo_permiso_dado = 0;
+        String nombreArchivo = null;
 
         CompartirCS compartirCS = null;
 /*
@@ -188,7 +191,7 @@ public class ProyectoCS {
                     
                     TipoSolicitud solicitud = null; //= solicitud();
                     String usuario = nombre_archivo_dado.split(" ")[1].substring(1, nombre_archivo_dado.split(" ")[1].length()-1);
-                    String nombreArchivo = nombre_archivo_dado.split(" ")[0].substring(0, nombre_archivo_dado.indexOf("."));
+                    nombreArchivo = nombre_archivo_dado.split(" ")[0].substring(0, nombre_archivo_dado.indexOf("."));
                     if(usuario_dado.equals(usuario)){
                         solicitud = TipoSolicitud.TuMismo;
 
@@ -206,20 +209,38 @@ public class ProyectoCS {
                         case Servidor:
                             
                             String directorioActual = System.getProperty("user.dir");
-                            File fakefile = new File(directorioActual+"\\datos\\admin\\solicitudes\\"+nombreArchivo+"_"+usuario+".txt");
+                            File fakefile = new File(directorioActual+"\\datos\\admin\\solicitudes\\"+nombreArchivo+"_"+usuario_dado+".txt");
                             fakefile.createNewFile();   //creamos el nuevo archivo con forma "nombrearchivo_usuario.txt"
                             //Devuelve el estado EsperarRespuesta
                             estadoCS=EstadoCS.EsperarRespuesta;
                             break;
                         case TuMismo:
                             //Devuelve el estado Desencriptar
-                            String archivo_decript = bbdd.recogerNombre(nombreArchivo);           //coges el nombre del archivo de la bbdd
+                            Probarbase64 base = new Probarbase64("");
+                            //String archivo_decript = bbdd.recogerNombre(nombreArchivo);           //coges el nombre del archivo de la bbdd
                             String clave2 = bbdd.recogerClave(nombreArchivo,usuario_dado);                      //cogemos la clave AES de ese archivo
 
-                            System.out.println(archivo_decript);
-                            System.out.println(clave2);
+                            archivos archivos = new archivos();
+                            archivos.accederArchivo(nombreArchivo, usuario_dado);
 
-                            estadoCS=EstadoCS.Desencriptar;
+                            /*
+                            //System.out.println(archivo_decript);
+                            System.out.println(clave2);
+                            //ALMACENAR LOS DATOS
+                            System.out.println("datos/"+usuario_dado+"/respuestas/"+nombreArchivo+".key");
+                            System.out.println("datos/"+usuario_dado+"/encript/"+nombreArchivo+".enc");
+
+                            String pathEncriptedFile = "datos/"+usuario_dado+"/encript/"+nombreArchivo+".enc";
+                            System.out.println("PATH: "+pathEncriptedFile);
+                            //String contenido = base.fileToString(pathEncriptedFile);
+                            //System.out.println("CONTENIDO: "+contenido);
+                            byte[] bytesArchivo = Files.readAllBytes(Paths.get(pathEncriptedFile));
+
+                            base.bFichero(clave2.getBytes(), "datos/"+usuario_dado+"/respuestas/"+nombreArchivo+".key");
+                            base.bFichero(bytesArchivo, "datos/"+usuario_dado+"/respuestas/"+nombreArchivo+".enc");
+
+                            */
+                            estadoCS=EstadoCS.EsperarRespuesta;
                             break;               
                     }
                     
@@ -253,10 +274,11 @@ public class ProyectoCS {
                     //Procesamos los datos de la respuesta [LLamado desde: EsperarRespuesta]
                 case LeerRespuesta:
                     //TODO: Leer el archivo de respuesta y procesar los datos
-                    String directorioLeer = "/datos/"+usuario_dado+"/respuestas";
+                    directorioActual = System.getProperty("user.dir");
+                    String directorioLeer = directorioActual+"/datos/"+usuario_dado+"/respuestas";
                     ruta = new File(directorioLeer);
                     String[] archivos = ruta.list();
-                    String nombre_archiv = archivos[0];
+                    nombreArchivo = archivos[0];
 
                     //Devuelve el estado Desencriptar cuando termina el proceso
                     estadoCS = EstadoCS.Desencriptar;
@@ -269,18 +291,21 @@ public class ProyectoCS {
                     AES aes = new AES();
                     RSA rsa = new RSA();
                     archivos metodo = new archivos();
-
+                    
+                    String path = "datos/"+usuario_dado+"/";
+                    String nombre_archivo = nombreArchivo;
+                    /*
                     //COGER FICHERO ENCRIPTADO
                     String path = interfaz.damePathFichero();
                     File f = new File(path);                    //cogemos el file de desencriptar
                     String nombre_archivo = f.getName();        //cogemos el nombre que tenga
                     
-
                     //COGER CLAVE PRIVADA USUARIO
                     String subpath = path.substring(0,path.lastIndexOf('\\'));
                     subpath = subpath.substring(0,subpath.lastIndexOf('\\'))+"\\";
+                    */
                     
-                    String keyRSA = subpath+usuario_dado+".pvk";        
+                    String keyRSA = path+usuario_dado+".pvk";        
                     String keyRSAString = base.fileToString(keyRSA);
 
                         //COGER AES DE LA CONTRASEÑA
@@ -301,7 +326,9 @@ public class ProyectoCS {
 
                     
                     String archivo_decript = bbdd.recogerNombre(nombre_archivo);           //coges el nombre del archivo de la bbdd
-                    String clave2 = bbdd.recogerClave(nombre_archivo,usuario_dado);                      //cogemos la clave AES de ese archivo
+                    //String clave2 = bbdd.recogerClave(nombre_archivo,usuario_dado);                      //cogemos la clave AES de ese archivo
+                    //File f = new File("datos/"+usuario_dado+"/respuestas/"+nombre_archivo+".key")
+                    String clave2 = base.fileToString("datos/"+usuario_dado+"/respuestas/"+nombre_archivo+".key");
 
                     System.out.println(archivo_decript);
                     System.out.println(clave2);

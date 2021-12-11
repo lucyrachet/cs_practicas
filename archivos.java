@@ -16,7 +16,7 @@ public class archivos {
         Datos datos = new Datos();
         Probarbase64 base = new Probarbase64("");
         AES aes = new AES();
-        nombre_archivo = nombre_archivo.substring(0, nombre_archivo.lastIndexOf('.'));
+        //nombre_archivo = nombre_archivo.substring(0, nombre_archivo.lastIndexOf('.'));
         System.out.println("Datos pasados: nombre = "+nombre_user+" | archivo = "+nombre_archivo);
 
         if(datos.existeUsuario(nombre_user) && !datos.recogerClave(nombre_archivo,"admin").equals("")){
@@ -25,7 +25,7 @@ public class archivos {
             String claveArchivo = datos.recogerClave(nombre_archivo,"admin");
             RSA rsa = new RSA();
             try {
-                String keyRSA = "datos/"+nombre_user+"/"+nombre_user+".pvk";                    //pongo como es el nombre de la key
+                String keyRSA = "datos/admin/admin.pvk";                    //pongo como es el nombre de la key
                 //File fKeyRSA = new File(keyRSA);                                                //cojo el archivo
                 String keyRSAString = base.fileToString(keyRSA);                                //cojo el archivo y lo paso a String
 
@@ -50,7 +50,10 @@ public class archivos {
 
                 //ENCRIPTAR CLAVE AES DEL ARCHIVO CON CLAVE PUBLICA DEL USUARIO
                 byte[] bytesClave = rsa.encryptKey(claveAES, clavePublica);
-
+                
+                String claveString = new String(bytesClave);
+                String claveBase64 = base.base64(claveString);
+                bytesClave= claveBase64.getBytes();
                 //ALMACENAR LOS DATOS
                 System.out.println("datos/"+nombre_user+"/respuestas/"+nombre_archivo+".key");
                 System.out.println("datos/"+nombre_user+"/encript/"+nombre_archivo+".enc");

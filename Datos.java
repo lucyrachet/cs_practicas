@@ -150,22 +150,25 @@ public class Datos {
                 datos = "";
             }
 
-            pstmt = con.prepareStatement("select nombre,usuario from archivoclaves where usuario='"+nombre+"'");
-            
-            if(permiso==1){
-                pstmt = con.prepareStatement("select nombre,usuario from archivoclaves");
+            if(!nombre.equals("admin")){
+                pstmt = con.prepareStatement("select nombre,usuario from archivoclaves where usuario='"+nombre+"'");
+                
+                if(permiso==1){
+                    pstmt = con.prepareStatement("select nombre,usuario from archivoclaves");
+                }
+                
+                //PreparedStatement pstmt = con.prepareStatement("select * from archivoclaves");
+    
+                rs = pstmt.executeQuery();
+                
+                while(rs.next()){
+                    //datos+=rs.getString(1)+";"+rs.getString(2)+";"+rs.getString(3)+";"+rs.getString(4);
+                    datos+=rs.getString(1)+" ("+rs.getString(2)+")";
+                    archivos.add(datos);
+                    datos = "";
+                }
             }
-            
-            //PreparedStatement pstmt = con.prepareStatement("select * from archivoclaves");
 
-            rs = pstmt.executeQuery();
-            
-            while(rs.next()){
-                //datos+=rs.getString(1)+";"+rs.getString(2)+";"+rs.getString(3)+";"+rs.getString(4);
-                datos+=rs.getString(1)+" ("+rs.getString(2)+")";
-                archivos.add(datos);
-                datos = "";
-            }
 
             con.close();
         }catch(Exception e){
