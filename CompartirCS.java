@@ -9,7 +9,20 @@ public class CompartirCS extends Thread {
         public void run() {
             while(ProyectoCS.estadoCS!=EstadoCS.DejarDeCompartir){
                 //TODO: Hacer lógica atender solicitud
+                archivos acceder = new archivos();
+                String directorioActual = System.getProperty("user.dir");
+                String directorioCheck = directorioActual+"/datos/admin/solicitudes";
+                File ruta = new File(directorioCheck);
+                String[] archivos = ruta.list();
+                String[] archivo = archivos[0].split("_");
+                String nombre = archivo[0];
+                String user = archivo[1];
+
+                ruta = new File(directorioCheck+archivo[0]);
+                acceder.accederArchivo(nombre, user);
                 
+                
+                ruta.delete();  //borramos el fichero
             }
         }
     }
