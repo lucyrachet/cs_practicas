@@ -116,14 +116,18 @@ public class ProyectoCS {
                             String hashpsw = base.bytebase64(hash);  
                             String pswbbdd = hashpsw.substring(hashpsw.length()/2);
                             String claveAES = hashpsw.substring(0,hashpsw.length()/2);
+                            
                             KeyPair pairRSA = rsa.crearParClaves();         //generamos par de claves
                             PublicKey publicKeyRSA = pairRSA.getPublic();   //cogemos la publica y la metemos en base de datos
                             PrivateKey privateKeyRSA = pairRSA.getPrivate();   //cogemos la privada 
                             SecretKey skAES = base.asciiSecretKey(claveAES);
-                            String clavepvstring = aes.encryptString(base.base64PrivateKey(privateKeyRSA), skAES);
+                            String clavepvstring = AES.encryptString(base.base64PrivateKey(privateKeyRSA), skAES);
                             base.crearCarpeta("datos/"+usuario_dado);
                             base.bFichero(clavepvstring.getBytes(), "datos/"+usuario_dado+"/"+usuario_dado+".pvk");             //guardamos rsa privada en un archivo
                             bbdd.insertarUsuario(usuario_dado, base.base64PublicKey(publicKeyRSA), pswbbdd,tipo_permiso_dado);   //insertamos el usuario
+                            if( usuario_dado.equals("admin")){
+                                base.bFichero(claveAES.getBytes(), "datos/"+usuario_dado+"/aesadmin.key");
+                            }
                             base.crearCarpeta("datos/"+usuario_dado+"/solicitudes");
                             base.crearCarpeta("datos/"+usuario_dado+"/respuestas");
                             //base.stringToFile(base.base64PrivateKey(privateKeyRSA), "datos/"+usuario_dado+".pvk");

@@ -71,8 +71,8 @@ public class Probarbase64 {
 	public PublicKey asciiToPublicKey(String publicKeyStr) throws  NoSuchAlgorithmException, InvalidKeySpecException {
         KeyFactory kf = KeyFactory.getInstance("RSA");
 
-        PKCS8EncodedKeySpec keySpecPKCS8 = new PKCS8EncodedKeySpec(Base64.getDecoder().decode(publicKeyStr));
-        PublicKey publicKey = kf.generatePublic(keySpecPKCS8);
+        X509EncodedKeySpec  keySpec = new X509EncodedKeySpec (Base64.getDecoder().decode(publicKeyStr));
+        PublicKey publicKey = kf.generatePublic(keySpec);
 
 		
 		return publicKey;
@@ -85,7 +85,12 @@ public class Probarbase64 {
 
         PKCS8EncodedKeySpec keySpecPKCS8 = new PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKeyStr));
         PrivateKey privateKey = kf.generatePrivate(keySpecPKCS8);
-
+/*
+		KeyFactory kf = KeyFactory.getInstance("RSA");
+        byte[] encodedPv = Base64.getDecoder().decode(privateKeyStr);
+        PKCS8EncodedKeySpec keySpecPv = new PKCS8EncodedKeySpec(encodedPv);
+        PrivateKey privateKey = kf.generatePrivate(keySpecPv);
+*/
 		return privateKey;
 	}
 

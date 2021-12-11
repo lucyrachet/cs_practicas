@@ -30,7 +30,7 @@ public class archivos {
                 //String aesAdmin = ""; //METER AQUI EL AES DEL ADMIN
                 SecretKey claveAESAdmin = base.asciiSecretKey(aesAdmin);
 
-                PrivateKey privKey = base.asciiToPrivateKey(aes.decryptString(keyRSAString, claveAESAdmin));      //paso el string a PrivateKey
+                PrivateKey privKey = base.asciiToPrivateKey(AES.decryptString(keyRSAString, claveAESAdmin));      //paso el string a PrivateKey
                 
                 nombre_archivo = nombre_archivo.substring(0, nombre_archivo.lastIndexOf('.'));  // Quita el .enc
 
