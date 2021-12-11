@@ -45,15 +45,22 @@ public class archivos {
                 SecretKey claveAESencripted = base.asciiSecretKey(clave);
                 SecretKey claveAES = rsa.decryptKey(claveAESencripted.getEncoded(), privKey);     //desencriptamos la clave AES con la privada de RSA
             
+                base.bFichero(aes.decryptFile("datos/admin/encript/"+nombre_archivo+".enc",claveAES), "datos/admin/decript/"+archivo_decript);
+
+
                 //COGER CLAVE PUBLICA DEL USUARIO
                 PublicKey clavePublica = base.asciiToPublicKey(clavePublicaUsr);
 
                 //ENCRIPTAR CLAVE AES DEL ARCHIVO CON CLAVE PUBLICA DEL USUARIO
-                byte[] bytesClave = rsa.encryptKey(claveAES, clavePublica);
+                //byte[] bytesClave = rsa.encryptKey(claveAES, clavePublica);
+
+                byte[] claveEncriptada = rsa.encryptKey(claveAES,clavePublica);           //encriptamos la clave publica
+                String claveEncriptadaString = base.bytebase64(claveEncriptada);    //en string
+
                 
-                String claveString = new String(bytesClave);
-                String claveBase64 = base.base64(claveString);
-                bytesClave= claveBase64.getBytes();
+                //String claveString = new String(bytesClave);
+                //String claveBase64 = base.base64(claveString);
+                //bytesClave= claveBase64.getBytes();
                 //ALMACENAR LOS DATOS
                 System.out.println("datos/"+nombre_user+"/respuestas/"+nombre_archivo+".key");
                 System.out.println("datos/"+nombre_user+"/encript/"+nombre_archivo+".enc");
@@ -64,7 +71,7 @@ public class archivos {
                 //System.out.println("CONTENIDO: "+contenido);
                 byte[] bytesArchivo = Files.readAllBytes(Paths.get(pathEncriptedFile));
 
-                base.bFichero(bytesClave, "datos/"+nombre_user+"/respuestas/"+nombre_archivo+".key");
+                base.bFichero(claveEncriptadaString.getBytes(), "datos/"+nombre_user+"/respuestas/"+nombre_archivo+".key");
                 base.bFichero(bytesArchivo, "datos/"+nombre_user+"/respuestas/"+nombre_archivo+".enc");
 
             } catch (Exception e) {

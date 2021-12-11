@@ -100,6 +100,7 @@ public class Datos {
         return tipo;
     }
 
+    /*
     //Recoge todos los archivos que hay en la base de datos, cada string contendrá la información de un archivo
     //separado por el símbolo de ";"
     public ArrayList<String> recogerArchivos(){
@@ -126,6 +127,7 @@ public class Datos {
         }
         return archivos;
     }
+    */
 
     //Crea un arraylist de string con los datos según el permiso introducido
     public ArrayList<String> recogerArchivos(String nombre, int permiso){
@@ -136,7 +138,7 @@ public class Datos {
             PreparedStatement pstmt = con.prepareStatement("select nombre,usuario from archivoclaves where tipo="+permiso+" AND usuario='admin'");
             
             if(permiso==1){
-                pstmt = con.prepareStatement("select nombre,usuario from archivoclaves");
+                pstmt = con.prepareStatement("select nombre,usuario from archivoclaves where usuario='admin'");
             }
             
             //PreparedStatement pstmt = con.prepareStatement("select * from archivoclaves");
@@ -154,7 +156,7 @@ public class Datos {
                 pstmt = con.prepareStatement("select nombre,usuario from archivoclaves where usuario='"+nombre+"'");
                 
                 if(permiso==1){
-                    pstmt = con.prepareStatement("select nombre,usuario from archivoclaves");
+                    pstmt = con.prepareStatement("select nombre,usuario from archivoclaves where usuario='"+nombre+"'");
                 }
                 
                 //PreparedStatement pstmt = con.prepareStatement("select * from archivoclaves");
